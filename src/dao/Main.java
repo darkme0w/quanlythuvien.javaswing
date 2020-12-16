@@ -3,20 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package dao;
 
 /**
  *
  * @author admin
  */
-public class NewClass {
-
-    public NewClass() {
-        System.out.println("aaaaaaaaaaa");
-    }
-    
+public class Main {
     public static void main(String[] args) {
-        NewClass ne = new NewClass();
-        
+        System.out.println("abc");
     }
-    
 }
