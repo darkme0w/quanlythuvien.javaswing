@@ -5,10 +5,12 @@
  */
 package dao;
 
+import models.Librarian;
+
 /**
  *
  * @author admin
  */
-public interface ILibrarianDAO {
+public interface ILibrarianDAO extends GenericDAO<Librarian>{
     
 }

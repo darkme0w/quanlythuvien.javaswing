@@ -5,10 +5,12 @@
  */
 package dao;
 
+import models.Reader;
+
 /**
  *
  * @author admin
  */
-public interface IReaderDAO {
+public interface IReaderDAO extends GenericDAO<Reader>{
     
 }

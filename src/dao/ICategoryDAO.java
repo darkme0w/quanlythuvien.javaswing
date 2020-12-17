@@ -5,10 +5,12 @@
  */
 package dao;
 
+import models.Category;
+
 /**
  *
  * @author admin
  */
-public interface ICategoryDAO {
+public interface ICategoryDAO extends GenericDAO<Category>{
     
 }

@@ -5,10 +5,12 @@
  */
 package dao;
 
+import models.Book;
+
 /**
  *
  * @author admin
  */
-public interface IBooksDAO {
+public interface IBooksDAO extends GenericDAO<Book>{
     
 }

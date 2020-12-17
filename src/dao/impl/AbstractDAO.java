@@ -8,8 +8,10 @@ package dao.impl;
 import dao.GenericDAO;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -71,6 +73,8 @@ public class AbstractDAO<T> implements GenericDAO<T> {
                     cstm.setFloat(index, (float) parameter);
                 } else if (parameter instanceof Boolean) {
                     cstm.setBoolean(index, (boolean) parameter);
+                } else if (parameter instanceof LocalDate) {
+                    cstm.setDate(index, (Date) parameter);
                 }
             }
         } catch (SQLException e) {
@@ -115,6 +119,45 @@ public class AbstractDAO<T> implements GenericDAO<T> {
             }
         }
 
+    }
+
+    @Override
+    public void insert(String sql, Object... parameters) {
+        CallableStatement csmt = null;
+        ResultSet rs = null;
+        Connection conn = null;
+
+        try {
+            conn = DBConnect.getInstance().getConnection();
+            conn.setAutoCommit(false);
+            csmt = conn.prepareCall(sql);
+            setParameter(csmt, parameters);
+            csmt.executeUpdate();
+//            conn.commit();
+        } catch (SQLException ex) {
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                } catch (SQLException ex1) {
+                    Logger.getLogger(AbstractDAO.class.getName()).log(Level.SEVERE, null, ex1);
+                }
+            }
+            Logger.getLogger(AbstractDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+                if (csmt != null) {
+                    csmt.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                // TODO: handle exception
+            }
+        }
     }
 
 }
