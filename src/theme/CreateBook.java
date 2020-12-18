@@ -47,20 +47,21 @@ public class CreateBook extends javax.swing.JInternalFrame {
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel16 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox<>();
-        createbook = new keeptoo.KButton();
-        createbook1 = new keeptoo.KButton();
+        kButton2 = new keeptoo.KButton();
+        kButton3 = new keeptoo.KButton();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jComboBox3 = new javax.swing.JComboBox<>();
-        createbook2 = new keeptoo.KButton();
-        createbook3 = new keeptoo.KButton();
+        kButton5 = new keeptoo.KButton();
+        kButton6 = new keeptoo.KButton();
         jTextField1 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
+        setBorder(null);
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
@@ -68,20 +69,20 @@ public class CreateBook extends javax.swing.JInternalFrame {
         setVisible(true);
 
         kGradientPanel1.setkBorderRadius(0);
-        kGradientPanel1.setkEndColor(new java.awt.Color(51, 153, 255));
-        kGradientPanel1.setkStartColor(new java.awt.Color(51, 153, 255));
+        kGradientPanel1.setkEndColor(new java.awt.Color(51, 153, 0));
+        kGradientPanel1.setkStartColor(new java.awt.Color(0, 204, 204));
         kGradientPanel1.setPreferredSize(new java.awt.Dimension(300, 470));
 
         jLabel6.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("Quản lý sách");
         jLabel6.setPreferredSize(new java.awt.Dimension(215, 29));
 
-        jLabel8.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Tài khoản");
 
-        jLabel9.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Tài khoản");
 
         jTextField2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -94,7 +95,7 @@ public class CreateBook extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel10.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Tài khoản");
 
         jTextField3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -102,7 +103,7 @@ public class CreateBook extends javax.swing.JInternalFrame {
         jTextField3.setCaretColor(new java.awt.Color(204, 0, 255));
         jTextField3.setBackground(new java.awt.Color(0,0,0,0));
 
-        jLabel11.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Tài khoản");
 
         jTextField4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -110,7 +111,7 @@ public class CreateBook extends javax.swing.JInternalFrame {
         jTextField4.setCaretColor(new java.awt.Color(204, 0, 255));
         jTextField4.setBackground(new java.awt.Color(0,0,0,0));
 
-        jLabel12.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("Tài khoản");
 
         jTextField5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -123,10 +124,10 @@ public class CreateBook extends javax.swing.JInternalFrame {
         jTextField6.setCaretColor(new java.awt.Color(204, 0, 255));
         jTextField6.setBackground(new java.awt.Color(0,0,0,0));
 
-        jLabel13.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Tài khoản");
 
-        jLabel14.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setText("Tài khoản");
 
         jTextField7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -134,7 +135,7 @@ public class CreateBook extends javax.swing.JInternalFrame {
         jTextField7.setCaretColor(new java.awt.Color(204, 0, 255));
         jTextField7.setBackground(new java.awt.Color(0,0,0,0));
 
-        jLabel15.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
         jLabel15.setText("Tài khoản");
 
         jTextField8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -145,39 +146,39 @@ public class CreateBook extends javax.swing.JInternalFrame {
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox1.setPreferredSize(new java.awt.Dimension(100, 25));
 
-        jLabel16.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
         jLabel16.setText("Tài khoản");
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox2.setPreferredSize(new java.awt.Dimension(100, 25));
 
-        createbook.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(255, 255, 255)));
-        createbook.setText("Thêm ");
-        createbook.setkBorderRadius(0);
-        createbook.setkEndColor(new java.awt.Color(51, 153, 255));
-        createbook.setkHoverEndColor(new java.awt.Color(204, 0, 204));
-        createbook.setkHoverForeGround(new java.awt.Color(255, 204, 255));
-        createbook.setkHoverStartColor(new java.awt.Color(0, 204, 204));
-        createbook.setkStartColor(new java.awt.Color(51, 153, 255));
-        createbook.setPreferredSize(new java.awt.Dimension(80, 30));
-        createbook.addActionListener(new java.awt.event.ActionListener() {
+        kButton2.setText("Thêm");
+        kButton2.setkBorderRadius(40);
+        kButton2.setkEndColor(new java.awt.Color(0, 204, 204));
+        kButton2.setkFillButton(false);
+        kButton2.setkHoverEndColor(new java.awt.Color(204, 0, 204));
+        kButton2.setkHoverForeGround(new java.awt.Color(255, 204, 255));
+        kButton2.setkHoverStartColor(new java.awt.Color(0, 204, 204));
+        kButton2.setkStartColor(new java.awt.Color(255, 255, 255));
+        kButton2.setPreferredSize(new java.awt.Dimension(80, 30));
+        kButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                createbookActionPerformed(evt);
+                kButton2ActionPerformed(evt);
             }
         });
 
-        createbook1.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(255, 255, 255)));
-        createbook1.setText("Sửa");
-        createbook1.setkBorderRadius(0);
-        createbook1.setkEndColor(new java.awt.Color(51, 153, 255));
-        createbook1.setkHoverEndColor(new java.awt.Color(204, 0, 204));
-        createbook1.setkHoverForeGround(new java.awt.Color(255, 204, 255));
-        createbook1.setkHoverStartColor(new java.awt.Color(0, 204, 204));
-        createbook1.setkStartColor(new java.awt.Color(51, 153, 255));
-        createbook1.setPreferredSize(new java.awt.Dimension(80, 30));
-        createbook1.addActionListener(new java.awt.event.ActionListener() {
+        kButton3.setText("Sửa");
+        kButton3.setkBorderRadius(40);
+        kButton3.setkEndColor(new java.awt.Color(0, 204, 204));
+        kButton3.setkFillButton(false);
+        kButton3.setkHoverEndColor(new java.awt.Color(204, 0, 204));
+        kButton3.setkHoverForeGround(new java.awt.Color(255, 204, 255));
+        kButton3.setkHoverStartColor(new java.awt.Color(0, 204, 204));
+        kButton3.setkStartColor(new java.awt.Color(255, 255, 255));
+        kButton3.setPreferredSize(new java.awt.Dimension(80, 30));
+        kButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                createbook1ActionPerformed(evt);
+                kButton3ActionPerformed(evt);
             }
         });
 
@@ -214,9 +215,9 @@ public class CreateBook extends javax.swing.JInternalFrame {
                     .addGroup(kGradientPanel1Layout.createSequentialGroup()
                         .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                                .addComponent(createbook, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(createbook1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(kButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(kButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel9)
                             .addComponent(jLabel10)
                             .addComponent(jLabel11)
@@ -224,7 +225,7 @@ public class CreateBook extends javax.swing.JInternalFrame {
                             .addComponent(jLabel13)
                             .addComponent(jLabel14)
                             .addComponent(jLabel15))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(12, Short.MAX_VALUE))))
         );
         kGradientPanel1Layout.setVerticalGroup(
             kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -267,11 +268,11 @@ public class CreateBook extends javax.swing.JInternalFrame {
                 .addComponent(jLabel15)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(createbook, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(createbook1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                    .addComponent(kButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(kButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         getContentPane().add(kGradientPanel1, java.awt.BorderLayout.LINE_START);
@@ -294,54 +295,53 @@ public class CreateBook extends javax.swing.JInternalFrame {
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 430, Short.MAX_VALUE)
+            .addGap(0, 439, Short.MAX_VALUE)
         );
 
         jPanel3.add(jPanel4, java.awt.BorderLayout.LINE_START);
 
         jPanel5.setPreferredSize(new java.awt.Dimension(544, 60));
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sắp Xếp", "A-Z", "Z-A" }));
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sắp xếp", "A-Z", "Z-A" }));
         jComboBox3.setPreferredSize(new java.awt.Dimension(80, 30));
         jPanel5.add(jComboBox3);
 
-        createbook2.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(255, 255, 255)));
-        createbook2.setText("Xóa");
-        createbook2.setkBorderRadius(0);
-        createbook2.setkEndColor(new java.awt.Color(51, 153, 255));
-        createbook2.setkHoverEndColor(new java.awt.Color(204, 0, 204));
-        createbook2.setkHoverForeGround(new java.awt.Color(255, 204, 255));
-        createbook2.setkHoverStartColor(new java.awt.Color(0, 204, 204));
-        createbook2.setkStartColor(new java.awt.Color(51, 153, 255));
-        createbook2.setPreferredSize(new java.awt.Dimension(80, 30));
-        createbook2.addActionListener(new java.awt.event.ActionListener() {
+        kButton5.setText("Xóa");
+        kButton5.setkBorderRadius(0);
+        kButton5.setkEndColor(new java.awt.Color(51, 153, 0));
+        kButton5.setkHoverEndColor(new java.awt.Color(204, 0, 204));
+        kButton5.setkHoverForeGround(new java.awt.Color(255, 204, 255));
+        kButton5.setkHoverStartColor(new java.awt.Color(0, 204, 204));
+        kButton5.setkStartColor(new java.awt.Color(0, 204, 204));
+        kButton5.setPreferredSize(new java.awt.Dimension(80, 30));
+        kButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                createbook2ActionPerformed(evt);
+                kButton5ActionPerformed(evt);
             }
         });
-        jPanel5.add(createbook2);
+        jPanel5.add(kButton5);
 
-        createbook3.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(255, 255, 255)));
-        createbook3.setText("Tìm Kiếm");
-        createbook3.setkBorderRadius(0);
-        createbook3.setkEndColor(new java.awt.Color(51, 153, 255));
-        createbook3.setkHoverEndColor(new java.awt.Color(204, 0, 204));
-        createbook3.setkHoverForeGround(new java.awt.Color(255, 204, 255));
-        createbook3.setkHoverStartColor(new java.awt.Color(0, 204, 204));
-        createbook3.setkStartColor(new java.awt.Color(51, 153, 255));
-        createbook3.setPreferredSize(new java.awt.Dimension(80, 30));
-        createbook3.addActionListener(new java.awt.event.ActionListener() {
+        kButton6.setText("Tìm kiếm");
+        kButton6.setkBorderRadius(0);
+        kButton6.setkEndColor(new java.awt.Color(51, 153, 0));
+        kButton6.setkHoverEndColor(new java.awt.Color(204, 0, 204));
+        kButton6.setkHoverForeGround(new java.awt.Color(255, 204, 255));
+        kButton6.setkHoverStartColor(new java.awt.Color(0, 204, 204));
+        kButton6.setkStartColor(new java.awt.Color(0, 204, 204));
+        kButton6.setPreferredSize(new java.awt.Dimension(80, 30));
+        kButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                createbook3ActionPerformed(evt);
+                kButton6ActionPerformed(evt);
             }
         });
-        jPanel5.add(createbook3);
+        jPanel5.add(kButton6);
 
         jTextField1.setPreferredSize(new java.awt.Dimension(200, 30));
         jPanel5.add(jTextField1);
 
         jPanel3.add(jPanel5, java.awt.BorderLayout.PAGE_START);
 
+        jTable1.setForeground(new java.awt.Color(255, 255, 255));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -368,28 +368,24 @@ public class CreateBook extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
 
-    private void createbookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createbookActionPerformed
+    private void kButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton2ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_createbookActionPerformed
+    }//GEN-LAST:event_kButton2ActionPerformed
 
-    private void createbook1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createbook1ActionPerformed
+    private void kButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton3ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_createbook1ActionPerformed
+    }//GEN-LAST:event_kButton3ActionPerformed
 
-    private void createbook2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createbook2ActionPerformed
+    private void kButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton5ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_createbook2ActionPerformed
+    }//GEN-LAST:event_kButton5ActionPerformed
 
-    private void createbook3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createbook3ActionPerformed
+    private void kButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton6ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_createbook3ActionPerformed
+    }//GEN-LAST:event_kButton6ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private keeptoo.KButton createbook;
-    private keeptoo.KButton createbook1;
-    private keeptoo.KButton createbook2;
-    private keeptoo.KButton createbook3;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
@@ -418,6 +414,10 @@ public class CreateBook extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
+    private keeptoo.KButton kButton2;
+    private keeptoo.KButton kButton3;
+    private keeptoo.KButton kButton5;
+    private keeptoo.KButton kButton6;
     private keeptoo.KGradientPanel kGradientPanel1;
     // End of variables declaration//GEN-END:variables
 }
