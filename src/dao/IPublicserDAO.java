@@ -5,10 +5,12 @@
  */
 package dao;
 
+import models.Publicser;
+
 /**
  *
  * @author admin
  */
-public interface IPublicserDAO {
+public interface IPublicserDAO extends GenericDAO<Publicser>{
     
 }

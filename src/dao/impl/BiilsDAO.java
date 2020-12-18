@@ -5,10 +5,13 @@
  */
 package dao.impl;
 
+import dao.IBillsDAO;
+import models.Bills;
+
 /**
  *
  * @author admin
  */
-public class BiilsDAO {
+public class BiilsDAO extends AbstractDAO<Bills> implements IBillsDAO{
     
 }

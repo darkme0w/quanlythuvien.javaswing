@@ -15,4 +15,6 @@ import models.Location;
 public interface ILocationDAO extends GenericDAO<Location>{
     List<Location> getAll();
     void delete(Location location);
+    void update(Location location);
+    void save(Location location);
 }

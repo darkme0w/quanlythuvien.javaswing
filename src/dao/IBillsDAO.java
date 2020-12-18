@@ -5,10 +5,12 @@
  */
 package dao;
 
+import models.Bills;
+
 /**
  *
  * @author admin
  */
-public interface IBillsDAO {
+public interface IBillsDAO extends GenericDAO<Bills>{
     
 }

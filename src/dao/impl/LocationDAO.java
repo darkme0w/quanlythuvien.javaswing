@@ -14,17 +14,29 @@ import models.Location;
  *
  * @author admin
  */
-public class LocationDAO extends AbstractDAO<Location> implements ILocationDAO{
+public class LocationDAO extends AbstractDAO<Location> implements ILocationDAO {
 
     @Override
     public List<Location> getAll() {
-       String sql = "";
-       return query(sql, new LocationMapper());
+        String sql = "";
+        return query(sql, new LocationMapper());
     }
 
     @Override
     public void delete(Location location) {
         String sql = "";
         this.update(sql, location.getLocationId());
+    }
+
+    @Override
+    public void update(Location location) {
+        String sql = "";
+        this.update(sql, location.getLocationName(), location.getLocationId());
+    }
+
+    @Override
+    public void save(Location location) {
+        String sql="";
+        this.insert(sql, location.getLocationName());
     }
 }

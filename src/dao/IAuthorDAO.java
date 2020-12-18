@@ -5,10 +5,16 @@
  */
 package dao;
 
+import java.util.List;
+import models.Author;
+
 /**
  *
  * @author admin
  */
-public interface IAuthorDAO {
-    
+public interface IAuthorDAO extends GenericDAO<Author>{
+    List<Author> getAll();
+    void save(Author author);
+    void update(Author author);
+    void delete(Author author);
 }
