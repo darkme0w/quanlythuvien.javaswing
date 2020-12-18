@@ -69,13 +69,13 @@ public class Home extends javax.swing.JFrame {
         jPanel16 = new javax.swing.JPanel();
         jPanel17 = new javax.swing.JPanel();
         jPanel15 = new javax.swing.JPanel();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        kButton8 = new keeptoo.KButton();
         kButton6 = new keeptoo.KButton();
+        kButton9 = new keeptoo.KButton();
+        kButton10 = new keeptoo.KButton();
         jTextField1 = new javax.swing.JTextField();
         jPanel18 = new javax.swing.JPanel();
-        kButton3 = new keeptoo.KButton();
-        kButton4 = new keeptoo.KButton();
-        kButton5 = new keeptoo.KButton();
-        kButton7 = new keeptoo.KButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
 
@@ -451,7 +451,7 @@ public class Home extends javax.swing.JFrame {
         kGradientPanel1Layout.setHorizontalGroup(
             kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel1Layout.createSequentialGroup()
-                .addContainerGap(476, Short.MAX_VALUE)
+                .addContainerGap(595, Short.MAX_VALUE)
                 .addComponent(jLabel22)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel21)
@@ -494,7 +494,7 @@ public class Home extends javax.swing.JFrame {
         );
         jPanel16Layout.setVerticalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 427, Short.MAX_VALUE)
+            .addGap(0, 477, Short.MAX_VALUE)
         );
 
         jPanel14.add(jPanel16, java.awt.BorderLayout.LINE_START);
@@ -511,7 +511,7 @@ public class Home extends javax.swing.JFrame {
         );
         jPanel17Layout.setVerticalGroup(
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 427, Short.MAX_VALUE)
+            .addGap(0, 477, Short.MAX_VALUE)
         );
 
         jPanel14.add(jPanel17, java.awt.BorderLayout.LINE_END);
@@ -519,7 +519,26 @@ public class Home extends javax.swing.JFrame {
         jPanel15.setBackground(new java.awt.Color(255, 255, 255));
         jPanel15.setPreferredSize(new java.awt.Dimension(572, 50));
 
-        kButton6.setText("Tìm kiếm");
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sắp Xếp", "A-Z", "Z-A" }));
+        jComboBox1.setPreferredSize(new java.awt.Dimension(80, 30));
+        jPanel15.add(jComboBox1);
+
+        kButton8.setText("Thêm ");
+        kButton8.setkBorderRadius(0);
+        kButton8.setkEndColor(new java.awt.Color(153, 255, 255));
+        kButton8.setkHoverEndColor(new java.awt.Color(204, 0, 204));
+        kButton8.setkHoverForeGround(new java.awt.Color(255, 204, 255));
+        kButton8.setkHoverStartColor(new java.awt.Color(0, 204, 204));
+        kButton8.setkStartColor(new java.awt.Color(0, 204, 153));
+        kButton8.setPreferredSize(new java.awt.Dimension(80, 30));
+        kButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                kButton8ActionPerformed(evt);
+            }
+        });
+        jPanel15.add(kButton8);
+
+        kButton6.setText("Sửa");
         kButton6.setkBorderRadius(0);
         kButton6.setkEndColor(new java.awt.Color(153, 255, 255));
         kButton6.setkHoverEndColor(new java.awt.Color(204, 0, 204));
@@ -534,75 +553,43 @@ public class Home extends javax.swing.JFrame {
         });
         jPanel15.add(kButton6);
 
-        jTextField1.setPreferredSize(new java.awt.Dimension(250, 30));
+        kButton9.setText("Xóa");
+        kButton9.setkBorderRadius(0);
+        kButton9.setkEndColor(new java.awt.Color(153, 255, 255));
+        kButton9.setkHoverEndColor(new java.awt.Color(204, 0, 204));
+        kButton9.setkHoverForeGround(new java.awt.Color(255, 204, 255));
+        kButton9.setkHoverStartColor(new java.awt.Color(0, 204, 204));
+        kButton9.setkStartColor(new java.awt.Color(0, 204, 153));
+        kButton9.setPreferredSize(new java.awt.Dimension(80, 30));
+        kButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                kButton9ActionPerformed(evt);
+            }
+        });
+        jPanel15.add(kButton9);
+
+        kButton10.setText("Tìm kiếm");
+        kButton10.setkBorderRadius(0);
+        kButton10.setkEndColor(new java.awt.Color(153, 255, 255));
+        kButton10.setkHoverEndColor(new java.awt.Color(204, 0, 204));
+        kButton10.setkHoverForeGround(new java.awt.Color(255, 204, 255));
+        kButton10.setkHoverStartColor(new java.awt.Color(0, 204, 204));
+        kButton10.setkStartColor(new java.awt.Color(0, 204, 153));
+        kButton10.setPreferredSize(new java.awt.Dimension(80, 30));
+        kButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                kButton10ActionPerformed(evt);
+            }
+        });
+        jPanel15.add(kButton10);
+
+        jTextField1.setPreferredSize(new java.awt.Dimension(200, 30));
         jPanel15.add(jTextField1);
 
         jPanel14.add(jPanel15, java.awt.BorderLayout.PAGE_START);
 
         jPanel18.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel18.setPreferredSize(new java.awt.Dimension(572, 100));
-
-        kButton3.setText("Thêm");
-        kButton3.setkBorderRadius(0);
-        kButton3.setkEndColor(new java.awt.Color(153, 255, 255));
-        kButton3.setkHoverEndColor(new java.awt.Color(204, 0, 204));
-        kButton3.setkHoverForeGround(new java.awt.Color(255, 204, 255));
-        kButton3.setkHoverStartColor(new java.awt.Color(0, 204, 204));
-        kButton3.setkStartColor(new java.awt.Color(0, 204, 153));
-        kButton3.setPreferredSize(new java.awt.Dimension(120, 30));
-        kButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                kButton3ActionPerformed(evt);
-            }
-        });
-        jPanel18.add(kButton3);
-
-        kButton4.setText("Sửa");
-        kButton4.setkBorderRadius(0);
-        kButton4.setkEndColor(new java.awt.Color(153, 255, 255));
-        kButton4.setkHoverEndColor(new java.awt.Color(204, 0, 204));
-        kButton4.setkHoverForeGround(new java.awt.Color(255, 204, 255));
-        kButton4.setkHoverStartColor(new java.awt.Color(0, 204, 204));
-        kButton4.setkStartColor(new java.awt.Color(0, 204, 153));
-        kButton4.setPreferredSize(new java.awt.Dimension(120, 30));
-        kButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                kButton4ActionPerformed(evt);
-            }
-        });
-        jPanel18.add(kButton4);
-
-        kButton5.setText("Xóa");
-        kButton5.setkBorderRadius(0);
-        kButton5.setkEndColor(new java.awt.Color(153, 255, 255));
-        kButton5.setkHoverEndColor(new java.awt.Color(204, 0, 204));
-        kButton5.setkHoverForeGround(new java.awt.Color(255, 204, 255));
-        kButton5.setkHoverStartColor(new java.awt.Color(0, 204, 204));
-        kButton5.setkStartColor(new java.awt.Color(0, 204, 153));
-        kButton5.setPreferredSize(new java.awt.Dimension(120, 30));
-        kButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                kButton5ActionPerformed(evt);
-            }
-        });
-        jPanel18.add(kButton5);
-
-        kButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_up_down_arrow_15px.png"))); // NOI18N
-        kButton7.setText("Sắp xếp ");
-        kButton7.setkBorderRadius(0);
-        kButton7.setkEndColor(new java.awt.Color(153, 255, 255));
-        kButton7.setkHoverEndColor(new java.awt.Color(204, 0, 204));
-        kButton7.setkHoverForeGround(new java.awt.Color(255, 204, 255));
-        kButton7.setkHoverStartColor(new java.awt.Color(0, 204, 204));
-        kButton7.setkStartColor(new java.awt.Color(0, 204, 153));
-        kButton7.setPreferredSize(new java.awt.Dimension(120, 30));
-        kButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                kButton7ActionPerformed(evt);
-            }
-        });
-        jPanel18.add(kButton7);
-
+        jPanel18.setPreferredSize(new java.awt.Dimension(572, 50));
         jPanel14.add(jPanel18, java.awt.BorderLayout.PAGE_END);
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
@@ -641,25 +628,21 @@ public class Home extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jLabel22MouseClicked
 
-    private void kButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_kButton3ActionPerformed
-
-    private void kButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_kButton4ActionPerformed
-
-    private void kButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_kButton5ActionPerformed
-
     private void kButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton6ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_kButton6ActionPerformed
 
-    private void kButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton7ActionPerformed
+    private void kButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton8ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_kButton7ActionPerformed
+    }//GEN-LAST:event_kButton8ActionPerformed
+
+    private void kButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton10ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_kButton10ActionPerformed
+
+    private void kButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton9ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_kButton9ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -697,6 +680,7 @@ public class Home extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -740,11 +724,10 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
-    private keeptoo.KButton kButton3;
-    private keeptoo.KButton kButton4;
-    private keeptoo.KButton kButton5;
+    private keeptoo.KButton kButton10;
     private keeptoo.KButton kButton6;
-    private keeptoo.KButton kButton7;
+    private keeptoo.KButton kButton8;
+    private keeptoo.KButton kButton9;
     private keeptoo.KGradientPanel kGradientPanel1;
     private javax.swing.JPanel menuleft;
     // End of variables declaration//GEN-END:variables
