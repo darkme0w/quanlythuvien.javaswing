@@ -18,10 +18,10 @@ import java.util.logging.Logger;
 public class DBConnect {
     private static DBConnect instance;
     private static Connection conn;
-    private String DRIVER = "";
-    private String URL = "";
-    private String USER = "";
-    private String PASSWORD = "";
+    private String DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+    private String URL = "jdbc:sqlserver://localhost:1433;databaseName=Library";
+    private String USER = "sa";
+    private String PASSWORD = "1234";
     
     
     
