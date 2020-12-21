@@ -37,25 +37,25 @@ public class Home extends javax.swing.JFrame {
         pnlquanlysach = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
+        pnlquanlytacgia = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jPanel6 = new javax.swing.JPanel();
+        pnlquanlynhaxuatban = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jPanel7 = new javax.swing.JPanel();
+        pnlquanlydanhmuc = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jPanel8 = new javax.swing.JPanel();
+        pnlquanlydocgia = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jPanel9 = new javax.swing.JPanel();
+        pnlquanlythuthu = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        jPanel10 = new javax.swing.JPanel();
+        pnlquanlyphieumuontra = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        jPanel11 = new javax.swing.JPanel();
+        pnlquanlyxuphat = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jPanel12 = new javax.swing.JPanel();
@@ -72,7 +72,7 @@ public class Home extends javax.swing.JFrame {
 
         menuleft.setBackground(new java.awt.Color(255, 255, 255));
         menuleft.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(153, 153, 153)));
-        menuleft.setPreferredSize(new java.awt.Dimension(150, 500));
+        menuleft.setPreferredSize(new java.awt.Dimension(165, 500));
         menuleft.setLayout(new java.awt.BorderLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -94,7 +94,7 @@ public class Home extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addComponent(jLabel2)))
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -122,18 +122,17 @@ public class Home extends javax.swing.JFrame {
         jLabel3.setText("Quản lý sách");
         jLabel3.setToolTipText("");
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_view_all_20px.png"))); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_book_20px.png"))); // NOI18N
 
         javax.swing.GroupLayout pnlquanlysachLayout = new javax.swing.GroupLayout(pnlquanlysach);
         pnlquanlysach.setLayout(pnlquanlysachLayout);
         pnlquanlysachLayout.setHorizontalGroup(
             pnlquanlysachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlquanlysachLayout.createSequentialGroup()
-                .addGap(27, 27, 27)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
         pnlquanlysachLayout.setVerticalGroup(
             pnlquanlysachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -149,236 +148,265 @@ public class Home extends javax.swing.JFrame {
 
         jPanel2.add(pnlquanlysach, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 150, 40));
 
-        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        pnlquanlytacgia.setBackground(new java.awt.Color(255, 255, 255));
+        pnlquanlytacgia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pnlquanlytacgiaMouseClicked(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel5.setText("Mychannel");
+        jLabel5.setText("Quản lý tác giả");
         jLabel5.setToolTipText("");
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_male_user_20px.png"))); // NOI18N
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
+        javax.swing.GroupLayout pnlquanlytacgiaLayout = new javax.swing.GroupLayout(pnlquanlytacgia);
+        pnlquanlytacgia.setLayout(pnlquanlytacgiaLayout);
+        pnlquanlytacgiaLayout.setHorizontalGroup(
+            pnlquanlytacgiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlquanlytacgiaLayout.createSequentialGroup()
                 .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
+        pnlquanlytacgiaLayout.setVerticalGroup(
+            pnlquanlytacgiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlquanlytacgiaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGroup(pnlquanlytacgiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlquanlytacgiaLayout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
-        jPanel2.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 150, 40));
+        jPanel2.add(pnlquanlytacgia, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 150, 40));
 
-        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
+        pnlquanlynhaxuatban.setBackground(new java.awt.Color(255, 255, 255));
+        pnlquanlynhaxuatban.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pnlquanlynhaxuatbanMouseClicked(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel7.setText("Chart");
+        jLabel7.setText("Quản lý nhà xuất bản");
         jLabel7.setToolTipText("");
 
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_chart_20px.png"))); // NOI18N
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_company_20px.png"))); // NOI18N
 
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
+        javax.swing.GroupLayout pnlquanlynhaxuatbanLayout = new javax.swing.GroupLayout(pnlquanlynhaxuatban);
+        pnlquanlynhaxuatban.setLayout(pnlquanlynhaxuatbanLayout);
+        pnlquanlynhaxuatbanLayout.setHorizontalGroup(
+            pnlquanlynhaxuatbanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlquanlynhaxuatbanLayout.createSequentialGroup()
+                .addGap(2, 2, 2)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel7)
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
+        pnlquanlynhaxuatbanLayout.setVerticalGroup(
+            pnlquanlynhaxuatbanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlquanlynhaxuatbanLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGroup(pnlquanlynhaxuatbanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlquanlynhaxuatbanLayout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
-        jPanel2.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 150, 40));
+        jPanel2.add(pnlquanlynhaxuatban, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 150, 40));
 
-        jPanel7.setBackground(new java.awt.Color(255, 255, 255));
+        pnlquanlydanhmuc.setBackground(new java.awt.Color(255, 255, 255));
+        pnlquanlydanhmuc.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pnlquanlydanhmucMouseClicked(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel9.setText("Messager");
+        jLabel9.setText("Quản lý danh mục ");
         jLabel9.setToolTipText("");
 
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_speech_bubble_20px_2.png"))); // NOI18N
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_sorting_20px.png"))); // NOI18N
 
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
+        javax.swing.GroupLayout pnlquanlydanhmucLayout = new javax.swing.GroupLayout(pnlquanlydanhmuc);
+        pnlquanlydanhmuc.setLayout(pnlquanlydanhmucLayout);
+        pnlquanlydanhmucLayout.setHorizontalGroup(
+            pnlquanlydanhmucLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlquanlydanhmucLayout.createSequentialGroup()
                 .addComponent(jLabel10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel9)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
+        pnlquanlydanhmucLayout.setVerticalGroup(
+            pnlquanlydanhmucLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlquanlydanhmucLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGroup(pnlquanlydanhmucLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlquanlydanhmucLayout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
-        jPanel2.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 150, 40));
+        jPanel2.add(pnlquanlydanhmuc, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 150, 40));
 
-        jPanel8.setBackground(new java.awt.Color(255, 255, 255));
+        pnlquanlydocgia.setBackground(new java.awt.Color(255, 255, 255));
+        pnlquanlydocgia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pnlquanlydocgiaMouseClicked(evt);
+            }
+        });
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel11.setText("Over view");
+        jLabel11.setText("Quản lý độc giả");
         jLabel11.setToolTipText("");
 
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_view_all_20px.png"))); // NOI18N
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_wattpad_20px.png"))); // NOI18N
 
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
+        javax.swing.GroupLayout pnlquanlydocgiaLayout = new javax.swing.GroupLayout(pnlquanlydocgia);
+        pnlquanlydocgia.setLayout(pnlquanlydocgiaLayout);
+        pnlquanlydocgiaLayout.setHorizontalGroup(
+            pnlquanlydocgiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlquanlydocgiaLayout.createSequentialGroup()
                 .addComponent(jLabel12)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel11)
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
+        pnlquanlydocgiaLayout.setVerticalGroup(
+            pnlquanlydocgiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlquanlydocgiaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGroup(pnlquanlydocgiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlquanlydocgiaLayout.createSequentialGroup()
                         .addComponent(jLabel12)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
-        jPanel2.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 150, 40));
+        jPanel2.add(pnlquanlydocgia, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 150, 40));
 
-        jPanel9.setBackground(new java.awt.Color(255, 255, 255));
+        pnlquanlythuthu.setBackground(new java.awt.Color(255, 255, 255));
+        pnlquanlythuthu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pnlquanlythuthuMouseClicked(evt);
+            }
+        });
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel13.setText("Over view");
+        jLabel13.setText("Quản lý thủ thư");
         jLabel13.setToolTipText("");
 
-        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_view_all_20px.png"))); // NOI18N
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_male_user_20px.png"))); // NOI18N
 
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
+        javax.swing.GroupLayout pnlquanlythuthuLayout = new javax.swing.GroupLayout(pnlquanlythuthu);
+        pnlquanlythuthu.setLayout(pnlquanlythuthuLayout);
+        pnlquanlythuthuLayout.setHorizontalGroup(
+            pnlquanlythuthuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlquanlythuthuLayout.createSequentialGroup()
                 .addComponent(jLabel14)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel13)
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
+        pnlquanlythuthuLayout.setVerticalGroup(
+            pnlquanlythuthuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlquanlythuthuLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGroup(pnlquanlythuthuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlquanlythuthuLayout.createSequentialGroup()
                         .addComponent(jLabel14)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
-        jPanel2.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 150, 40));
+        jPanel2.add(pnlquanlythuthu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 150, 40));
 
-        jPanel10.setBackground(new java.awt.Color(255, 255, 255));
+        pnlquanlyphieumuontra.setBackground(new java.awt.Color(255, 255, 255));
+        pnlquanlyphieumuontra.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pnlquanlyphieumuontraMouseClicked(evt);
+            }
+        });
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel15.setText("Over view");
+        jLabel15.setText("Quản lý phiếu mượn trả");
         jLabel15.setToolTipText("");
 
-        jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_view_all_20px.png"))); // NOI18N
+        jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_bill_20px.png"))); // NOI18N
 
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
+        javax.swing.GroupLayout pnlquanlyphieumuontraLayout = new javax.swing.GroupLayout(pnlquanlyphieumuontra);
+        pnlquanlyphieumuontra.setLayout(pnlquanlyphieumuontraLayout);
+        pnlquanlyphieumuontraLayout.setHorizontalGroup(
+            pnlquanlyphieumuontraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlquanlyphieumuontraLayout.createSequentialGroup()
                 .addComponent(jLabel16)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel15)
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
+        pnlquanlyphieumuontraLayout.setVerticalGroup(
+            pnlquanlyphieumuontraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlquanlyphieumuontraLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel10Layout.createSequentialGroup()
+                .addGroup(pnlquanlyphieumuontraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlquanlyphieumuontraLayout.createSequentialGroup()
                         .addComponent(jLabel16)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
-        jPanel2.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 150, 40));
+        jPanel2.add(pnlquanlyphieumuontra, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 160, 40));
 
-        jPanel11.setBackground(new java.awt.Color(255, 255, 255));
+        pnlquanlyxuphat.setBackground(new java.awt.Color(255, 255, 255));
+        pnlquanlyxuphat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pnlquanlyxuphatMouseClicked(evt);
+            }
+        });
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel17.setText("Over view");
+        jLabel17.setText("Quản lý xử phạt");
         jLabel17.setToolTipText("");
 
-        jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_view_all_20px.png"))); // NOI18N
+        jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_soccer_yellow_card_20px.png"))); // NOI18N
 
-        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
-        jPanel11.setLayout(jPanel11Layout);
-        jPanel11Layout.setHorizontalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
+        javax.swing.GroupLayout pnlquanlyxuphatLayout = new javax.swing.GroupLayout(pnlquanlyxuphat);
+        pnlquanlyxuphat.setLayout(pnlquanlyxuphatLayout);
+        pnlquanlyxuphatLayout.setHorizontalGroup(
+            pnlquanlyxuphatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlquanlyxuphatLayout.createSequentialGroup()
                 .addComponent(jLabel18)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel17)
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
-        jPanel11Layout.setVerticalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel11Layout.createSequentialGroup()
+        pnlquanlyxuphatLayout.setVerticalGroup(
+            pnlquanlyxuphatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlquanlyxuphatLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel11Layout.createSequentialGroup()
+                .addGroup(pnlquanlyxuphatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlquanlyxuphatLayout.createSequentialGroup()
                         .addComponent(jLabel18)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
-        jPanel2.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 150, 40));
+        jPanel2.add(pnlquanlyxuphat, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 150, 40));
 
         jPanel12.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -427,7 +455,7 @@ public class Home extends javax.swing.JFrame {
         kGradientPanel1Layout.setHorizontalGroup(
             kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel1Layout.createSequentialGroup()
-                .addContainerGap(615, Short.MAX_VALUE)
+                .addContainerGap(610, Short.MAX_VALUE)
                 .addComponent(jLabel22)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel21)
@@ -463,7 +491,7 @@ public class Home extends javax.swing.JFrame {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 691, Short.MAX_VALUE)
+            .addGap(0, 686, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -493,13 +521,57 @@ public class Home extends javax.swing.JFrame {
 
     private void pnlquanlysachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlquanlysachMouseClicked
         CreateBook createBook = new CreateBook();
-        
-      
-            jPanel4.add(createBook);
-            createBook.setVisible(true);
-           
-       
+
+        jPanel4.add(createBook);
+        createBook.setVisible(true);
+
+
     }//GEN-LAST:event_pnlquanlysachMouseClicked
+
+    private void pnlquanlytacgiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlquanlytacgiaMouseClicked
+        ManagerAuthor managerAuthor = new ManagerAuthor();
+
+        jPanel4.add(managerAuthor);
+        managerAuthor.setVisible(true);
+    }//GEN-LAST:event_pnlquanlytacgiaMouseClicked
+
+    private void pnlquanlynhaxuatbanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlquanlynhaxuatbanMouseClicked
+        MangagerPublicser mangagerPublicser = new MangagerPublicser();
+        jPanel4.add(mangagerPublicser);
+        mangagerPublicser.setVisible(true);
+
+
+    }//GEN-LAST:event_pnlquanlynhaxuatbanMouseClicked
+
+    private void pnlquanlydanhmucMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlquanlydanhmucMouseClicked
+        ManagerCategory managerCategory = new ManagerCategory();
+        jPanel4.add(managerCategory);
+        managerCategory.setVisible(true);
+    }//GEN-LAST:event_pnlquanlydanhmucMouseClicked
+
+    private void pnlquanlydocgiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlquanlydocgiaMouseClicked
+        ManagerReaders managerReaders = new ManagerReaders();
+        jPanel4.add(managerReaders);
+        managerReaders.setVisible(true);
+    }//GEN-LAST:event_pnlquanlydocgiaMouseClicked
+
+    private void pnlquanlythuthuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlquanlythuthuMouseClicked
+        ManagerLibrarian managerLibrarian = new ManagerLibrarian();
+        jPanel4.add(managerLibrarian);
+        managerLibrarian.setVisible(true);
+    }//GEN-LAST:event_pnlquanlythuthuMouseClicked
+
+    private void pnlquanlyphieumuontraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlquanlyphieumuontraMouseClicked
+        ManagerBiils managerBiils = new ManagerBiils();
+        jPanel4.add(managerBiils);
+        managerBiils.setVisible(true);
+    }//GEN-LAST:event_pnlquanlyphieumuontraMouseClicked
+
+    private void pnlquanlyxuphatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlquanlyxuphatMouseClicked
+        ManagerPenalize managerPenalize = new ManagerPenalize();
+        jPanel4.add(managerPenalize);
+        managerPenalize.setVisible(true);
+    }//GEN-LAST:event_pnlquanlyxuphatMouseClicked
 
     /**
      * @param args the command line arguments
@@ -559,20 +631,20 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
     private keeptoo.KGradientPanel kGradientPanel1;
     private javax.swing.JPanel menuleft;
+    private javax.swing.JPanel pnlquanlydanhmuc;
+    private javax.swing.JPanel pnlquanlydocgia;
+    private javax.swing.JPanel pnlquanlynhaxuatban;
+    private javax.swing.JPanel pnlquanlyphieumuontra;
     private javax.swing.JPanel pnlquanlysach;
+    private javax.swing.JPanel pnlquanlytacgia;
+    private javax.swing.JPanel pnlquanlythuthu;
+    private javax.swing.JPanel pnlquanlyxuphat;
     // End of variables declaration//GEN-END:variables
 }
