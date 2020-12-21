@@ -19,15 +19,17 @@ public class BookMapper implements RowMapper<Book>{
     public Book mapRow(ResultSet rs) {
         try {
             Book book = new Book();
-            book.setBookId(rs.getInt("BooksID"));
-            book.setBooksName(rs.getNString("BooksName"));
+//            book.setBookId(rs.getInt("BooksID"));
+            book.setBooksName(rs.getString("BooksName"));
             book.setBooksCode(rs.getString("BooksCode"));
             book.setBooksPrice(rs.getFloat("BooksPrice"));
             book.setQuantity(rs.getInt("Quantity"));
             book.setStatus(rs.getInt("Status"));
             book.setYear(rs.getInt("Year"));
-            book.setLocationId(rs.getInt("LocationID"));
-            book.setPublicserId(rs.getInt("PublicserID"));
+//            book.setLocationId(rs.getInt("LocationID"));
+//            book.setPublicserId(rs.getInt("PublicserID"));
+            book.setLocationName(rs.getString("LocationName"));
+            book.setPublicserName(rs.getString("PublicserName"));
             return book;
         } catch (SQLException e) {
             return null;

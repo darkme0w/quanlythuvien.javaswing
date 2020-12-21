@@ -19,19 +19,37 @@ public class Book {
     private int year;
     private int locationId;
     private int publicserId;
+    private String locationName;
+    private String publicserName;
 
     public Book() {
     }
 
-    public Book(String booksCode, String booksName, float booksPrice, int quantity, int status, int year, int locationId, int publicserId) {
+    public Book(String booksCode, String booksName, float booksPrice, int quantity, int status, int year,String locationName, String publicserName) {
         this.booksCode = booksCode;
         this.booksName = booksName;
         this.booksPrice = booksPrice;
         this.quantity = quantity;
         this.status = status;
         this.year = year;
-        this.locationId = locationId;
-        this.publicserId = publicserId;
+        this.locationName = locationName;
+        this.publicserName = publicserName;
+    }
+
+    public String getLocationName() {
+        return locationName;
+    }
+
+    public void setLocationName(String locationName) {
+        this.locationName = locationName;
+    }
+
+    public String getPublicserName() {
+        return publicserName;
+    }
+
+    public void setPublicserName(String publicserName) {
+        this.publicserName = publicserName;
     }
 
     public int getBookId() {
@@ -105,6 +123,12 @@ public class Book {
     public void setPublicserId(int publicserId) {
         this.publicserId = publicserId;
     }
+
+    @Override
+    public String toString() {
+        return this.publicserName +"" +this.locationName;
+    }
+
     
     
     

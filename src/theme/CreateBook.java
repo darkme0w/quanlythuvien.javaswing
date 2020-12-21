@@ -5,6 +5,14 @@
  */
 package theme;
 
+import dao.IBooksDAO;
+import dao.impl.BookDAO;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+import javax.swing.table.DefaultTableModel;
+import models.Book;
+
 /**
  *
  * @author admin
@@ -14,10 +22,57 @@ public class CreateBook extends javax.swing.JInternalFrame {
     /**
      * Creates new form CreateBook
      */
+    private DefaultTableModel dftbBook;
+    private List<Book> listBook  = new ArrayList<>();
+    private IBooksDAO bookDAO;
+    private Book book;
     public CreateBook() {
         initComponents();
+        preapareGUI();
+        loadData();
     }
 
+    private void preapareGUI(){
+        dftbBook = new DefaultTableModel();
+        dftbBook.addColumn("Mã sách");
+        dftbBook.addColumn("Tên sách");
+        dftbBook.addColumn("Giá sách");
+        dftbBook.addColumn("Số lượng");
+        dftbBook.addColumn("Năm xuất bản");
+        dftbBook.addColumn("Trạng thái");
+        dftbBook.addColumn("Nhà xuất bản");
+        dftbBook.addColumn("Vị trí");
+    }
+    
+    private void loadData(){
+        bookDAO = new BookDAO();
+        listBook = bookDAO.getAll();
+        Vector v;
+        
+        
+        for (Book book : listBook) {
+            v = new Vector();
+            v.add(book.getBooksCode());
+            v.add(book.getBooksName());
+            v.add(book.getBooksPrice());
+            v.add(book.getQuantity());
+            v.add(book.getYear());
+            if (book.getStatus() == 1) {
+                v.add("Còn sách");
+            }else{
+                v.add("Hết sách");
+            }
+            v.add(book.getPublicserName());
+            v.add(book.getLocationName());
+            dftbBook.addRow(v);
+        }
+        
+        listBook.forEach(s->System.out.println(s.toString()));
+        
+        jTable1.setModel(dftbBook);
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -31,22 +86,20 @@ public class CreateBook extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        jtBookCode = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        jtBookName = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        jtBPrice = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
+        jQuantity = new javax.swing.JTextField();
+        jtYear = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
-        jLabel15 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jtStatus = new javax.swing.JTextField();
+        cbLocation = new javax.swing.JComboBox<>();
         jLabel16 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cbPublicser = new javax.swing.JComboBox<>();
         kButton2 = new keeptoo.KButton();
         kButton3 = new keeptoo.KButton();
         jPanel1 = new javax.swing.JPanel();
@@ -65,6 +118,7 @@ public class CreateBook extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
+        setResizable(true);
         setPreferredSize(new java.awt.Dimension(800, 600));
         setVisible(true);
 
@@ -80,77 +134,69 @@ public class CreateBook extends javax.swing.JInternalFrame {
         jLabel6.setPreferredSize(new java.awt.Dimension(215, 29));
 
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Tài khoản");
+        jLabel8.setText("Vị trí");
 
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Tài khoản");
+        jLabel9.setText("Mã sách");
 
-        jTextField2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
-        jTextField2.setCaretColor(new java.awt.Color(204, 0, 255));
-        jTextField2.setBackground(new java.awt.Color(0,0,0,0));
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        jtBookCode.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jtBookCode.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        jtBookCode.setCaretColor(new java.awt.Color(204, 0, 255));
+        jtBookCode.setBackground(new java.awt.Color(0,0,0,0));
+        jtBookCode.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                jtBookCodeActionPerformed(evt);
             }
         });
 
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("Tài khoản");
+        jLabel10.setText("Tên sách");
 
-        jTextField3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField3.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
-        jTextField3.setCaretColor(new java.awt.Color(204, 0, 255));
-        jTextField3.setBackground(new java.awt.Color(0,0,0,0));
+        jtBookName.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jtBookName.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        jtBookName.setCaretColor(new java.awt.Color(204, 0, 255));
+        jtBookName.setBackground(new java.awt.Color(0,0,0,0));
 
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Tài khoản");
+        jLabel11.setText("Giá sách");
 
-        jTextField4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField4.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
-        jTextField4.setCaretColor(new java.awt.Color(204, 0, 255));
-        jTextField4.setBackground(new java.awt.Color(0,0,0,0));
+        jtBPrice.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jtBPrice.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        jtBPrice.setCaretColor(new java.awt.Color(204, 0, 255));
+        jtBPrice.setBackground(new java.awt.Color(0,0,0,0));
 
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setText("Tài khoản");
+        jLabel12.setText("Số lượng");
 
-        jTextField5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField5.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
-        jTextField5.setCaretColor(new java.awt.Color(204, 0, 255));
-        jTextField5.setBackground(new java.awt.Color(0,0,0,0));
+        jQuantity.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jQuantity.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        jQuantity.setCaretColor(new java.awt.Color(204, 0, 255));
+        jQuantity.setBackground(new java.awt.Color(0,0,0,0));
 
-        jTextField6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField6.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
-        jTextField6.setCaretColor(new java.awt.Color(204, 0, 255));
-        jTextField6.setBackground(new java.awt.Color(0,0,0,0));
+        jtYear.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jtYear.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        jtYear.setCaretColor(new java.awt.Color(204, 0, 255));
+        jtYear.setBackground(new java.awt.Color(0,0,0,0));
 
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel13.setText("Tài khoản");
+        jLabel13.setText("Năm xuất bản");
 
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel14.setText("Tài khoản");
+        jLabel14.setText("Trạng thái");
 
-        jTextField7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField7.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
-        jTextField7.setCaretColor(new java.awt.Color(204, 0, 255));
-        jTextField7.setBackground(new java.awt.Color(0,0,0,0));
+        jtStatus.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jtStatus.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        jtStatus.setCaretColor(new java.awt.Color(204, 0, 255));
+        jtStatus.setBackground(new java.awt.Color(0,0,0,0));
 
-        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel15.setText("Tài khoản");
-
-        jTextField8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField8.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
-        jTextField8.setCaretColor(new java.awt.Color(204, 0, 255));
-        jTextField8.setBackground(new java.awt.Color(0,0,0,0));
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.setPreferredSize(new java.awt.Dimension(100, 25));
+        cbLocation.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbLocation.setPreferredSize(new java.awt.Dimension(100, 25));
 
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel16.setText("Tài khoản");
+        jLabel16.setText("Nhà xuất bản");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox2.setPreferredSize(new java.awt.Dimension(100, 25));
+        cbPublicser.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbPublicser.setPreferredSize(new java.awt.Dimension(100, 25));
 
         kButton2.setText("Thêm");
         kButton2.setkBorderRadius(40);
@@ -187,45 +233,42 @@ public class CreateBook extends javax.swing.JInternalFrame {
         kGradientPanel1Layout.setHorizontalGroup(
             kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(35, Short.MAX_VALUE)
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34))
             .addGroup(kGradientPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jtBookName)
+                    .addComponent(jtBPrice)
+                    .addComponent(jQuantity)
+                    .addComponent(jtYear)
+                    .addComponent(jtStatus)
+                    .addComponent(jtBookCode)
                     .addGroup(kGradientPanel1Layout.createSequentialGroup()
                         .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField3)
-                            .addComponent(jTextField4)
-                            .addComponent(jTextField5)
-                            .addComponent(jTextField6)
-                            .addComponent(jTextField7)
-                            .addComponent(jTextField8)
-                            .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(25, 25, 25)
-                                .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jTextField2))
-                        .addContainerGap())
-                    .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel16)
-                        .addGap(92, 92, 92))
-                    .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                            .addComponent(cbLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8))
+                        .addGap(25, 25, 25)
                         .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                                .addComponent(kButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(kButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jLabel16)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(cbPublicser, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                        .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel9)
                             .addComponent(jLabel10)
                             .addComponent(jLabel11)
                             .addComponent(jLabel12)
                             .addComponent(jLabel13)
-                            .addComponent(jLabel14)
-                            .addComponent(jLabel15))
-                        .addContainerGap(12, Short.MAX_VALUE))))
+                            .addComponent(jLabel14))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                        .addComponent(kButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(kButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         kGradientPanel1Layout.setVerticalGroup(
             kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -238,41 +281,37 @@ public class CreateBook extends javax.swing.JInternalFrame {
                     .addComponent(jLabel16))
                 .addGap(1, 1, 1)
                 .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbPublicser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jtBookCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(23, 23, 23)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jtBookName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jtBPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel13)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jtYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel14)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel15)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jtStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(kButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(kButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(67, Short.MAX_VALUE))
         );
 
         getContentPane().add(kGradientPanel1, java.awt.BorderLayout.LINE_START);
@@ -295,7 +334,7 @@ public class CreateBook extends javax.swing.JInternalFrame {
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 439, Short.MAX_VALUE)
+            .addGap(0, 450, Short.MAX_VALUE)
         );
 
         jPanel3.add(jPanel4, java.awt.BorderLayout.LINE_START);
@@ -344,15 +383,16 @@ public class CreateBook extends javax.swing.JInternalFrame {
         jTable1.setForeground(new java.awt.Color(255, 255, 255));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Mã sách", "Tên sách", "Giá sách", "Số lượng", "Năm xuất bản", "Trạng thái", "Nhà xuất bản", "Vị trí"
             }
         ));
+        jTable1.setPreferredSize(new java.awt.Dimension(800, 64));
         jScrollPane1.setViewportView(jTable1);
 
         jPanel3.add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -364,9 +404,9 @@ public class CreateBook extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void jtBookCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtBookCodeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_jtBookCodeActionPerformed
 
     private void kButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton2ActionPerformed
         // TODO add your handling code here:
@@ -386,15 +426,14 @@ public class CreateBook extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> cbLocation;
+    private javax.swing.JComboBox<String> cbPublicser;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
@@ -404,16 +443,15 @@ public class CreateBook extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JTextField jQuantity;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
+    private javax.swing.JTextField jtBPrice;
+    private javax.swing.JTextField jtBookCode;
+    private javax.swing.JTextField jtBookName;
+    private javax.swing.JTextField jtStatus;
+    private javax.swing.JTextField jtYear;
     private keeptoo.KButton kButton2;
     private keeptoo.KButton kButton3;
     private keeptoo.KButton kButton5;

@@ -5,6 +5,7 @@
  */
 package dao;
 
+import java.util.List;
 import models.Book;
 
 /**
@@ -12,5 +13,8 @@ import models.Book;
  * @author admin
  */
 public interface IBooksDAO extends GenericDAO<Book>{
-    
+     List<Book> getAll();
+    void delete(Book book);
+    void update(Book book);
+    void save(Book book);
 }
