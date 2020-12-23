@@ -36,6 +36,17 @@ public class Book {
         this.publicserName = publicserName;
     }
 
+    public Book(String booksCode, String booksName, float booksPrice, int quantity, int status, int year, int locationId, int publicserId) {
+        this.booksCode = booksCode;
+        this.booksName = booksName;
+        this.booksPrice = booksPrice;
+        this.quantity = quantity;
+        this.status = status;
+        this.year = year;
+        this.locationId = locationId;
+        this.publicserId = publicserId;
+    }
+
     public String getLocationName() {
         return locationName;
     }

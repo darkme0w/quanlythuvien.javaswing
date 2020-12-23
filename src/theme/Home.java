@@ -525,17 +525,17 @@ public class Home extends javax.swing.JFrame {
  
         
           CreateBook createBook = new CreateBook();
-        boolean flag = false;
-        for (Component component : jPanel4.getComponents()) {
-            if (component instanceof CreateBook) {
-                flag = true;
-                break;
-            }
-        }
-        if (!flag) {
+//        boolean flag = false;
+//        for (Component component : jPanel4.getComponents()) {
+//            if (component instanceof CreateBook) {
+//                flag = true;
+//                break;
+//            }
+//        }
+//        if (!flag) {
             jPanel4.add(createBook);
             createBook.setVisible(true);
-        }
+//        }
 
 
     }//GEN-LAST:event_pnlquanlysachMouseClicked

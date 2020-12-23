@@ -10,6 +10,7 @@ package models;
  * @author admin
  */
 public class Location {
+
     private int locationId;
     private String locationName;
 
@@ -39,8 +40,8 @@ public class Location {
 
     @Override
     public String toString() {
-        return "Location{" + "locationId=" + locationId + ", locationName=" + locationName + '}';
+//        return "Location{" + "locationId=" + locationId + ", locationName=" + locationName + '}';
+        return this.locationName;
     }
-    
-    
+
 }

@@ -42,6 +42,11 @@ public class Publicser {
         return address;
     }
 
+    @Override
+    public String toString() {
+        return this.publicserName;
+    }
+
     public void setAddress(String address) {
         this.address = address;
     }
