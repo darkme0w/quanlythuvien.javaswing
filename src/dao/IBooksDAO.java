@@ -13,7 +13,7 @@ import models.Book;
  * @author admin
  */
 public interface IBooksDAO extends GenericDAO<Book>{
-     List<Book> getAll();
+    List<Book> getAll();
     void delete(Book book);
     void update(Book book);
     void save(Book book);

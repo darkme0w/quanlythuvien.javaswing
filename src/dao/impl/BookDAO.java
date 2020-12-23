@@ -34,7 +34,8 @@ public class BookDAO extends AbstractDAO<Book> implements IBooksDAO{
 
     @Override
     public void save(Book book) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       String sql = "{Call sp_insert_Book (?,?,?,?,?,?,?,?)}";
+       this.insert(sql, book.getBooksCode(),book.getBooksName(),book.getBooksPrice(),book.getQuantity(),book.getStatus(),book.getYear(),book.getLocationId(),book.getPublicserId());
     }
     
 }

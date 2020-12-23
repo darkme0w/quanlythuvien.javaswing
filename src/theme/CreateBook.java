@@ -6,7 +6,11 @@
 package theme;
 
 import dao.IBooksDAO;
+import dao.ILocationDAO;
+import dao.IPublicserDAO;
 import dao.impl.BookDAO;
+import dao.impl.LocationDAO;
+import dao.impl.PublicserDAO;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -14,6 +18,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import models.Book;
+import models.Location;
+import models.Publicser;
 
 /**
  *
@@ -25,13 +31,41 @@ public class CreateBook extends javax.swing.JInternalFrame {
      * Creates new form CreateBook
      */
     private DefaultTableModel dftbBook;
+    //Location
+    private List<Location> listLocation  = new ArrayList<>();
+    private ILocationDAO locationDAO;
+    private Location location;
+    //Publicser 
+    private List<Publicser> listPublicser  = new ArrayList<>();
+    private IPublicserDAO publicserDAO;
+    private Publicser publicser;
+    //Book
     private List<Book> listBook  = new ArrayList<>();
     private IBooksDAO bookDAO;
     private Book books;
     public CreateBook() {
         initComponents();
+        bookDAO = new BookDAO();
         preapareGUI();
         loadData();
+        loadCBox();
+    }
+    
+    private void loadCBox(){
+        listLocation.removeAll(listLocation);
+        listPublicser.removeAll(listPublicser);
+        locationDAO = new LocationDAO();
+        publicserDAO = new PublicserDAO();
+        listPublicser = publicserDAO.getAll();
+        listLocation = locationDAO.getAll();
+        for (Location location1 : listLocation) {
+            cbLocation.addItem(location1.getLocationName());
+        }   
+        for (Publicser publicser1 : listPublicser) {
+           cbPublicser.addItem(publicser1.getPublicserName());
+        }
+        
+        
     }
 
     private void preapareGUI(){
@@ -47,10 +81,10 @@ public class CreateBook extends javax.swing.JInternalFrame {
     }
     
     private void loadData(){
-        bookDAO = new BookDAO();
+        
         listBook = bookDAO.getAll();
         Vector v;
-        
+      
         
         for (Book book : listBook) {
             v = new Vector();
@@ -139,8 +173,9 @@ public class CreateBook extends javax.swing.JInternalFrame {
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jComboBox3 = new javax.swing.JComboBox<>();
-        kButton5 = new keeptoo.KButton();
-        kButton6 = new keeptoo.KButton();
+        btnRefesh = new keeptoo.KButton();
+        btnDelete = new keeptoo.KButton();
+        btnSearch = new keeptoo.KButton();
         jTextField1 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -150,7 +185,7 @@ public class CreateBook extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
-        setPreferredSize(new java.awt.Dimension(800, 600));
+        setPreferredSize(new java.awt.Dimension(1200, 650));
         setVisible(true);
 
         kGradientPanel1.setkBorderRadius(0);
@@ -220,14 +255,22 @@ public class CreateBook extends javax.swing.JInternalFrame {
         jtStatus.setCaretColor(new java.awt.Color(204, 0, 255));
         jtStatus.setBackground(new java.awt.Color(0,0,0,0));
 
-        cbLocation.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbLocation.setPreferredSize(new java.awt.Dimension(100, 25));
+        cbLocation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbLocationActionPerformed(evt);
+            }
+        });
 
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
         jLabel16.setText("Nhà xuất bản");
 
-        cbPublicser.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbPublicser.setPreferredSize(new java.awt.Dimension(100, 25));
+        cbPublicser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbPublicserActionPerformed(evt);
+            }
+        });
 
         kButton2.setText("Thêm");
         kButton2.setkBorderRadius(40);
@@ -270,6 +313,7 @@ public class CreateBook extends javax.swing.JInternalFrame {
             .addGroup(kGradientPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cbPublicser, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jtBookName)
                     .addComponent(jtBPrice)
                     .addComponent(jQuantity)
@@ -278,27 +322,20 @@ public class CreateBook extends javax.swing.JInternalFrame {
                     .addComponent(jtBookCode)
                     .addGroup(kGradientPanel1Layout.createSequentialGroup()
                         .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8))
-                        .addGap(25, 25, 25)
-                        .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel16)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(cbPublicser, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                        .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
                             .addComponent(jLabel9)
                             .addComponent(jLabel10)
                             .addComponent(jLabel11)
                             .addComponent(jLabel12)
                             .addComponent(jLabel13)
-                            .addComponent(jLabel14))
+                            .addComponent(jLabel14)
+                            .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                                .addComponent(kButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(kButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel16))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                        .addComponent(kButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(kButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(cbLocation, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         kGradientPanel1Layout.setVerticalGroup(
@@ -307,42 +344,42 @@ public class CreateBook extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel16))
-                .addGap(1, 1, 1)
-                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbPublicser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel8)
+                .addGap(5, 5, 5)
+                .addComponent(cbLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel16)
+                .addGap(18, 18, 18)
+                .addComponent(cbPublicser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jtBookCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23)
+                .addGap(20, 20, 20)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jtBookName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel11)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addComponent(jtBPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel12)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel13)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jtYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel14)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(12, 12, 12)
                 .addComponent(jtStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(kButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(kButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addGap(23, 23, 23))
         );
 
         getContentPane().add(kGradientPanel1, java.awt.BorderLayout.LINE_START);
@@ -365,7 +402,7 @@ public class CreateBook extends javax.swing.JInternalFrame {
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 450, Short.MAX_VALUE)
+            .addGap(0, 542, Short.MAX_VALUE)
         );
 
         jPanel3.add(jPanel4, java.awt.BorderLayout.LINE_START);
@@ -374,37 +411,57 @@ public class CreateBook extends javax.swing.JInternalFrame {
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sắp xếp", "A-Z", "Z-A" }));
         jComboBox3.setPreferredSize(new java.awt.Dimension(80, 30));
+        jComboBox3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox3ActionPerformed(evt);
+            }
+        });
         jPanel5.add(jComboBox3);
 
-        kButton5.setText("Xóa");
-        kButton5.setkBorderRadius(0);
-        kButton5.setkEndColor(new java.awt.Color(51, 153, 0));
-        kButton5.setkHoverEndColor(new java.awt.Color(204, 0, 204));
-        kButton5.setkHoverForeGround(new java.awt.Color(255, 204, 255));
-        kButton5.setkHoverStartColor(new java.awt.Color(0, 204, 204));
-        kButton5.setkStartColor(new java.awt.Color(0, 204, 204));
-        kButton5.setPreferredSize(new java.awt.Dimension(80, 30));
-        kButton5.addActionListener(new java.awt.event.ActionListener() {
+        btnRefesh.setText("Tải lại");
+        btnRefesh.setkBorderRadius(0);
+        btnRefesh.setkEndColor(new java.awt.Color(51, 153, 0));
+        btnRefesh.setkHoverEndColor(new java.awt.Color(204, 0, 204));
+        btnRefesh.setkHoverForeGround(new java.awt.Color(255, 204, 255));
+        btnRefesh.setkHoverStartColor(new java.awt.Color(0, 204, 204));
+        btnRefesh.setkStartColor(new java.awt.Color(0, 204, 204));
+        btnRefesh.setPreferredSize(new java.awt.Dimension(80, 30));
+        btnRefesh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                kButton5ActionPerformed(evt);
+                btnRefeshActionPerformed(evt);
             }
         });
-        jPanel5.add(kButton5);
+        jPanel5.add(btnRefesh);
 
-        kButton6.setText("Tìm kiếm");
-        kButton6.setkBorderRadius(0);
-        kButton6.setkEndColor(new java.awt.Color(51, 153, 0));
-        kButton6.setkHoverEndColor(new java.awt.Color(204, 0, 204));
-        kButton6.setkHoverForeGround(new java.awt.Color(255, 204, 255));
-        kButton6.setkHoverStartColor(new java.awt.Color(0, 204, 204));
-        kButton6.setkStartColor(new java.awt.Color(0, 204, 204));
-        kButton6.setPreferredSize(new java.awt.Dimension(80, 30));
-        kButton6.addActionListener(new java.awt.event.ActionListener() {
+        btnDelete.setText("Xóa");
+        btnDelete.setkBorderRadius(0);
+        btnDelete.setkEndColor(new java.awt.Color(51, 153, 0));
+        btnDelete.setkHoverEndColor(new java.awt.Color(204, 0, 204));
+        btnDelete.setkHoverForeGround(new java.awt.Color(255, 204, 255));
+        btnDelete.setkHoverStartColor(new java.awt.Color(0, 204, 204));
+        btnDelete.setkStartColor(new java.awt.Color(0, 204, 204));
+        btnDelete.setPreferredSize(new java.awt.Dimension(80, 30));
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                kButton6ActionPerformed(evt);
+                btnDeleteActionPerformed(evt);
             }
         });
-        jPanel5.add(kButton6);
+        jPanel5.add(btnDelete);
+
+        btnSearch.setText("Tìm kiếm");
+        btnSearch.setkBorderRadius(0);
+        btnSearch.setkEndColor(new java.awt.Color(51, 153, 0));
+        btnSearch.setkHoverEndColor(new java.awt.Color(204, 0, 204));
+        btnSearch.setkHoverForeGround(new java.awt.Color(255, 204, 255));
+        btnSearch.setkHoverStartColor(new java.awt.Color(0, 204, 204));
+        btnSearch.setkStartColor(new java.awt.Color(0, 204, 204));
+        btnSearch.setPreferredSize(new java.awt.Dimension(80, 30));
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
+        jPanel5.add(btnSearch);
 
         jTextField1.setPreferredSize(new java.awt.Dimension(200, 30));
         jPanel5.add(jTextField1);
@@ -440,23 +497,44 @@ public class CreateBook extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jtBookCodeActionPerformed
 
     private void kButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton2ActionPerformed
-        // TODO add your handling code here:
+        books = new Book(jtBookCode.getText(), title, TOP_ALIGNMENT, SOMEBITS, WIDTH, ERROR, title, title);
+        bookDAO.save(books);
     }//GEN-LAST:event_kButton2ActionPerformed
 
     private void kButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_kButton3ActionPerformed
 
-    private void kButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton5ActionPerformed
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_kButton5ActionPerformed
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
-    private void kButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton6ActionPerformed
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_kButton6ActionPerformed
+    }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void cbLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbLocationActionPerformed
+        
+    }//GEN-LAST:event_cbLocationActionPerformed
+
+    private void btnRefeshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefeshActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRefeshActionPerformed
+
+    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox3ActionPerformed
+
+    private void cbPublicserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbPublicserActionPerformed
+
+       
+    }//GEN-LAST:event_cbPublicserActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private keeptoo.KButton btnDelete;
+    private keeptoo.KButton btnRefesh;
+    private keeptoo.KButton btnSearch;
     private javax.swing.JComboBox<String> cbLocation;
     private javax.swing.JComboBox<String> cbPublicser;
     private javax.swing.JComboBox<String> jComboBox3;
@@ -485,8 +563,6 @@ public class CreateBook extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jtYear;
     private keeptoo.KButton kButton2;
     private keeptoo.KButton kButton3;
-    private keeptoo.KButton kButton5;
-    private keeptoo.KButton kButton6;
     private keeptoo.KGradientPanel kGradientPanel1;
     // End of variables declaration//GEN-END:variables
 }

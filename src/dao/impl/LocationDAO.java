@@ -18,7 +18,7 @@ public class LocationDAO extends AbstractDAO<Location> implements ILocationDAO {
 
     @Override
     public List<Location> getAll() {
-        String sql = "";
+        String sql = "{Call sp_getAll_Location}";
         return query(sql, new LocationMapper());
     }
 

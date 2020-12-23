@@ -5,6 +5,7 @@
  */
 package dao;
 
+import java.util.List;
 import models.Publicser;
 
 /**
@@ -12,5 +13,8 @@ import models.Publicser;
  * @author admin
  */
 public interface IPublicserDAO extends GenericDAO<Publicser>{
-    
+    List<Publicser> getAll();
+    void delete(Publicser publicser);
+    void update(Publicser publicser);
+    void save(Publicser publicser);
 }

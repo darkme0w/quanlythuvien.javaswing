@@ -5,6 +5,8 @@
  */
 package theme;
 
+import java.awt.Component;
+
 /**
  *
  * @author admin
@@ -520,10 +522,20 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel22MouseClicked
 
     private void pnlquanlysachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlquanlysachMouseClicked
-        CreateBook createBook = new CreateBook();
-
-        jPanel4.add(createBook);
-        createBook.setVisible(true);
+ 
+        
+          CreateBook createBook = new CreateBook();
+        boolean flag = false;
+        for (Component component : jPanel4.getComponents()) {
+            if (component instanceof CreateBook) {
+                flag = true;
+                break;
+            }
+        }
+        if (!flag) {
+            jPanel4.add(createBook);
+            createBook.setVisible(true);
+        }
 
 
     }//GEN-LAST:event_pnlquanlysachMouseClicked
