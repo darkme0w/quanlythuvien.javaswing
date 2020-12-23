@@ -10,6 +10,8 @@ import dao.impl.BookDAO;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import models.Book;
 
@@ -25,7 +27,7 @@ public class CreateBook extends javax.swing.JInternalFrame {
     private DefaultTableModel dftbBook;
     private List<Book> listBook  = new ArrayList<>();
     private IBooksDAO bookDAO;
-    private Book book;
+    private Book books;
     public CreateBook() {
         initComponents();
         preapareGUI();
@@ -64,14 +66,43 @@ public class CreateBook extends javax.swing.JInternalFrame {
             }
             v.add(book.getPublicserName());
             v.add(book.getLocationName());
+            
+            jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent lse) {
+               int pos = jTable1.getSelectedRow();
+               if(pos <0){
+                   pos=0;
+               }
+               
+               books = listBook.get(pos);
+               setData(book);
+               
+            }
+        });
+            
             dftbBook.addRow(v);
         }
         
-        listBook.forEach(s->System.out.println(s.toString()));
+//        listBook.forEach(s->System.out.println(s.toString()));
         
         jTable1.setModel(dftbBook);
     }
     
+    
+    private void setData(Book book){
+        jtBookCode.setText(book.getBooksCode());
+        jtBookName.setText(book.getBooksName());
+        String price = String.valueOf(book.getBooksPrice());
+        String quantity = String.valueOf(book.getQuantity());
+        String year = String.valueOf(book.getYear());
+        String status = String.valueOf(book.getStatus());
+        jtBPrice.setText(price);
+        jQuantity.setText(quantity);
+        jtYear.setText(year);
+        jtStatus.setText(status);
+        
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
