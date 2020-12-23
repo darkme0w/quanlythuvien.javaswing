@@ -3,15 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/C:/Users/phamh/OneDrive/Documents/NetBeansProjects/quanlythuvien.javaswing/src/theme/Home.java</file>
-=======
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/quanlythuvien.javaswing/src/theme/ManagerAuthor.java</file>
             <file>file:/C:/Users/admin/Documents/NetBeansProjects/quanlythuvien.javaswing/src/theme/ManagerCategory.java</file>
             <file>file:/C:/Users/admin/Documents/NetBeansProjects/quanlythuvien.javaswing/src/theme/CreateBook.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/quanlythuvien.javaswing/src/theme/MangagerPublicser.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/quanlythuvien.javaswing/src/theme/Home.java</file>
->>>>>>> 637c72a4e3f242b2d33d59c57abafc2ab28701cc
+            <file>file:/C:/Users/admin/Documents/NetBeansProjects/quanlythuvien.javaswing/src/dao/impl/CategoryDAO.java</file>
+            <file>file:/C:/Users/admin/Documents/NetBeansProjects/quanlythuvien.javaswing/src/dao/impl/BookDAO.java</file>
         </group>
     </open-files>
 </project-private>

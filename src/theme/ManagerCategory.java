@@ -5,6 +5,16 @@
  */
 package theme;
 
+import dao.ICategoryDAO;
+import dao.impl.CategoryDAO;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+import models.Category;
+
 /**
  *
  * @author admin
@@ -14,8 +24,72 @@ public class ManagerCategory extends javax.swing.JInternalFrame {
     /**
      * Creates new form ManagerCategory
      */
+    private DefaultTableModel dtfCategory;
+    private List<Category> listCategory = new ArrayList<Category>();
+    private ICategoryDAO categoryDAO;
+    private Category category;
+
     public ManagerCategory() {
         initComponents();
+             categoryDAO = new CategoryDAO();
+        preapareGUI();
+        loadData();
+    }
+
+    private void preapareGUI() {
+        dtfCategory = new DefaultTableModel();
+        dtfCategory.addColumn("Mã danh mục");
+        dtfCategory.addColumn("Tên danh mục");
+    }
+
+    private void loadData() {
+        listCategory.removeAll(listCategory);
+        categoryDAO = new CategoryDAO();
+        listCategory = categoryDAO.getAll();
+        Vector v;
+
+        for (Category category : listCategory) {
+            v = new Vector();
+            v.add(category.getCategoryId());
+            v.add(category.getCategoryName());
+
+            dtfCategory.addRow(v);
+        }
+        jTable1.setModel(dtfCategory);
+
+        if (listCategory.size() > 0) {
+            jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+                @Override
+                public void valueChanged(ListSelectionEvent e) {
+                    int pos = jTable1.getSelectedRow();
+                    if (pos < 0) {
+                        pos = 0;
+                    }
+                    category = listCategory.get(pos);
+                    lblid.setText(String.valueOf(category.getCategoryId()));
+                    txtname.setText(category.getCategoryName());
+
+                }
+
+            });
+        }
+
+    }
+
+    private void loadChange() {
+        listCategory.removeAll(listCategory);
+   
+        listCategory = categoryDAO.getAll();
+        Vector v;
+
+        for (Category category : listCategory) {
+            v = new Vector();
+            v.add(category.getCategoryId());
+            v.add(category.getCategoryName());
+
+            dtfCategory.addRow(v);
+        }
+        jTable1.setModel(dtfCategory);
     }
 
     /**
@@ -29,14 +103,17 @@ public class ManagerCategory extends javax.swing.JInternalFrame {
 
         kGradientPanel2 = new keeptoo.KGradientPanel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        jlabel7 = new javax.swing.JLabel();
+        txtname = new javax.swing.JTextField();
         kButton2 = new keeptoo.KButton();
         kButton3 = new keeptoo.KButton();
         kButton6 = new keeptoo.KButton();
         jTextField3 = new javax.swing.JTextField();
         jComboBox3 = new javax.swing.JComboBox<>();
-        kButton5 = new keeptoo.KButton();
+        btndelete = new keeptoo.KButton();
+        btndelete1 = new keeptoo.KButton();
+        jlabel8 = new javax.swing.JLabel();
+        lblid = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
@@ -48,7 +125,7 @@ public class ManagerCategory extends javax.swing.JInternalFrame {
         kGradientPanel2.setkBorderRadius(0);
         kGradientPanel2.setkEndColor(new java.awt.Color(51, 153, 0));
         kGradientPanel2.setkStartColor(new java.awt.Color(0, 204, 204));
-        kGradientPanel2.setPreferredSize(new java.awt.Dimension(590, 150));
+        kGradientPanel2.setPreferredSize(new java.awt.Dimension(590, 180));
 
         jLabel6.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
@@ -56,16 +133,16 @@ public class ManagerCategory extends javax.swing.JInternalFrame {
         jLabel6.setText("Quản lý danh mục");
         jLabel6.setPreferredSize(new java.awt.Dimension(215, 29));
 
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Tên tác giả");
+        jlabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jlabel7.setText("Tên danh mục");
 
-        jTextField2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
-        jTextField2.setCaretColor(new java.awt.Color(204, 0, 255));
-        jTextField2.setBackground(new java.awt.Color(0,0,0,0));
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        txtname.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtname.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        txtname.setCaretColor(new java.awt.Color(204, 0, 255));
+        txtname.setBackground(new java.awt.Color(0,0,0,0));
+        txtname.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                txtnameActionPerformed(evt);
             }
         });
 
@@ -126,19 +203,39 @@ public class ManagerCategory extends javax.swing.JInternalFrame {
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sắp xếp", "A-Z", "Z-A" }));
         jComboBox3.setPreferredSize(new java.awt.Dimension(80, 30));
 
-        kButton5.setText("Xóa");
-        kButton5.setkBorderRadius(0);
-        kButton5.setkEndColor(new java.awt.Color(51, 153, 0));
-        kButton5.setkHoverEndColor(new java.awt.Color(204, 0, 204));
-        kButton5.setkHoverForeGround(new java.awt.Color(255, 204, 255));
-        kButton5.setkHoverStartColor(new java.awt.Color(0, 204, 204));
-        kButton5.setkStartColor(new java.awt.Color(0, 204, 204));
-        kButton5.setPreferredSize(new java.awt.Dimension(80, 30));
-        kButton5.addActionListener(new java.awt.event.ActionListener() {
+        btndelete.setText("Xóa");
+        btndelete.setkBorderRadius(0);
+        btndelete.setkEndColor(new java.awt.Color(51, 153, 0));
+        btndelete.setkHoverEndColor(new java.awt.Color(204, 0, 204));
+        btndelete.setkHoverForeGround(new java.awt.Color(255, 204, 255));
+        btndelete.setkHoverStartColor(new java.awt.Color(0, 204, 204));
+        btndelete.setkStartColor(new java.awt.Color(0, 204, 204));
+        btndelete.setPreferredSize(new java.awt.Dimension(80, 30));
+        btndelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                kButton5ActionPerformed(evt);
+                btndeleteActionPerformed(evt);
             }
         });
+
+        btndelete1.setText("Tải lại");
+        btndelete1.setkBorderRadius(0);
+        btndelete1.setkEndColor(new java.awt.Color(51, 153, 0));
+        btndelete1.setkHoverEndColor(new java.awt.Color(204, 0, 204));
+        btndelete1.setkHoverForeGround(new java.awt.Color(255, 204, 255));
+        btndelete1.setkHoverStartColor(new java.awt.Color(0, 204, 204));
+        btndelete1.setkStartColor(new java.awt.Color(0, 204, 204));
+        btndelete1.setPreferredSize(new java.awt.Dimension(80, 30));
+        btndelete1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btndelete1ActionPerformed(evt);
+            }
+        });
+
+        jlabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jlabel8.setText("Mã danh mục :");
+
+        lblid.setForeground(new java.awt.Color(255, 255, 255));
+        lblid.setText("...");
 
         javax.swing.GroupLayout kGradientPanel2Layout = new javax.swing.GroupLayout(kGradientPanel2);
         kGradientPanel2.setLayout(kGradientPanel2Layout);
@@ -148,12 +245,14 @@ public class ManagerCategory extends javax.swing.JInternalFrame {
                 .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(kGradientPanel2Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel9)
+                        .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jlabel7)
+                            .addComponent(jlabel8))
                         .addGap(18, 18, 18)
                         .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(kGradientPanel2Layout.createSequentialGroup()
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addComponent(lblid)
+                                .addGap(218, 218, 218)
                                 .addComponent(kButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -164,7 +263,10 @@ public class ManagerCategory extends javax.swing.JInternalFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(kButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(btndelete, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btndelete1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtname, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(kGradientPanel2Layout.createSequentialGroup()
                         .addGap(179, 179, 179)
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -177,16 +279,21 @@ public class ManagerCategory extends javax.swing.JInternalFrame {
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(11, 11, 11)
                 .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(kButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlabel8)
+                    .addComponent(lblid))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlabel7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(kButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(kButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(kButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btndelete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btndelete1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -210,16 +317,23 @@ public class ManagerCategory extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void txtnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_txtnameActionPerformed
 
     private void kButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton2ActionPerformed
-        // TODO add your handling code here:
+        category = new Category();
+        category.setCategoryName(txtname.getText());
+        categoryDAO.save(category);
     }//GEN-LAST:event_kButton2ActionPerformed
 
     private void kButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton3ActionPerformed
-        // TODO add your handling code here:
+
+        category = new Category();
+        category.setCategoryName(txtname.getText());
+
+        categoryDAO.update(category);
+        
     }//GEN-LAST:event_kButton3ActionPerformed
 
     private void kButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton6ActionPerformed
@@ -230,23 +344,36 @@ public class ManagerCategory extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField3ActionPerformed
 
-    private void kButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_kButton5ActionPerformed
+    private void btndeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeleteActionPerformed
+        categoryDAO.delete(category);
+//        loadChange();
+
+    }//GEN-LAST:event_btndeleteActionPerformed
+
+    private void btndelete1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndelete1ActionPerformed
+        if (dtfCategory.getRowCount() > 0) {
+            for (int i = dtfCategory.getRowCount() - 1; i > -1; i--) {
+                dtfCategory.removeRow(i);
+            }
+        }
+    }//GEN-LAST:event_btndelete1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private keeptoo.KButton btndelete;
+    private keeptoo.KButton btndelete1;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
+    private javax.swing.JLabel jlabel7;
+    private javax.swing.JLabel jlabel8;
     private keeptoo.KButton kButton2;
     private keeptoo.KButton kButton3;
-    private keeptoo.KButton kButton5;
     private keeptoo.KButton kButton6;
     private keeptoo.KGradientPanel kGradientPanel2;
+    private javax.swing.JLabel lblid;
+    private javax.swing.JTextField txtname;
     // End of variables declaration//GEN-END:variables
 }

@@ -133,7 +133,7 @@ public class AbstractDAO<T> implements GenericDAO<T> {
             csmt = conn.prepareCall(sql);
             setParameter(csmt, parameters);
             csmt.executeUpdate();
-//            conn.commit();
+            conn.commit();
         } catch (SQLException ex) {
             if (conn != null) {
                 try {
