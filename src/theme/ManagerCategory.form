@@ -62,7 +62,7 @@
                                   <EmptySpace min="-2" pref="218" max="-2" attributes="0"/>
                                   <Component id="kButton6" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jTextField3" min="-2" pref="114" max="-2" attributes="0"/>
+                                  <Component id="txtsearch" min="-2" pref="114" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="kButton2" min="-2" pref="130" max="-2" attributes="0"/>
@@ -95,7 +95,7 @@
                   <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="kButton6" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
-                      <Component id="jTextField3" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtsearch" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jlabel8" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="lblid" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -247,7 +247,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="kButton6ActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField3">
+        <Component class="javax.swing.JTextField" name="txtsearch">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="0"/>
@@ -264,10 +264,11 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField3ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtsearchActionPerformed"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtsearchKeyReleased"/>
           </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jTextField3.setBackground(new java.awt.Color(0,0,0,0));"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="txtsearch.setBackground(new java.awt.Color(0,0,0,0));"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JComboBox" name="jComboBox3">

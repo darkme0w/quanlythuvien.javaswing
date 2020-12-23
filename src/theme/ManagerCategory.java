@@ -5,6 +5,8 @@
  */
 package theme;
 
+import java.lang.Object; 
+import javax.swing.RowFilter;
 import dao.ICategoryDAO;
 import dao.impl.CategoryDAO;
 import java.util.ArrayList;
@@ -13,6 +15,7 @@ import java.util.Vector;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import models.Category;
 
 /**
@@ -55,6 +58,7 @@ public class ManagerCategory extends javax.swing.JInternalFrame {
 
             dtfCategory.addRow(v);
         }
+
         jTable1.setModel(dtfCategory);
 
         if (listCategory.size() > 0) {
@@ -68,7 +72,6 @@ public class ManagerCategory extends javax.swing.JInternalFrame {
                     category = listCategory.get(pos);
                     lblid.setText(String.valueOf(category.getCategoryId()));
                     txtname.setText(category.getCategoryName());
-
                 }
 
             });
@@ -76,20 +79,18 @@ public class ManagerCategory extends javax.swing.JInternalFrame {
 
     }
 
-    private void loadChange() {
-        listCategory.removeAll(listCategory);
+    private void search(String query){
+        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(dtfCategory);
+        jTable1.setRowSorter(tr);
+        tr.setRowFilter(RowFilter.regexFilter(query));
+    }
 
-        listCategory = categoryDAO.getAll();
-        Vector v;
-
-        for (Category category : listCategory) {
-            v = new Vector();
-            v.add(category.getCategoryId());
-            v.add(category.getCategoryName());
-
-            dtfCategory.addRow(v);
+    public void clearTable() {
+        dtfCategory = new DefaultTableModel();
+        int count = dtfCategory.getRowCount();
+        for (int i = count - 1; i >= 0; i--) {
+            dtfCategory.removeRow(i);
         }
-        jTable1.setModel(dtfCategory);
     }
 
     /**
@@ -108,7 +109,7 @@ public class ManagerCategory extends javax.swing.JInternalFrame {
         kButton2 = new keeptoo.KButton();
         update = new keeptoo.KButton();
         kButton6 = new keeptoo.KButton();
-        jTextField3 = new javax.swing.JTextField();
+        txtsearch = new javax.swing.JTextField();
         jComboBox3 = new javax.swing.JComboBox<>();
         btndelete = new keeptoo.KButton();
         btndelete1 = new keeptoo.KButton();
@@ -190,13 +191,18 @@ public class ManagerCategory extends javax.swing.JInternalFrame {
             }
         });
 
-        jTextField3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField3.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
-        jTextField3.setCaretColor(new java.awt.Color(204, 0, 255));
-        jTextField3.setBackground(new java.awt.Color(0,0,0,0));
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        txtsearch.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtsearch.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        txtsearch.setCaretColor(new java.awt.Color(204, 0, 255));
+        txtsearch.setBackground(new java.awt.Color(0,0,0,0));
+        txtsearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                txtsearchActionPerformed(evt);
+            }
+        });
+        txtsearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtsearchKeyReleased(evt);
             }
         });
 
@@ -255,7 +261,7 @@ public class ManagerCategory extends javax.swing.JInternalFrame {
                                 .addGap(218, 218, 218)
                                 .addComponent(kButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtsearch, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(kGradientPanel2Layout.createSequentialGroup()
                                 .addComponent(kButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -280,7 +286,7 @@ public class ManagerCategory extends javax.swing.JInternalFrame {
                 .addGap(11, 11, 11)
                 .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(kButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtsearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jlabel8)
                     .addComponent(lblid))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
@@ -325,38 +331,49 @@ public class ManagerCategory extends javax.swing.JInternalFrame {
         category = new Category();
         category.setCategoryName(txtname.getText());
         categoryDAO.save(category);
+        clearTable();
+        preapareGUI();
+        loadData();
     }//GEN-LAST:event_kButton2ActionPerformed
 
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
         category = new Category();
-        int ok = new Integer(lblid.getText());
+        int getid = new Integer(lblid.getText());
         category.setCategoryName(txtname.getText());
-        category.setCategoryId(ok);
+        category.setCategoryId(getid);
         categoryDAO.update(category);
-
+        clearTable();
+        preapareGUI();
+        loadData();
     }//GEN-LAST:event_updateActionPerformed
 
     private void kButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton6ActionPerformed
-        // TODO add your handling code here:
+        clearTable();
+        preapareGUI();
+       
     }//GEN-LAST:event_kButton6ActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void txtsearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtsearchActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_txtsearchActionPerformed
 
     private void btndeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeleteActionPerformed
         categoryDAO.delete(category);
-//        loadChange();
-
+        clearTable();
+        preapareGUI();
+        loadData();
     }//GEN-LAST:event_btndeleteActionPerformed
 
     private void btndelete1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndelete1ActionPerformed
-        if (dtfCategory.getRowCount() > 0) {
-            for (int i = dtfCategory.getRowCount() - 1; i > -1; i--) {
-                dtfCategory.removeRow(i);
-            }
-        }
+        clearTable();
+        preapareGUI();
+        loadData();
     }//GEN-LAST:event_btndelete1ActionPerformed
+
+    private void txtsearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtsearchKeyReleased
+        String query = txtsearch.getText();
+        search(query);
+    }//GEN-LAST:event_txtsearchKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -366,7 +383,6 @@ public class ManagerCategory extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JLabel jlabel7;
     private javax.swing.JLabel jlabel8;
     private keeptoo.KButton kButton2;
@@ -374,6 +390,7 @@ public class ManagerCategory extends javax.swing.JInternalFrame {
     private keeptoo.KGradientPanel kGradientPanel2;
     private javax.swing.JLabel lblid;
     private javax.swing.JTextField txtname;
+    private javax.swing.JTextField txtsearch;
     private keeptoo.KButton update;
     // End of variables declaration//GEN-END:variables
 }
