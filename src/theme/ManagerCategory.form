@@ -67,7 +67,7 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="kButton2" min="-2" pref="130" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="kButton3" min="-2" pref="130" max="-2" attributes="0"/>
+                                  <Component id="update" min="-2" pref="130" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="jComboBox3" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -107,7 +107,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="kButton2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="kButton3" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="update" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jComboBox3" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btndelete" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btndelete1" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -192,7 +192,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="kButton2ActionPerformed"/>
           </Events>
         </Component>
-        <Component class="keeptoo.KButton" name="kButton3">
+        <Component class="keeptoo.KButton" name="update">
           <Properties>
             <Property name="text" type="java.lang.String" value="S&#x1eed;a"/>
             <Property name="kBorderRadius" type="int" value="40"/>
@@ -217,7 +217,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="kButton3ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="updateActionPerformed"/>
           </Events>
         </Component>
         <Component class="keeptoo.KButton" name="kButton6">

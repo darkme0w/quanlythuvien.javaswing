@@ -31,7 +31,7 @@ public class ManagerCategory extends javax.swing.JInternalFrame {
 
     public ManagerCategory() {
         initComponents();
-             categoryDAO = new CategoryDAO();
+        categoryDAO = new CategoryDAO();
         preapareGUI();
         loadData();
     }
@@ -78,7 +78,7 @@ public class ManagerCategory extends javax.swing.JInternalFrame {
 
     private void loadChange() {
         listCategory.removeAll(listCategory);
-   
+
         listCategory = categoryDAO.getAll();
         Vector v;
 
@@ -106,7 +106,7 @@ public class ManagerCategory extends javax.swing.JInternalFrame {
         jlabel7 = new javax.swing.JLabel();
         txtname = new javax.swing.JTextField();
         kButton2 = new keeptoo.KButton();
-        kButton3 = new keeptoo.KButton();
+        update = new keeptoo.KButton();
         kButton6 = new keeptoo.KButton();
         jTextField3 = new javax.swing.JTextField();
         jComboBox3 = new javax.swing.JComboBox<>();
@@ -161,18 +161,18 @@ public class ManagerCategory extends javax.swing.JInternalFrame {
             }
         });
 
-        kButton3.setText("Sửa");
-        kButton3.setkBorderRadius(40);
-        kButton3.setkEndColor(new java.awt.Color(0, 204, 204));
-        kButton3.setkFillButton(false);
-        kButton3.setkHoverEndColor(new java.awt.Color(204, 0, 204));
-        kButton3.setkHoverForeGround(new java.awt.Color(255, 204, 255));
-        kButton3.setkHoverStartColor(new java.awt.Color(0, 204, 204));
-        kButton3.setkStartColor(new java.awt.Color(255, 255, 255));
-        kButton3.setPreferredSize(new java.awt.Dimension(80, 30));
-        kButton3.addActionListener(new java.awt.event.ActionListener() {
+        update.setText("Sửa");
+        update.setkBorderRadius(40);
+        update.setkEndColor(new java.awt.Color(0, 204, 204));
+        update.setkFillButton(false);
+        update.setkHoverEndColor(new java.awt.Color(204, 0, 204));
+        update.setkHoverForeGround(new java.awt.Color(255, 204, 255));
+        update.setkHoverStartColor(new java.awt.Color(0, 204, 204));
+        update.setkStartColor(new java.awt.Color(255, 255, 255));
+        update.setPreferredSize(new java.awt.Dimension(80, 30));
+        update.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                kButton3ActionPerformed(evt);
+                updateActionPerformed(evt);
             }
         });
 
@@ -259,7 +259,7 @@ public class ManagerCategory extends javax.swing.JInternalFrame {
                             .addGroup(kGradientPanel2Layout.createSequentialGroup()
                                 .addComponent(kButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(kButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(update, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -290,7 +290,7 @@ public class ManagerCategory extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(kButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(kButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(update, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btndelete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btndelete1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -327,14 +327,14 @@ public class ManagerCategory extends javax.swing.JInternalFrame {
         categoryDAO.save(category);
     }//GEN-LAST:event_kButton2ActionPerformed
 
-    private void kButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton3ActionPerformed
-
+    private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
         category = new Category();
+        int ok = new Integer(lblid.getText());
         category.setCategoryName(txtname.getText());
-
+        category.setCategoryId(ok);
         categoryDAO.update(category);
-        
-    }//GEN-LAST:event_kButton3ActionPerformed
+
+    }//GEN-LAST:event_updateActionPerformed
 
     private void kButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton6ActionPerformed
         // TODO add your handling code here:
@@ -370,10 +370,10 @@ public class ManagerCategory extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jlabel7;
     private javax.swing.JLabel jlabel8;
     private keeptoo.KButton kButton2;
-    private keeptoo.KButton kButton3;
     private keeptoo.KButton kButton6;
     private keeptoo.KGradientPanel kGradientPanel2;
     private javax.swing.JLabel lblid;
     private javax.swing.JTextField txtname;
+    private keeptoo.KButton update;
     // End of variables declaration//GEN-END:variables
 }
