@@ -12,9 +12,19 @@ import models.Category;
  *
  * @author admin
  */
-public interface ICategoryDAO extends GenericDAO<Category>{
-     List<Category> getAll();
+public interface ICategoryDAO extends GenericDAO<Category> {
+
+    List<Category> getAll();
+
     void delete(Category category);
+
     void update(Category category);
+
     void save(Category category);
+
+    List<Category> search(Category category);
+
+    List<Category> sortAsc();
+
+    List<Category> sortDesc();
 }
