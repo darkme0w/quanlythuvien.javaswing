@@ -22,8 +22,6 @@ public interface ICategoryDAO extends GenericDAO<Category> {
 
     void save(Category category);
 
-    List<Category> search(Category category);
-
     List<Category> sortAsc();
 
     List<Category> sortDesc();

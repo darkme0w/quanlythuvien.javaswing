@@ -17,4 +17,6 @@ public interface IAuthorDAO extends GenericDAO<Author>{
     void save(Author author);
     void update(Author author);
     void delete(Author author);
+    List<Author> sortAsc();
+    List<Author> sortDesc();
 }

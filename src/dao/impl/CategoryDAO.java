@@ -41,11 +41,6 @@ public class CategoryDAO extends AbstractDAO<Category> implements ICategoryDAO {
         this.insert(sql, category.getCategoryName());
     }
 
-    @Override
-    public List<Category> search(Category category) {
-        String sql = "{Call search_Category_Byname (?)}";
-        return query(sql, new CategoryMapper(), category.getCategoryName());
-    }
 
     @Override
     public List<Category> sortAsc() {

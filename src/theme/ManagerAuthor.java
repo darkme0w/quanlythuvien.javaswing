@@ -5,17 +5,162 @@
  */
 package theme;
 
+import dao.IAuthorDAO;
+
+import dao.impl.AuthorDAO;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+import javax.swing.RowFilter;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import models.Author;
+
+
 /**
  *
  * @author admin
  */
 public class ManagerAuthor extends javax.swing.JInternalFrame {
 
+    private DefaultTableModel dtfAuthor;
+    private List<Author> listAuthor = new ArrayList<Author>();
+    private IAuthorDAO authorDAO;
+    private Author author;
+
     /**
      * Creates new form ManagerAuthor
      */
     public ManagerAuthor() {
         initComponents();
+        authorDAO = new AuthorDAO();
+        preapareGUI();
+        loadData();
+    }
+
+    private void preapareGUI() {
+        dtfAuthor = new DefaultTableModel();
+        dtfAuthor.addColumn("Mã tác giả");
+        dtfAuthor.addColumn("Tên tác giả");
+    }
+
+    private void loadData() {
+        listAuthor.removeAll(listAuthor);
+        authorDAO = new AuthorDAO();
+        listAuthor = authorDAO.getAll();
+        Vector v;
+
+        for (Author author : listAuthor) {
+            v = new Vector();
+            v.add(author.getAuthorId());
+            v.add(author.getAuthorName());
+
+            dtfAuthor.addRow(v);
+        }
+
+        jTable1.setModel(dtfAuthor);
+
+        if (listAuthor.size() > 0) {
+            jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+                @Override
+                public void valueChanged(ListSelectionEvent e) {
+                    int pos = jTable1.getSelectedRow();
+                    if (pos < 0) {
+                        pos = 0;
+                    }
+                    author = listAuthor.get(pos);
+                    lblid.setText(String.valueOf(author.getAuthorId()));
+                    txttentacgia.setText(author.getAuthorName());
+                }
+
+            });
+        }
+
+    }
+
+    private void sortByASC() {
+        listAuthor.removeAll(listAuthor);
+        authorDAO = new AuthorDAO();
+        listAuthor = authorDAO.sortAsc();
+        Vector v;
+
+        for (Author author : listAuthor) {
+            v = new Vector();
+            v.add(author.getAuthorId());
+            v.add(author.getAuthorName());
+
+            dtfAuthor.addRow(v);
+        }
+
+        jTable1.setModel(dtfAuthor);
+
+        if (listAuthor.size() > 0) {
+            jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+                @Override
+                public void valueChanged(ListSelectionEvent e) {
+                    int pos = jTable1.getSelectedRow();
+                    if (pos < 0) {
+                        pos = 0;
+                    }
+                    author = listAuthor.get(pos);
+                    lblid.setText(String.valueOf(author.getAuthorId()));
+                    txttentacgia.setText(author.getAuthorName());
+                }
+
+            });
+        }
+
+    }
+
+    private void sortByDESC() {
+        listAuthor.removeAll(listAuthor);
+        authorDAO = new AuthorDAO();
+        listAuthor = authorDAO.sortDesc();
+        Vector v;
+
+        for (Author author : listAuthor) {
+            v = new Vector();
+            v.add(author.getAuthorId());
+            v.add(author.getAuthorName());
+
+            dtfAuthor.addRow(v);
+        }
+
+        jTable1.setModel(dtfAuthor);
+
+        if (listAuthor.size() > 0) {
+            jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+                @Override
+                public void valueChanged(ListSelectionEvent e) {
+                    int pos = jTable1.getSelectedRow();
+                    if (pos < 0) {
+                        pos = 0;
+                    }
+                    author = listAuthor.get(pos);
+                    lblid.setText(String.valueOf(author.getAuthorId()));
+                    txttentacgia.setText(author.getAuthorName());
+                }
+
+            });
+        }
+
+    }
+
+    private void clearTable() {
+        dtfAuthor = new DefaultTableModel();
+        int count = dtfAuthor.getRowCount();
+        for (int i = count - 1; i >= 0; i--) {
+            dtfAuthor.removeRow(i);
+        }
+    }
+
+    private void search(String query) {
+        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(dtfAuthor);
+        jTable1.setRowSorter(tr);
+        tr.setRowFilter(RowFilter.regexFilter(query));
     }
 
     /**
@@ -30,13 +175,16 @@ public class ManagerAuthor extends javax.swing.JInternalFrame {
         kGradientPanel2 = new keeptoo.KGradientPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txttentacgia = new javax.swing.JTextField();
         kButton2 = new keeptoo.KButton();
         kButton3 = new keeptoo.KButton();
-        kButton6 = new keeptoo.KButton();
-        jTextField3 = new javax.swing.JTextField();
+        txtfilter = new javax.swing.JTextField();
         jComboBox3 = new javax.swing.JComboBox<>();
         kButton5 = new keeptoo.KButton();
+        jLabel10 = new javax.swing.JLabel();
+        lblid = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        kButton6 = new keeptoo.KButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
@@ -48,7 +196,7 @@ public class ManagerAuthor extends javax.swing.JInternalFrame {
         kGradientPanel2.setkBorderRadius(0);
         kGradientPanel2.setkEndColor(new java.awt.Color(51, 153, 0));
         kGradientPanel2.setkStartColor(new java.awt.Color(0, 204, 204));
-        kGradientPanel2.setPreferredSize(new java.awt.Dimension(590, 150));
+        kGradientPanel2.setPreferredSize(new java.awt.Dimension(590, 180));
 
         jLabel6.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
@@ -59,13 +207,14 @@ public class ManagerAuthor extends javax.swing.JInternalFrame {
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Tên tác giả");
 
-        jTextField2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
-        jTextField2.setCaretColor(new java.awt.Color(204, 0, 255));
-        jTextField2.setBackground(new java.awt.Color(0,0,0,0));
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        txttentacgia.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txttentacgia.setForeground(new java.awt.Color(255, 255, 255));
+        txttentacgia.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        txttentacgia.setCaretColor(new java.awt.Color(204, 0, 255));
+        txttentacgia.setBackground(new java.awt.Color(0,0,0,0));
+        txttentacgia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                txttentacgiaActionPerformed(evt);
             }
         });
 
@@ -99,32 +248,29 @@ public class ManagerAuthor extends javax.swing.JInternalFrame {
             }
         });
 
-        kButton6.setText("Tìm kiếm");
-        kButton6.setkBorderRadius(0);
-        kButton6.setkEndColor(new java.awt.Color(51, 153, 0));
-        kButton6.setkHoverEndColor(new java.awt.Color(204, 0, 204));
-        kButton6.setkHoverForeGround(new java.awt.Color(255, 204, 255));
-        kButton6.setkHoverStartColor(new java.awt.Color(0, 204, 204));
-        kButton6.setkStartColor(new java.awt.Color(0, 204, 204));
-        kButton6.setPreferredSize(new java.awt.Dimension(80, 30));
-        kButton6.addActionListener(new java.awt.event.ActionListener() {
+        txtfilter.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtfilter.setForeground(new java.awt.Color(255, 255, 255));
+        txtfilter.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        txtfilter.setCaretColor(new java.awt.Color(204, 0, 255));
+        txtfilter.setBackground(new java.awt.Color(0,0,0,0));
+        txtfilter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                kButton6ActionPerformed(evt);
+                txtfilterActionPerformed(evt);
             }
         });
-
-        jTextField3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField3.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
-        jTextField3.setCaretColor(new java.awt.Color(204, 0, 255));
-        jTextField3.setBackground(new java.awt.Color(0,0,0,0));
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+        txtfilter.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtfilterKeyReleased(evt);
             }
         });
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sắp xếp", "A-Z", "Z-A" }));
         jComboBox3.setPreferredSize(new java.awt.Dimension(80, 30));
+        jComboBox3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox3ActionPerformed(evt);
+            }
+        });
 
         kButton5.setText("Xóa");
         kButton5.setkBorderRadius(0);
@@ -140,6 +286,29 @@ public class ManagerAuthor extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("Mã tác giả");
+
+        lblid.setForeground(new java.awt.Color(255, 255, 255));
+        lblid.setText("...");
+
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setText("Tìm kiếm");
+
+        kButton6.setText("Tải lại");
+        kButton6.setkBorderRadius(0);
+        kButton6.setkEndColor(new java.awt.Color(51, 153, 0));
+        kButton6.setkHoverEndColor(new java.awt.Color(204, 0, 204));
+        kButton6.setkHoverForeGround(new java.awt.Color(255, 204, 255));
+        kButton6.setkHoverStartColor(new java.awt.Color(0, 204, 204));
+        kButton6.setkStartColor(new java.awt.Color(0, 204, 204));
+        kButton6.setPreferredSize(new java.awt.Dimension(80, 30));
+        kButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                kButton6ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout kGradientPanel2Layout = new javax.swing.GroupLayout(kGradientPanel2);
         kGradientPanel2.setLayout(kGradientPanel2Layout);
         kGradientPanel2Layout.setHorizontalGroup(
@@ -148,15 +317,15 @@ public class ManagerAuthor extends javax.swing.JInternalFrame {
                 .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(kGradientPanel2Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel9)
+                        .addComponent(jLabel10)
                         .addGap(18, 18, 18)
-                        .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(kGradientPanel2Layout.createSequentialGroup()
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(kButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(lblid)
+                                .addGap(258, 258, 258)
+                                .addComponent(jLabel12)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtfilter, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(kGradientPanel2Layout.createSequentialGroup()
                                 .addComponent(kButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -164,11 +333,18 @@ public class ManagerAuthor extends javax.swing.JInternalFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(kButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(kButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(kButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))))
                     .addGroup(kGradientPanel2Layout.createSequentialGroup()
                         .addGap(179, 179, 179)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(21, Short.MAX_VALUE))
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(kGradientPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel9)
+                        .addGap(18, 18, 18)
+                        .addComponent(txttentacgia, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
         kGradientPanel2Layout.setVerticalGroup(
             kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,16 +353,21 @@ public class ManagerAuthor extends javax.swing.JInternalFrame {
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(11, 11, 11)
                 .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtfilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10)
+                    .addComponent(lblid)
+                    .addComponent(jLabel12))
+                .addGap(18, 18, 18)
+                .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(kButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                    .addComponent(txttentacgia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(kButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(kButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(kButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(kButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(kButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -210,43 +391,87 @@ public class ManagerAuthor extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void txttentacgiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txttentacgiaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_txttentacgiaActionPerformed
 
     private void kButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton2ActionPerformed
-        // TODO add your handling code here:
+        author = new Author();
+        author.setAuthorName(txttentacgia.getText());
+        authorDAO.save(author);
+        clearTable();
+        preapareGUI();
+        loadData();
+
     }//GEN-LAST:event_kButton2ActionPerformed
 
     private void kButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton3ActionPerformed
-        // TODO add your handling code here:
+        author = new Author();
+        int getid = new Integer(lblid.getText());
+        author.setAuthorName(txttentacgia.getText());
+        author.setAuthorId(getid);
+        authorDAO.update(author);
+        clearTable();
+        preapareGUI();
+        loadData();
     }//GEN-LAST:event_kButton3ActionPerformed
 
-    private void kButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton6ActionPerformed
+    private void txtfilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfilterActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_kButton6ActionPerformed
-
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_txtfilterActionPerformed
 
     private void kButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton5ActionPerformed
-        // TODO add your handling code here:
+        authorDAO.delete(author);
+        clearTable();
+        preapareGUI();
+        loadData();
     }//GEN-LAST:event_kButton5ActionPerformed
+
+    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
+        if (evt.getSource() == jComboBox3) {
+            String msg = (String) jComboBox3.getSelectedItem();
+            switch (msg) {
+                case "A-Z":
+                    clearTable();
+                    preapareGUI();
+                    sortByASC();
+                    break;
+                case "Z-A":
+                    clearTable();
+                    preapareGUI();
+                    sortByDESC();
+                    break;
+            }
+        }
+    }//GEN-LAST:event_jComboBox3ActionPerformed
+
+    private void txtfilterKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtfilterKeyReleased
+        String query = txtfilter.getText();
+        search(query);
+    }//GEN-LAST:event_txtfilterKeyReleased
+
+    private void kButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton6ActionPerformed
+        clearTable();
+        preapareGUI();
+        loadData();
+    }//GEN-LAST:event_kButton6ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private keeptoo.KButton kButton2;
     private keeptoo.KButton kButton3;
     private keeptoo.KButton kButton5;
     private keeptoo.KButton kButton6;
     private keeptoo.KGradientPanel kGradientPanel2;
+    private javax.swing.JLabel lblid;
+    private javax.swing.JTextField txtfilter;
+    private javax.swing.JTextField txttentacgia;
     // End of variables declaration//GEN-END:variables
 }

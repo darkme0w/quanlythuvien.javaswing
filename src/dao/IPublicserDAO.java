@@ -17,4 +17,6 @@ public interface IPublicserDAO extends GenericDAO<Publicser>{
     void delete(Publicser publicser);
     void update(Publicser publicser);
     void save(Publicser publicser);
+    List<Publicser> sortAsc();
+    List<Publicser> sortDesc();
 }

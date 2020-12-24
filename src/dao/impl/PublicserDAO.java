@@ -18,23 +18,38 @@ public class PublicserDAO extends AbstractDAO<Publicser> implements IPublicserDA
 
     @Override
     public List<Publicser> getAll() {
-        String sql = "{Call sp_getAll_Publicser}";
+        String sql = "{Call get_All_Publicser}";
         return query(sql, new PublicserMapper());
     }
 
     @Override
     public void delete(Publicser publicser) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = "{Call delete_Publicser_Byid(?)}";
+        this.insert(sql, publicser.getPublicserId());
     }
 
     @Override
     public void update(Publicser publicser) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = "{Call update_Publicser(?,?,?)}";
+        this.insert(sql, publicser.getPublicserName(),publicser.getAddress(),publicser.getPublicserId());
     }
 
     @Override
     public void save(Publicser publicser) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = "{Call create_Publicser(?,?)}";
+        this.insert(sql, publicser.getPublicserName(),publicser.getAddress());
+    }
+
+    @Override
+    public List<Publicser> sortAsc() {
+       String sql = "{Call sort_Publicser_ASC}";
+        return query(sql, new PublicserMapper());
+    }
+
+    @Override
+    public List<Publicser> sortDesc() {
+        String sql = "{Call sort_Publicser_DESC}";
+        return query(sql, new PublicserMapper());
     }
     
 }
