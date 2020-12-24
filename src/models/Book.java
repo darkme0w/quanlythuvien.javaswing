@@ -25,6 +25,19 @@ public class Book {
     public Book() {
     }
 
+    public Book(int bookId, String booksCode, String booksName, float booksPrice, int quantity, int status, int year, int locationId, int publicserId) {
+        this.bookId = bookId;
+        this.booksCode = booksCode;
+        this.booksName = booksName;
+        this.booksPrice = booksPrice;
+        this.quantity = quantity;
+        this.status = status;
+        this.year = year;
+        this.locationId = locationId;
+        this.publicserId = publicserId;
+    }
+    
+
     public Book(String booksCode, String booksName, float booksPrice, int quantity, int status, int year,String locationName, String publicserName) {
         this.booksCode = booksCode;
         this.booksName = booksName;

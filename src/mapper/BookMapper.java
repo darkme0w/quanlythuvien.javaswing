@@ -19,7 +19,7 @@ public class BookMapper implements RowMapper<Book>{
     public Book mapRow(ResultSet rs) {
         try {
             Book book = new Book();
-//            book.setBookId(rs.getInt("BooksID"));
+            book.setBookId(rs.getInt("BooksID"));
             book.setBooksName(rs.getString("BooksName"));
             book.setBooksCode(rs.getString("BooksCode"));
             book.setBooksPrice(rs.getFloat("BooksPrice"));

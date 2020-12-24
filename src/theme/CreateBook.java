@@ -11,6 +11,7 @@ import dao.IPublicserDAO;
 import dao.impl.BookDAO;
 import dao.impl.LocationDAO;
 import dao.impl.PublicserDAO;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -20,6 +21,7 @@ import javax.swing.table.DefaultTableModel;
 import models.Book;
 import models.Location;
 import models.Publicser;
+import utils.Myultis;
 
 /**
  *
@@ -30,6 +32,7 @@ public class CreateBook extends javax.swing.JInternalFrame {
     /**
      * Creates new form CreateBook
      */
+    
     private DefaultTableModel dftbBook;
     //Location
     private List<Location> listLocation = new ArrayList<>();
@@ -44,6 +47,8 @@ public class CreateBook extends javax.swing.JInternalFrame {
     private IBooksDAO bookDAO;
     private Book books;
 
+    
+    private String idBook;
     public CreateBook() {
         initComponents();
         bookDAO = new BookDAO();
@@ -71,6 +76,7 @@ public class CreateBook extends javax.swing.JInternalFrame {
 
     private void preapareGUI() {
         dftbBook = new DefaultTableModel();
+        dftbBook.addColumn("ID");
         dftbBook.addColumn("Mã sách");
         dftbBook.addColumn("Tên sách");
         dftbBook.addColumn("Giá sách");
@@ -88,6 +94,7 @@ public class CreateBook extends javax.swing.JInternalFrame {
 
         for (Book book : listBook) {
             v = new Vector();
+            v.add(book.getBookId());
             v.add(book.getBooksCode());
             v.add(book.getBooksName());
             v.add(book.getBooksPrice());
@@ -100,7 +107,6 @@ public class CreateBook extends javax.swing.JInternalFrame {
             }
             v.add(book.getPublicserName());
             v.add(book.getLocationName());
-
 
             dftbBook.addRow(v);
         }
@@ -119,6 +125,9 @@ public class CreateBook extends javax.swing.JInternalFrame {
         }
     }
 
+    private String getValueID(String value){
+        return value;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -129,6 +138,8 @@ public class CreateBook extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        jPopupMenu1 = new javax.swing.JPopupMenu();
+        jmnEdit = new javax.swing.JMenuItem();
         kGradientPanel1 = new keeptoo.KGradientPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -146,8 +157,8 @@ public class CreateBook extends javax.swing.JInternalFrame {
         cbLocation = new javax.swing.JComboBox<>();
         jLabel16 = new javax.swing.JLabel();
         cbPublicser = new javax.swing.JComboBox<>();
-        kButton2 = new keeptoo.KButton();
-        kButton3 = new keeptoo.KButton();
+        btnAdd = new keeptoo.KButton();
+        btnEdit = new keeptoo.KButton();
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
         jPanel1 = new javax.swing.JPanel();
@@ -159,9 +170,17 @@ public class CreateBook extends javax.swing.JInternalFrame {
         btnRefesh = new keeptoo.KButton();
         btnDelete = new keeptoo.KButton();
         btnSearch = new keeptoo.KButton();
-        jTextField1 = new javax.swing.JTextField();
+        txtSearch = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+
+        jmnEdit.setText("Sửa");
+        jmnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmnEditActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(jmnEdit);
 
         setBorder(null);
         setClosable(true);
@@ -250,37 +269,38 @@ public class CreateBook extends javax.swing.JInternalFrame {
             }
         });
 
-        kButton2.setText("Thêm");
-        kButton2.setkBorderRadius(40);
-        kButton2.setkEndColor(new java.awt.Color(0, 204, 204));
-        kButton2.setkFillButton(false);
-        kButton2.setkHoverEndColor(new java.awt.Color(204, 0, 204));
-        kButton2.setkHoverForeGround(new java.awt.Color(255, 204, 255));
-        kButton2.setkHoverStartColor(new java.awt.Color(0, 204, 204));
-        kButton2.setkStartColor(new java.awt.Color(255, 255, 255));
-        kButton2.setPreferredSize(new java.awt.Dimension(80, 30));
-        kButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnAdd.setText("Thêm");
+        btnAdd.setkBorderRadius(40);
+        btnAdd.setkEndColor(new java.awt.Color(0, 204, 204));
+        btnAdd.setkFillButton(false);
+        btnAdd.setkHoverEndColor(new java.awt.Color(204, 0, 204));
+        btnAdd.setkHoverForeGround(new java.awt.Color(255, 204, 255));
+        btnAdd.setkHoverStartColor(new java.awt.Color(0, 204, 204));
+        btnAdd.setkStartColor(new java.awt.Color(255, 255, 255));
+        btnAdd.setPreferredSize(new java.awt.Dimension(80, 30));
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                kButton2ActionPerformed(evt);
+                btnAddActionPerformed(evt);
             }
         });
 
-        kButton3.setText("Sửa");
-        kButton3.setkBorderRadius(40);
-        kButton3.setkEndColor(new java.awt.Color(0, 204, 204));
-        kButton3.setkFillButton(false);
-        kButton3.setkHoverEndColor(new java.awt.Color(204, 0, 204));
-        kButton3.setkHoverForeGround(new java.awt.Color(255, 204, 255));
-        kButton3.setkHoverStartColor(new java.awt.Color(0, 204, 204));
-        kButton3.setkStartColor(new java.awt.Color(255, 255, 255));
-        kButton3.setPreferredSize(new java.awt.Dimension(80, 30));
-        kButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnEdit.setText("Sửa");
+        btnEdit.setkBorderRadius(40);
+        btnEdit.setkEndColor(new java.awt.Color(0, 204, 204));
+        btnEdit.setkFillButton(false);
+        btnEdit.setkHoverEndColor(new java.awt.Color(204, 0, 204));
+        btnEdit.setkHoverForeGround(new java.awt.Color(255, 204, 255));
+        btnEdit.setkHoverStartColor(new java.awt.Color(0, 204, 204));
+        btnEdit.setkStartColor(new java.awt.Color(255, 255, 255));
+        btnEdit.setPreferredSize(new java.awt.Dimension(80, 30));
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                kButton3ActionPerformed(evt);
+                btnEditActionPerformed(evt);
             }
         });
 
         buttonGroup1.add(jRadioButton1);
+        jRadioButton1.setSelected(true);
         jRadioButton1.setText("Còn sách");
         jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -321,11 +341,11 @@ public class CreateBook extends javax.swing.JInternalFrame {
                             .addComponent(jLabel16)
                             .addGroup(kGradientPanel1Layout.createSequentialGroup()
                                 .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(kButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                                    .addComponent(btnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
                                     .addComponent(jRadioButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(18, 18, 18)
                                 .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(kButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                                    .addComponent(btnEdit, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
                                     .addComponent(jRadioButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -371,8 +391,8 @@ public class CreateBook extends javax.swing.JInternalFrame {
                     .addComponent(jRadioButton2))
                 .addGap(18, 18, 18)
                 .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(kButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(kButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(23, 23, 23))
         );
 
@@ -457,26 +477,39 @@ public class CreateBook extends javax.swing.JInternalFrame {
         });
         jPanel5.add(btnSearch);
 
-        jTextField1.setPreferredSize(new java.awt.Dimension(200, 30));
-        jPanel5.add(jTextField1);
+        txtSearch.setPreferredSize(new java.awt.Dimension(200, 30));
+        txtSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSearchActionPerformed(evt);
+            }
+        });
+        txtSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtSearchKeyReleased(evt);
+            }
+        });
+        jPanel5.add(txtSearch);
 
         jPanel3.add(jPanel5, java.awt.BorderLayout.PAGE_START);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Mã sách", "Tên sách", "Giá sách", "Số lượng", "Năm xuất bản", "Trạng thái", "Nhà xuất bản", "Vị trí"
+                "ID", "Mã sách", "Tên sách", "Giá sách", "Số lượng", "Năm xuất bản", "Trạng thái", "Nhà xuất bản", "Vị trí"
             }
         ));
         jTable1.setPreferredSize(new java.awt.Dimension(800, 64));
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable1MouseClicked(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jTable1MouseReleased(evt);
             }
         });
         jScrollPane1.setViewportView(jTable1);
@@ -494,22 +527,38 @@ public class CreateBook extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtBookCodeActionPerformed
 
-    private void kButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton2ActionPerformed
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         Float price = Float.valueOf(jtBPrice.getText());
         int quantity = Integer.valueOf(jQuantity.getText());
-
         int year = Integer.valueOf(jtYear.getText());
         int status = getValueRadio();
         Location idLocaltion = (Location) cbLocation.getSelectedItem();
         Publicser idpublicser = (Publicser) cbPublicser.getSelectedItem();
-//        System.out.println(status);
         books = new Book(jtBookCode.getText(), jtBookName.getText(), price, quantity, status, year, idLocaltion.getLocationId(), idpublicser.getPublicserId());
         bookDAO.save(books);
-    }//GEN-LAST:event_kButton2ActionPerformed
+        
+         Myultis.clearTable(dftbBook);
+        preapareGUI();
+        loadData();
+        
+    }//GEN-LAST:event_btnAddActionPerformed
 
-    private void kButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_kButton3ActionPerformed
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+
+        Float price = Float.valueOf(jtBPrice.getText());
+        int quantity = Integer.valueOf(jQuantity.getText());
+        int id = Integer.valueOf(idBook);
+        int year = Integer.valueOf(jtYear.getText());
+        int status = getValueRadio();
+        Location idLocaltion = (Location) cbLocation.getSelectedItem();
+        Publicser idpublicser = (Publicser) cbPublicser.getSelectedItem();
+        books = new Book(id,jtBookCode.getText(), jtBookName.getText(), price, quantity, status, year, idLocaltion.getLocationId(), idpublicser.getPublicserId());
+        bookDAO.update(books);
+        
+        Myultis.clearTable(dftbBook);
+        preapareGUI();
+        loadData();
+    }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
@@ -541,20 +590,59 @@ public class CreateBook extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        int pos = jTable1.getSelectedRow();
-        jtBookCode.setText(dftbBook.getValueAt(pos, 0).toString());
-        jtBookName.setText(dftbBook.getValueAt(pos, 1).toString());
-        jtBPrice.setText(dftbBook.getValueAt(pos, 2).toString());
-        jQuantity.setText(dftbBook.getValueAt(pos, 3).toString());
-        jtYear.setText(dftbBook.getValueAt(pos, 4).toString());
-        cbLocation.setSelectedItem(ABORT);
         
-        cbPublicser.setSelectedItem(dftbBook.getValueAt(pos, 6).toString());
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jTable1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseReleased
+        if (evt.isPopupTrigger()) {
+            jPopupMenu1.show(jTable1, evt.getX(), evt.getY());
+        }
+    }//GEN-LAST:event_jTable1MouseReleased
+
+    private void jmnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnEditActionPerformed
+        int pos = jTable1.getSelectedRow();
+        idBook = dftbBook.getValueAt(pos, 0).toString();
+        jtBookCode.setText(dftbBook.getValueAt(pos, 1).toString());
+        jtBookName.setText(dftbBook.getValueAt(pos, 2).toString());
+        jtBPrice.setText(dftbBook.getValueAt(pos, 3).toString());
+        jQuantity.setText(dftbBook.getValueAt(pos, 4).toString());
+        jtYear.setText(dftbBook.getValueAt(pos, 5).toString());
+        for (int i = 0; i < cbPublicser.getItemCount(); i++) {
+            if (dftbBook.getValueAt(pos, 7).toString().equals(cbPublicser.getItemAt(i).getPublicserName())) {
+                cbPublicser.setSelectedIndex(i);
+                break;
+            }
+        }
+
+        for (int j = 0; j < cbLocation.getItemCount(); j++) {
+            if (dftbBook.getValueAt(pos, 8).toString().equals(cbLocation.getItemAt(j).getLocationName())) {
+                cbLocation.setSelectedIndex(j);
+                break;
+            }
+        }
+        if (dftbBook.getValueAt(pos, 6).toString().equals(jRadioButton1.getActionCommand())) {
+            jRadioButton1.setSelected(true);
+        } else if (dftbBook.getValueAt(pos, 5).toString().equals(jRadioButton2.getActionCommand())) {
+            jRadioButton2.setSelected(true);
+        } else {
+            jRadioButton1.setSelected(true);
+        }
+    }//GEN-LAST:event_jmnEditActionPerformed
+
+    private void txtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSearchActionPerformed
+
+    private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
+        String query = txtSearch.getText();
+        Myultis.filter(query,dftbBook,jTable1);
+    }//GEN-LAST:event_txtSearchKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private keeptoo.KButton btnAdd;
     private keeptoo.KButton btnDelete;
+    private keeptoo.KButton btnEdit;
     private keeptoo.KButton btnRefesh;
     private keeptoo.KButton btnSearch;
     private javax.swing.ButtonGroup buttonGroup1;
@@ -575,18 +663,18 @@ public class CreateBook extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JTextField jQuantity;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JMenuItem jmnEdit;
     private javax.swing.JTextField jtBPrice;
     private javax.swing.JTextField jtBookCode;
     private javax.swing.JTextField jtBookName;
     private javax.swing.JTextField jtYear;
-    private keeptoo.KButton kButton2;
-    private keeptoo.KButton kButton3;
     private keeptoo.KGradientPanel kGradientPanel1;
+    private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 }
