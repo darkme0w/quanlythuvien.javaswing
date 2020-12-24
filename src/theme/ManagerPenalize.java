@@ -53,7 +53,7 @@ public class ManagerPenalize extends javax.swing.JInternalFrame {
         jLabel6.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("Quản lý tác giả");
+        jLabel6.setText("Quản lý xử phạt");
         jLabel6.setPreferredSize(new java.awt.Dimension(215, 29));
 
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
@@ -168,7 +168,7 @@ public class ManagerPenalize extends javax.swing.JInternalFrame {
                     .addGroup(kGradientPanel2Layout.createSequentialGroup()
                         .addGap(179, 179, 179)
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
         kGradientPanel2Layout.setVerticalGroup(
             kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
