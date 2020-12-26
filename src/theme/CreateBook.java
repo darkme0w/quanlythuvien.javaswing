@@ -11,12 +11,11 @@ import dao.IPublicserDAO;
 import dao.impl.BookDAO;
 import dao.impl.LocationDAO;
 import dao.impl.PublicserDAO;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import models.Book;
 import models.Location;
@@ -32,7 +31,6 @@ public class CreateBook extends javax.swing.JInternalFrame {
     /**
      * Creates new form CreateBook
      */
-    
     private DefaultTableModel dftbBook;
     //Location
     private List<Location> listLocation = new ArrayList<>();
@@ -47,8 +45,8 @@ public class CreateBook extends javax.swing.JInternalFrame {
     private IBooksDAO bookDAO;
     private Book books;
 
-    
     private String idBook;
+
     public CreateBook() {
         initComponents();
         bookDAO = new BookDAO();
@@ -125,9 +123,56 @@ public class CreateBook extends javax.swing.JInternalFrame {
         }
     }
 
-    private String getValueID(String value){
-        return value;
+    private void sortByASC() {
+        listBook.removeAll(listBook);
+        listBook = bookDAO.sortASC();
+        Vector v;
+        for (Book book : listBook) {
+            v = new Vector();
+            v.add(book.getBookId());
+            v.add(book.getBooksCode());
+            v.add(book.getBooksName());
+            v.add(book.getBooksPrice());
+            v.add(book.getQuantity());
+            v.add(book.getYear());
+            if (book.getStatus() == 1) {
+                v.add("Còn sách");
+            } else {
+                v.add("Hết sách");
+            }
+            v.add(book.getPublicserName());
+            v.add(book.getLocationName());
+
+            dftbBook.addRow(v);
+        }
+        jTable1.setModel(dftbBook);
     }
+
+    private void sortByDESC() {
+        listBook.removeAll(listBook);
+        listBook = bookDAO.sortDESC();
+        Vector v;
+        for (Book book : listBook) {
+            v = new Vector();
+            v.add(book.getBookId());
+            v.add(book.getBooksCode());
+            v.add(book.getBooksName());
+            v.add(book.getBooksPrice());
+            v.add(book.getQuantity());
+            v.add(book.getYear());
+            if (book.getStatus() == 1) {
+                v.add("Còn sách");
+            } else {
+                v.add("Hết sách");
+            }
+            v.add(book.getPublicserName());
+            v.add(book.getLocationName());
+
+            dftbBook.addRow(v);
+        }
+        jTable1.setModel(dftbBook);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -140,6 +185,7 @@ public class CreateBook extends javax.swing.JInternalFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPopupMenu1 = new javax.swing.JPopupMenu();
         jmnEdit = new javax.swing.JMenuItem();
+        jmnDelete = new javax.swing.JMenuItem();
         kGradientPanel1 = new keeptoo.KGradientPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -161,6 +207,11 @@ public class CreateBook extends javax.swing.JInternalFrame {
         btnEdit = new keeptoo.KButton();
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
+        vldBCode = new javax.swing.JLabel();
+        vldBName = new javax.swing.JLabel();
+        vldBPrice = new javax.swing.JLabel();
+        vldBQuantity = new javax.swing.JLabel();
+        vldBYear = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -168,7 +219,6 @@ public class CreateBook extends javax.swing.JInternalFrame {
         jPanel5 = new javax.swing.JPanel();
         jComboBox3 = new javax.swing.JComboBox<>();
         btnRefesh = new keeptoo.KButton();
-        btnDelete = new keeptoo.KButton();
         btnSearch = new keeptoo.KButton();
         txtSearch = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -181,6 +231,14 @@ public class CreateBook extends javax.swing.JInternalFrame {
             }
         });
         jPopupMenu1.add(jmnEdit);
+
+        jmnDelete.setText("Xóa");
+        jmnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmnDeleteActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(jmnDelete);
 
         setBorder(null);
         setClosable(true);
@@ -216,6 +274,11 @@ public class CreateBook extends javax.swing.JInternalFrame {
                 jtBookCodeActionPerformed(evt);
             }
         });
+        jtBookCode.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtBookCodeKeyReleased(evt);
+            }
+        });
 
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Tên sách");
@@ -224,6 +287,11 @@ public class CreateBook extends javax.swing.JInternalFrame {
         jtBookName.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         jtBookName.setCaretColor(new java.awt.Color(204, 0, 255));
         jtBookName.setBackground(new java.awt.Color(0,0,0,0));
+        jtBookName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtBookNameKeyReleased(evt);
+            }
+        });
 
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Giá sách");
@@ -232,6 +300,11 @@ public class CreateBook extends javax.swing.JInternalFrame {
         jtBPrice.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         jtBPrice.setCaretColor(new java.awt.Color(204, 0, 255));
         jtBPrice.setBackground(new java.awt.Color(0,0,0,0));
+        jtBPrice.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtBPriceKeyReleased(evt);
+            }
+        });
 
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("Số lượng");
@@ -240,11 +313,21 @@ public class CreateBook extends javax.swing.JInternalFrame {
         jQuantity.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         jQuantity.setCaretColor(new java.awt.Color(204, 0, 255));
         jQuantity.setBackground(new java.awt.Color(0,0,0,0));
+        jQuantity.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jQuantityKeyReleased(evt);
+            }
+        });
 
         jtYear.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jtYear.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         jtYear.setCaretColor(new java.awt.Color(204, 0, 255));
         jtYear.setBackground(new java.awt.Color(0,0,0,0));
+        jtYear.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtYearKeyReleased(evt);
+            }
+        });
 
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Năm xuất bản");
@@ -285,6 +368,7 @@ public class CreateBook extends javax.swing.JInternalFrame {
         });
 
         btnEdit.setText("Sửa");
+        btnEdit.setEnabled(false);
         btnEdit.setkBorderRadius(40);
         btnEdit.setkEndColor(new java.awt.Color(0, 204, 204));
         btnEdit.setkFillButton(false);
@@ -311,6 +395,16 @@ public class CreateBook extends javax.swing.JInternalFrame {
         buttonGroup1.add(jRadioButton2);
         jRadioButton2.setText("Hết sách");
 
+        vldBCode.setForeground(new java.awt.Color(255, 0, 51));
+
+        vldBName.setForeground(new java.awt.Color(255, 0, 51));
+
+        vldBPrice.setForeground(new java.awt.Color(255, 0, 51));
+
+        vldBQuantity.setForeground(new java.awt.Color(255, 0, 51));
+
+        vldBYear.setForeground(new java.awt.Color(255, 0, 51));
+
         javax.swing.GroupLayout kGradientPanel1Layout = new javax.swing.GroupLayout(kGradientPanel1);
         kGradientPanel1.setLayout(kGradientPanel1Layout);
         kGradientPanel1Layout.setHorizontalGroup(
@@ -332,11 +426,26 @@ public class CreateBook extends javax.swing.JInternalFrame {
                     .addGroup(kGradientPanel1Layout.createSequentialGroup()
                         .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel12)
-                            .addComponent(jLabel13)
+                            .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addGap(18, 18, 18)
+                                .addComponent(vldBCode))
+                            .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addGap(18, 18, 18)
+                                .addComponent(vldBName))
+                            .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addGap(18, 18, 18)
+                                .addComponent(vldBPrice))
+                            .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel12)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(vldBQuantity))
+                            .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel13)
+                                .addGap(18, 18, 18)
+                                .addComponent(vldBYear))
                             .addComponent(jLabel14)
                             .addComponent(jLabel16)
                             .addGroup(kGradientPanel1Layout.createSequentialGroup()
@@ -364,23 +473,33 @@ public class CreateBook extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addComponent(cbPublicser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel9)
-                .addGap(18, 18, 18)
+                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(vldBCode))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jtBookCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(jLabel10)
+                .addGap(18, 18, 18)
+                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(vldBName))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jtBookName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel11)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addComponent(jtBPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(vldBPrice))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel12)
+                .addComponent(jtBPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(vldBQuantity))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel13)
+                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(vldBYear))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jtYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -446,21 +565,6 @@ public class CreateBook extends javax.swing.JInternalFrame {
             }
         });
         jPanel5.add(btnRefesh);
-
-        btnDelete.setText("Xóa");
-        btnDelete.setkBorderRadius(0);
-        btnDelete.setkEndColor(new java.awt.Color(51, 153, 0));
-        btnDelete.setkHoverEndColor(new java.awt.Color(204, 0, 204));
-        btnDelete.setkHoverForeGround(new java.awt.Color(255, 204, 255));
-        btnDelete.setkHoverStartColor(new java.awt.Color(0, 204, 204));
-        btnDelete.setkStartColor(new java.awt.Color(0, 204, 204));
-        btnDelete.setPreferredSize(new java.awt.Dimension(80, 30));
-        btnDelete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteActionPerformed(evt);
-            }
-        });
-        jPanel5.add(btnDelete);
 
         btnSearch.setText("Tìm kiếm");
         btnSearch.setkBorderRadius(0);
@@ -528,23 +632,34 @@ public class CreateBook extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jtBookCodeActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        String bookCode = jtBookCode.getText();
+        String bookName = jtBookName.getText();
         Float price = Float.valueOf(jtBPrice.getText());
         int quantity = Integer.valueOf(jQuantity.getText());
         int year = Integer.valueOf(jtYear.getText());
         int status = getValueRadio();
         Location idLocaltion = (Location) cbLocation.getSelectedItem();
         Publicser idpublicser = (Publicser) cbPublicser.getSelectedItem();
-        books = new Book(jtBookCode.getText(), jtBookName.getText(), price, quantity, status, year, idLocaltion.getLocationId(), idpublicser.getPublicserId());
-        bookDAO.save(books);
-        
-         Myultis.clearTable(dftbBook);
-        preapareGUI();
-        loadData();
-        
+        if (bookCode.isEmpty() == false && bookName.isEmpty() == false && jtBPrice.getText().isEmpty() == false && jQuantity.getText().isEmpty() == false && jtYear.getText().isEmpty() == false) {
+            if (vldBCode.getText().isEmpty() && vldBName.getText().isEmpty() && vldBPrice.getText().isEmpty() && vldBQuantity.getText().isEmpty() && vldBYear.getText().isEmpty()) {
+                books = new Book(bookCode, bookName, price, quantity, status, year, idLocaltion.getLocationId(), idpublicser.getPublicserId());
+                bookDAO.save(books);
+                Myultis.clearTable(dftbBook);
+                preapareGUI();
+                loadData();
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "Vui lòng xem lại các trường dữ liệu");
+            }
+
+        } else {
+             JOptionPane.showMessageDialog(rootPane, "Hãy nhập đủ các trường trước khi thêm");
+        }
+
+
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-
+        System.out.println("abc");
         Float price = Float.valueOf(jtBPrice.getText());
         int quantity = Integer.valueOf(jQuantity.getText());
         int id = Integer.valueOf(idBook);
@@ -552,17 +667,13 @@ public class CreateBook extends javax.swing.JInternalFrame {
         int status = getValueRadio();
         Location idLocaltion = (Location) cbLocation.getSelectedItem();
         Publicser idpublicser = (Publicser) cbPublicser.getSelectedItem();
-        books = new Book(id,jtBookCode.getText(), jtBookName.getText(), price, quantity, status, year, idLocaltion.getLocationId(), idpublicser.getPublicserId());
+        books = new Book(id, jtBookCode.getText(), jtBookName.getText(), price, quantity, status, year, idLocaltion.getLocationId(), idpublicser.getPublicserId());
         bookDAO.update(books);
-        
+
         Myultis.clearTable(dftbBook);
         preapareGUI();
         loadData();
     }//GEN-LAST:event_btnEditActionPerformed
-
-    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         // TODO add your handling code here:
@@ -573,11 +684,33 @@ public class CreateBook extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cbLocationActionPerformed
 
     private void btnRefeshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefeshActionPerformed
-        // TODO add your handling code here:
+        Myultis.clearTable(dftbBook);
+        preapareGUI();
+        loadData();
     }//GEN-LAST:event_btnRefeshActionPerformed
 
     private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
-        // TODO add your handling code here:
+
+        if (evt.getSource() == jComboBox3) {
+            String msg = (String) jComboBox3.getSelectedItem();
+            switch (msg) {
+                case "A-Z":
+                    Myultis.clearTable(dftbBook);
+                    preapareGUI();
+                    sortByASC();
+                    break;
+                case "Z-A":
+                    Myultis.clearTable(dftbBook);
+                    preapareGUI();
+                    sortByDESC();
+                    break;
+                default:
+                    Myultis.clearTable(dftbBook);
+                    preapareGUI();
+                    loadData();
+                    break;
+            }
+        }
     }//GEN-LAST:event_jComboBox3ActionPerformed
 
     private void cbPublicserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbPublicserActionPerformed
@@ -590,7 +723,7 @@ public class CreateBook extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        
+
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jTable1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseReleased
@@ -635,13 +768,84 @@ public class CreateBook extends javax.swing.JInternalFrame {
 
     private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
         String query = txtSearch.getText();
-        Myultis.filter(query,dftbBook,jTable1);
+        Myultis.filter(query, dftbBook, jTable1);
     }//GEN-LAST:event_txtSearchKeyReleased
+
+    private void jmnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnDeleteActionPerformed
+        int pos = jTable1.getSelectedRow();
+        String bookName = dftbBook.getValueAt(pos, 2).toString();
+        int choose = JOptionPane.showConfirmDialog(rootPane, "Bạn chắc chắn muốn xóa " + bookName, "", JOptionPane.OK_CANCEL_OPTION);
+        if (choose == JOptionPane.OK_OPTION) {
+            idBook = dftbBook.getValueAt(pos, 0).toString();
+            int id = Integer.valueOf(idBook);
+            books = new Book();
+            books.setBookId(id);
+            bookDAO.delete(books);
+            Myultis.clearTable(dftbBook);
+            preapareGUI();
+            loadData();
+        } else {
+            System.out.println(".");
+        }
+    }//GEN-LAST:event_jmnDeleteActionPerformed
+
+    private void jtBookCodeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtBookCodeKeyReleased
+
+        if (jtBookCode.getText().isEmpty()) {
+            vldBCode.setText("Không được để trống");
+        } else if (jtBookCode.getText().equals(dftbBook.getValueAt(jTable1.getSelectedRow(), 1).toString())) {
+            vldBCode.setText("Mã sách đã tồn tại");
+        } else {
+            vldBCode.setText("");
+        }
+    }//GEN-LAST:event_jtBookCodeKeyReleased
+
+    private void jtBookNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtBookNameKeyReleased
+        if (jtBookName.getText().isEmpty()) {
+            vldBName.setText("Không được để trống");
+        } else {
+            vldBName.setText("");
+        }
+
+    }//GEN-LAST:event_jtBookNameKeyReleased
+
+    private void jtBPriceKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtBPriceKeyReleased
+        String regex = "[0-9]{1,40}";
+        if (jtBPrice.getText().isEmpty()) {
+            vldBPrice.setText("Không được để trống");
+        } else if (Pattern.matches(regex, jtBPrice.getText()) == false) {
+            vldBPrice.setText("Chỉ nhập số");
+        } else {
+            vldBPrice.setText("");
+        }
+
+    }//GEN-LAST:event_jtBPriceKeyReleased
+
+    private void jQuantityKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jQuantityKeyReleased
+        String regex = "[0-9]{1,40}";
+        if (jQuantity.getText().isEmpty()) {
+            vldBQuantity.setText("Không được để trống");
+        } else if (Pattern.matches(regex, vldBQuantity.getText()) == false) {
+            vldBQuantity.setText("Chỉ nhập số");
+        } else {
+            vldBQuantity.setText("");
+        }
+    }//GEN-LAST:event_jQuantityKeyReleased
+
+    private void jtYearKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtYearKeyReleased
+        String regex = "\\d{4}";
+        if (jtYear.getText().isEmpty()) {
+            vldBYear.setText("Không được để trống");
+        } else if (Pattern.matches(regex, jtYear.getText()) == false) {
+            vldBYear.setText("Nhập đúng định dạng năm");
+        } else {
+            vldBYear.setText("");
+        }
+    }//GEN-LAST:event_jtYearKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private keeptoo.KButton btnAdd;
-    private keeptoo.KButton btnDelete;
     private keeptoo.KButton btnEdit;
     private keeptoo.KButton btnRefesh;
     private keeptoo.KButton btnSearch;
@@ -669,6 +873,7 @@ public class CreateBook extends javax.swing.JInternalFrame {
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JMenuItem jmnDelete;
     private javax.swing.JMenuItem jmnEdit;
     private javax.swing.JTextField jtBPrice;
     private javax.swing.JTextField jtBookCode;
@@ -676,5 +881,10 @@ public class CreateBook extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jtYear;
     private keeptoo.KGradientPanel kGradientPanel1;
     private javax.swing.JTextField txtSearch;
+    private javax.swing.JLabel vldBCode;
+    private javax.swing.JLabel vldBName;
+    private javax.swing.JLabel vldBPrice;
+    private javax.swing.JLabel vldBQuantity;
+    private javax.swing.JLabel vldBYear;
     // End of variables declaration//GEN-END:variables
 }

@@ -18,7 +18,7 @@ public class PublicserDAO extends AbstractDAO<Publicser> implements IPublicserDA
 
     @Override
     public List<Publicser> getAll() {
-        String sql = "{Call get_All_Publicser}";
+        String sql = "{Call sp_getAll_Publicser}";
         return query(sql, new PublicserMapper());
     }
 

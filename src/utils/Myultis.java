@@ -5,6 +5,9 @@
  */
 package utils;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -26,6 +29,5 @@ public class Myultis {
         jtable.setRowSorter(tr);
         tr.setRowFilter(RowFilter.regexFilter(query));
     }
-    
     
 }
