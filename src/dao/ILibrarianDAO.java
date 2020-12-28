@@ -5,6 +5,7 @@
  */
 package dao;
 
+import java.util.List;
 import models.Librarian;
 
 /**
@@ -12,5 +13,10 @@ import models.Librarian;
  * @author admin
  */
 public interface ILibrarianDAO extends GenericDAO<Librarian>{
-    
+    List<Librarian> getAll();
+    void delete(Librarian librarian);
+    void update(Librarian librarian);
+    void save(Librarian librarian);
+    List<Librarian> sortAsc();
+    List<Librarian> sortDesc();
 }

@@ -16,8 +16,8 @@ public class Librarian {
     private String librarianName;
     private String phone;
     private String address;
-    private float account;
-    private int status;
+    private String userName;
+    private String password;
     private int gender;
     private int permission;
     private LocalDate createdDate;
@@ -25,14 +25,16 @@ public class Librarian {
     public Librarian() {
     }
 
-    public Librarian(String librarianName, String phone, String address, float account, int status, int gender, int permission) {
+    public Librarian(int librarianId, String librarianName, String phone, String address, String userName, String password, int gender, int permission, LocalDate createdDate) {
+        this.librarianId = librarianId;
         this.librarianName = librarianName;
         this.phone = phone;
         this.address = address;
-        this.account = account;
-        this.status = status;
+        this.userName = userName;
+        this.password = password;
         this.gender = gender;
         this.permission = permission;
+        this.createdDate = createdDate;
     }
 
     public int getLibrarianId() {
@@ -67,20 +69,20 @@ public class Librarian {
         this.address = address;
     }
 
-    public float getAccount() {
-        return account;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setAccount(float account) {
-        this.account = account;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public int getStatus() {
-        return status;
+    public String getPassword() {
+        return password;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public int getGender() {

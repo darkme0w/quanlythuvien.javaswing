@@ -11,6 +11,7 @@ import dao.impl.PublicserDAO;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -18,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import models.Author;
 import models.Publicser;
+import utils.Myultis;
 
 /**
  *
@@ -29,6 +31,7 @@ public class MangagerPublicser extends javax.swing.JInternalFrame {
     private List<Publicser> listPublicser = new ArrayList<Publicser>();
     private IPublicserDAO publicserDAO;
     private Publicser publicser;
+    private String idPublicser;
 
     /**
      * Creates new form MangagerPublicser
@@ -63,23 +66,6 @@ public class MangagerPublicser extends javax.swing.JInternalFrame {
 
         jTable1.setModel(dtfPublicser);
 
-        if (listPublicser.size() > 0) {
-            jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-                @Override
-                public void valueChanged(ListSelectionEvent e) {
-                    int pos = jTable1.getSelectedRow();
-                    if (pos < 0) {
-                        pos = 0;
-                    }
-                    publicser = listPublicser.get(pos);
-                    lblid.setText(String.valueOf(publicser.getPublicserId()));
-                    txtnhaxuatban.setText(publicser.getPublicserName());
-                    txtdiachi.setText(publicser.getAddress());
-                }
-
-            });
-        }
-
     }
 
     private void sortByASC() {
@@ -96,24 +82,7 @@ public class MangagerPublicser extends javax.swing.JInternalFrame {
             dtfPublicser.addRow(v);
         }
 
-        jTable1.setModel(dtfPublicser);
-
-        if (listPublicser.size() > 0) {
-            jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-                @Override
-                public void valueChanged(ListSelectionEvent e) {
-                    int pos = jTable1.getSelectedRow();
-                    if (pos < 0) {
-                        pos = 0;
-                    }
-                    publicser = listPublicser.get(pos);
-                    lblid.setText(String.valueOf(publicser.getPublicserId()));
-                    txtnhaxuatban.setText(publicser.getPublicserName());
-                    txtdiachi.setText(publicser.getAddress());
-                }
-
-            });
-        }
+        jTable1.setModel(dtfPublicser);      
 
     }
 
@@ -133,38 +102,9 @@ public class MangagerPublicser extends javax.swing.JInternalFrame {
 
         jTable1.setModel(dtfPublicser);
 
-        if (listPublicser.size() > 0) {
-            jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-                @Override
-                public void valueChanged(ListSelectionEvent e) {
-                    int pos = jTable1.getSelectedRow();
-                    if (pos < 0) {
-                        pos = 0;
-                    }
-                    publicser = listPublicser.get(pos);
-                    lblid.setText(String.valueOf(publicser.getPublicserId()));
-                    txtnhaxuatban.setText(publicser.getPublicserName());
-                    txtdiachi.setText(publicser.getAddress());
-                }
-
-            });
-        }
-
     }
 
-    private void clearTable() {
-        dtfPublicser = new DefaultTableModel();
-        int count = dtfPublicser.getRowCount();
-        for (int i = count - 1; i >= 0; i--) {
-            dtfPublicser.removeRow(i);
-        }
-    }
 
-    private void search(String query) {
-        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(dtfPublicser);
-        jTable1.setRowSorter(tr);
-        tr.setRowFilter(RowFilter.regexFilter(query));
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -175,6 +115,9 @@ public class MangagerPublicser extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPopupMenu1 = new javax.swing.JPopupMenu();
+        jmEdit = new javax.swing.JMenuItem();
+        jmDelete = new javax.swing.JMenuItem();
         kGradientPanel2 = new keeptoo.KGradientPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -183,7 +126,6 @@ public class MangagerPublicser extends javax.swing.JInternalFrame {
         kButton3 = new keeptoo.KButton();
         txtfilter = new javax.swing.JTextField();
         jComboBox3 = new javax.swing.JComboBox<>();
-        kButton5 = new keeptoo.KButton();
         jLabel10 = new javax.swing.JLabel();
         txtdiachi = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
@@ -192,6 +134,22 @@ public class MangagerPublicser extends javax.swing.JInternalFrame {
         kButton6 = new keeptoo.KButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+
+        jmEdit.setText("Sửa");
+        jmEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmEditActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(jmEdit);
+
+        jmDelete.setText("Xóa");
+        jmDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmDeleteActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(jmDelete);
 
         setClosable(true);
         setIconifiable(true);
@@ -277,20 +235,6 @@ public class MangagerPublicser extends javax.swing.JInternalFrame {
             }
         });
 
-        kButton5.setText("Xóa");
-        kButton5.setkBorderRadius(0);
-        kButton5.setkEndColor(new java.awt.Color(51, 153, 0));
-        kButton5.setkHoverEndColor(new java.awt.Color(204, 0, 204));
-        kButton5.setkHoverForeGround(new java.awt.Color(255, 204, 255));
-        kButton5.setkHoverStartColor(new java.awt.Color(0, 204, 204));
-        kButton5.setkStartColor(new java.awt.Color(0, 204, 204));
-        kButton5.setPreferredSize(new java.awt.Dimension(80, 30));
-        kButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                kButton5ActionPerformed(evt);
-            }
-        });
-
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Địa chỉ");
 
@@ -345,18 +289,16 @@ public class MangagerPublicser extends javax.swing.JInternalFrame {
                                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel13))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtfilter, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtfilter, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(kGradientPanel2Layout.createSequentialGroup()
                                 .addComponent(kButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(kButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(kButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(kButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                                .addComponent(kButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(kGradientPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addGap(71, 71, 71)
@@ -397,7 +339,6 @@ public class MangagerPublicser extends javax.swing.JInternalFrame {
                     .addComponent(kButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(kButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(kButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(kButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -417,6 +358,11 @@ public class MangagerPublicser extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jTable1MouseReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -433,7 +379,7 @@ public class MangagerPublicser extends javax.swing.JInternalFrame {
         publicser.setPublicserName(txtnhaxuatban.getText());
         publicser.setAddress(txtdiachi.getText());
         publicserDAO.save(publicser);
-        clearTable();
+        Myultis.clearTable(dtfPublicser);
         preapareGUI();
         loadData();
     }//GEN-LAST:event_kButton2ActionPerformed
@@ -446,21 +392,14 @@ public class MangagerPublicser extends javax.swing.JInternalFrame {
         publicser.setPublicserId(getid);
         publicserDAO.update(publicser);
         System.out.println(getid);
-        clearTable();
+        Myultis.clearTable(dtfPublicser);
         preapareGUI();
         loadData();
     }//GEN-LAST:event_kButton3ActionPerformed
 
     private void txtfilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfilterActionPerformed
-        // TODO add your handling code here:
+       
     }//GEN-LAST:event_txtfilterActionPerformed
-
-    private void kButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton5ActionPerformed
-        publicserDAO.delete(publicser);
-        clearTable();
-        preapareGUI();
-        loadData();
-    }//GEN-LAST:event_kButton5ActionPerformed
 
     private void txtdiachiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtdiachiActionPerformed
         // TODO add your handling code here:
@@ -471,12 +410,12 @@ public class MangagerPublicser extends javax.swing.JInternalFrame {
             String msg = (String) jComboBox3.getSelectedItem();
             switch (msg) {
                 case "A-Z":
-                    clearTable();
+                    Myultis.clearTable(dtfPublicser);
                     preapareGUI();
                     sortByASC();
                     break;
                 case "Z-A":
-                    clearTable();
+                    Myultis.clearTable(dtfPublicser);
                     preapareGUI();
                     sortByDESC();
                     break;
@@ -486,14 +425,45 @@ public class MangagerPublicser extends javax.swing.JInternalFrame {
 
     private void txtfilterKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtfilterKeyReleased
         String query = txtfilter.getText();
-        search(query);
+        Myultis.filter(query, dtfPublicser, jTable1);
     }//GEN-LAST:event_txtfilterKeyReleased
 
     private void kButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton6ActionPerformed
-        clearTable();
+        Myultis.clearTable(dtfPublicser);
         preapareGUI();
         loadData();
     }//GEN-LAST:event_kButton6ActionPerformed
+
+    private void jTable1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseReleased
+        if (evt.isPopupTrigger()) {
+            jPopupMenu1.show(jTable1, evt.getX(), evt.getY());
+        }
+    }//GEN-LAST:event_jTable1MouseReleased
+
+    private void jmEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmEditActionPerformed
+        int pos = jTable1.getSelectedRow();
+        lblid.setText(String.valueOf(publicser.getPublicserId()));
+        txtnhaxuatban.setText(publicser.getPublicserName());
+        txtdiachi.setText(publicser.getAddress());
+    }//GEN-LAST:event_jmEditActionPerformed
+
+    private void jmDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmDeleteActionPerformed
+        int pos = jTable1.getSelectedRow();
+        String publicserName = dtfPublicser.getValueAt(pos, 2).toString();
+        int choose = JOptionPane.showConfirmDialog(rootPane, "Bạn chắc chắn muốn xóa " + publicserName, "", JOptionPane.OK_CANCEL_OPTION);
+        if (choose == JOptionPane.OK_OPTION) {
+            idPublicser = dtfPublicser.getValueAt(pos, 0).toString();
+            int id = Integer.valueOf(idPublicser);
+            publicser = new Publicser();
+            publicser.setPublicserId(id);
+            publicserDAO.delete(publicser);
+            Myultis.clearTable(dtfPublicser);
+            preapareGUI();
+            loadData();
+        } else {
+            System.out.println(".");
+        }
+    }//GEN-LAST:event_jmDeleteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -503,11 +473,13 @@ public class MangagerPublicser extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JMenuItem jmDelete;
+    private javax.swing.JMenuItem jmEdit;
     private keeptoo.KButton kButton2;
     private keeptoo.KButton kButton3;
-    private keeptoo.KButton kButton5;
     private keeptoo.KButton kButton6;
     private keeptoo.KGradientPanel kGradientPanel2;
     private javax.swing.JLabel lblid;
