@@ -12,13 +12,14 @@ import dao.impl.AuthorDAO;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import models.Author;
-
+import utils.Myultis;
 
 /**
  *
@@ -30,6 +31,7 @@ public class ManagerAuthor extends javax.swing.JInternalFrame {
     private List<Author> listAuthor = new ArrayList<Author>();
     private IAuthorDAO authorDAO;
     private Author author;
+    private String idAuthor;
 
     /**
      * Creates new form ManagerAuthor
@@ -49,7 +51,7 @@ public class ManagerAuthor extends javax.swing.JInternalFrame {
 
     private void loadData() {
         listAuthor.removeAll(listAuthor);
-        authorDAO = new AuthorDAO();
+        
         listAuthor = authorDAO.getAll();
         Vector v;
 
@@ -63,21 +65,6 @@ public class ManagerAuthor extends javax.swing.JInternalFrame {
 
         jTable1.setModel(dtfAuthor);
 
-        if (listAuthor.size() > 0) {
-            jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-                @Override
-                public void valueChanged(ListSelectionEvent e) {
-                    int pos = jTable1.getSelectedRow();
-                    if (pos < 0) {
-                        pos = 0;
-                    }
-                    author = listAuthor.get(pos);
-                    lblid.setText(String.valueOf(author.getAuthorId()));
-                    txttentacgia.setText(author.getAuthorName());
-                }
-
-            });
-        }
 
     }
 
@@ -106,8 +93,7 @@ public class ManagerAuthor extends javax.swing.JInternalFrame {
                         pos = 0;
                     }
                     author = listAuthor.get(pos);
-                    lblid.setText(String.valueOf(author.getAuthorId()));
-                    txttentacgia.setText(author.getAuthorName());
+
                 }
 
             });
@@ -149,13 +135,6 @@ public class ManagerAuthor extends javax.swing.JInternalFrame {
 
     }
 
-    private void clearTable() {
-        dtfAuthor = new DefaultTableModel();
-        int count = dtfAuthor.getRowCount();
-        for (int i = count - 1; i >= 0; i--) {
-            dtfAuthor.removeRow(i);
-        }
-    }
 
     private void search(String query) {
         TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(dtfAuthor);
@@ -172,6 +151,9 @@ public class ManagerAuthor extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPopupMenu1 = new javax.swing.JPopupMenu();
+        jmEdit = new javax.swing.JMenuItem();
+        jmDelete = new javax.swing.JMenuItem();
         kGradientPanel2 = new keeptoo.KGradientPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -180,13 +162,28 @@ public class ManagerAuthor extends javax.swing.JInternalFrame {
         kButton3 = new keeptoo.KButton();
         txtfilter = new javax.swing.JTextField();
         jComboBox3 = new javax.swing.JComboBox<>();
-        kButton5 = new keeptoo.KButton();
         jLabel10 = new javax.swing.JLabel();
         lblid = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         kButton6 = new keeptoo.KButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+
+        jmEdit.setText("Sửa");
+        jmEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmEditActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(jmEdit);
+
+        jmDelete.setText("Xóa");
+        jmDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmDeleteActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(jmDelete);
 
         setClosable(true);
         setIconifiable(true);
@@ -272,20 +269,6 @@ public class ManagerAuthor extends javax.swing.JInternalFrame {
             }
         });
 
-        kButton5.setText("Xóa");
-        kButton5.setkBorderRadius(0);
-        kButton5.setkEndColor(new java.awt.Color(51, 153, 0));
-        kButton5.setkHoverEndColor(new java.awt.Color(204, 0, 204));
-        kButton5.setkHoverForeGround(new java.awt.Color(255, 204, 255));
-        kButton5.setkHoverStartColor(new java.awt.Color(0, 204, 204));
-        kButton5.setkStartColor(new java.awt.Color(0, 204, 204));
-        kButton5.setPreferredSize(new java.awt.Dimension(80, 30));
-        kButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                kButton5ActionPerformed(evt);
-            }
-        });
-
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Mã tác giả");
 
@@ -332,10 +315,8 @@ public class ManagerAuthor extends javax.swing.JInternalFrame {
                                 .addComponent(kButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(kButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(kButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))))
+                                .addComponent(kButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(kGradientPanel2Layout.createSequentialGroup()
                         .addGap(179, 179, 179)
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -366,7 +347,6 @@ public class ManagerAuthor extends javax.swing.JInternalFrame {
                     .addComponent(kButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(kButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(kButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(kButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -384,6 +364,11 @@ public class ManagerAuthor extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jTable1MouseReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -399,7 +384,7 @@ public class ManagerAuthor extends javax.swing.JInternalFrame {
         author = new Author();
         author.setAuthorName(txttentacgia.getText());
         authorDAO.save(author);
-        clearTable();
+        Myultis.clearTable(dtfAuthor);
         preapareGUI();
         loadData();
 
@@ -411,7 +396,7 @@ public class ManagerAuthor extends javax.swing.JInternalFrame {
         author.setAuthorName(txttentacgia.getText());
         author.setAuthorId(getid);
         authorDAO.update(author);
-        clearTable();
+        Myultis.clearTable(dtfAuthor);
         preapareGUI();
         loadData();
     }//GEN-LAST:event_kButton3ActionPerformed
@@ -420,24 +405,17 @@ public class ManagerAuthor extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtfilterActionPerformed
 
-    private void kButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton5ActionPerformed
-        authorDAO.delete(author);
-        clearTable();
-        preapareGUI();
-        loadData();
-    }//GEN-LAST:event_kButton5ActionPerformed
-
     private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
         if (evt.getSource() == jComboBox3) {
             String msg = (String) jComboBox3.getSelectedItem();
             switch (msg) {
                 case "A-Z":
-                    clearTable();
+                    Myultis.clearTable(dtfAuthor);
                     preapareGUI();
                     sortByASC();
                     break;
                 case "Z-A":
-                    clearTable();
+                    Myultis.clearTable(dtfAuthor);
                     preapareGUI();
                     sortByDESC();
                     break;
@@ -451,10 +429,42 @@ public class ManagerAuthor extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtfilterKeyReleased
 
     private void kButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton6ActionPerformed
-        clearTable();
+        Myultis.clearTable(dtfAuthor);
         preapareGUI();
         loadData();
     }//GEN-LAST:event_kButton6ActionPerformed
+
+    private void jmEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmEditActionPerformed
+        int pos = jTable1.getSelectedRow();
+        idAuthor = dtfAuthor.getValueAt(pos, 0).toString();
+        String authorName = dtfAuthor.getValueAt(pos, 1).toString();
+        lblid.setText(idAuthor);
+        txttentacgia.setText(authorName);
+    }//GEN-LAST:event_jmEditActionPerformed
+
+    private void jmDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmDeleteActionPerformed
+        int pos = jTable1.getSelectedRow();
+        String authorName = dtfAuthor.getValueAt(pos, 1).toString();
+        int choose = JOptionPane.showConfirmDialog(rootPane, "Bạn chắc chắn muốn xóa " + authorName, "", JOptionPane.OK_CANCEL_OPTION);
+        if (choose == JOptionPane.OK_OPTION) {
+            idAuthor = dtfAuthor.getValueAt(pos, 0).toString();
+            int id = Integer.valueOf(idAuthor);
+            author = new Author();
+            author.setAuthorId(id);
+            authorDAO.delete(author);
+            Myultis.clearTable(dtfAuthor);
+            preapareGUI();
+            loadData();
+        } else {
+            System.out.println(".");
+        }
+    }//GEN-LAST:event_jmDeleteActionPerformed
+
+    private void jTable1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseReleased
+        if (evt.isPopupTrigger()) {
+            jPopupMenu1.show(jTable1, evt.getX(), evt.getY());
+        }
+    }//GEN-LAST:event_jTable1MouseReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -463,11 +473,13 @@ public class ManagerAuthor extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JMenuItem jmDelete;
+    private javax.swing.JMenuItem jmEdit;
     private keeptoo.KButton kButton2;
     private keeptoo.KButton kButton3;
-    private keeptoo.KButton kButton5;
     private keeptoo.KButton kButton6;
     private keeptoo.KGradientPanel kGradientPanel2;
     private javax.swing.JLabel lblid;

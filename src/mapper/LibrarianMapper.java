@@ -9,13 +9,12 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import models.Librarian;
+
 /**
  *
  * @author admin
  */
-public class LibrarianMapper implements RowMapper<Librarian>{
-
-    
+public class LibrarianMapper implements RowMapper<Librarian> {
     
     @Override
     public Librarian mapRow(ResultSet rs) {
@@ -23,13 +22,14 @@ public class LibrarianMapper implements RowMapper<Librarian>{
         try {
             librarian.setLibrarianId(rs.getInt("LibrarianID"));
             librarian.setLibrarianName(rs.getNString("LibrarianName"));
+            librarian.setUserName(rs.getNString("UserName"));
+            librarian.setPassword(rs.getNString("Password"));
             librarian.setPhone(rs.getString("Phone"));
             librarian.setAddress(rs.getNString("Address"));
             librarian.setGender(rs.getInt("Gender"));
-            Date cDate = rs.getDate("CreatedDate");
-            librarian.setCreatedDate(cDate.toLocalDate());
             librarian.setPermission(rs.getInt("Permission"));
-            librarian.setStatus(rs.getInt("Status"));
+            Date date = rs.getDate("CreatedDate");
+            librarian.setCreatedDate(date.toLocalDate());
             return librarian;
         } catch (SQLException ex) {
             return null;
