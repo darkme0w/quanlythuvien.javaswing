@@ -659,7 +659,7 @@ public class CreateBook extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        System.out.println("abc");
+
         Float price = Float.valueOf(jtBPrice.getText());
         int quantity = Integer.valueOf(jQuantity.getText());
         int id = Integer.valueOf(idBook);

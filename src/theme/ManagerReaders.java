@@ -5,6 +5,16 @@
  */
 package theme;
 
+import dao.IReaderDAO;
+import dao.impl.ReaderDAO;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import models.Reader;
+import utils.Myultis;
+
 /**
  *
  * @author admin
@@ -14,8 +24,151 @@ public class ManagerReaders extends javax.swing.JInternalFrame {
     /**
      * Creates new form ManagerReaders
      */
+
+    
+    private DefaultTableModel dftbReader;
+    //Reader
+    private List<Reader> listReader = new ArrayList<Reader>();
+    private IReaderDAO readerDAO;
+    private Reader reader;
+
+    private String idReader;
+
     public ManagerReaders() {
         initComponents();
+        readerDAO = new ReaderDAO();
+        preapareGUI();
+        loadData();
+    }
+
+    private void preapareGUI() {
+        dftbReader = new DefaultTableModel();
+        dftbReader.addColumn("ID");
+        dftbReader.addColumn("Tên độc giả");
+        dftbReader.addColumn("Số điện thoại");
+        dftbReader.addColumn("Email");
+        dftbReader.addColumn("Địa chỉ");
+        dftbReader.addColumn("Số tiền");
+        dftbReader.addColumn("Giới tính");
+        dftbReader.addColumn("Trạng thái");
+        dftbReader.addColumn("Ngày tạo");
+    }
+
+    private void loadData() {
+
+        listReader = readerDAO.getAll();
+        Vector v;
+
+        for (Reader reader : listReader) {
+            v = new Vector();
+            v.add(reader.getReaderId());
+            v.add(reader.getReaderName());
+            v.add(reader.getPhone());
+            v.add(reader.getEmail());
+            v.add(reader.getAddress());
+            v.add(reader.getAccount());
+            if (reader.getGender() == 1) {
+                v.add("Nam");
+            } else {
+                v.add("Nữ");
+            }
+            if (reader.getStatus() == 1) {
+                v.add("Được phép");
+            } else {
+                v.add("Bị cấm");
+            }
+            v.add(reader.getCreatedDate());
+
+            dftbReader.addRow(v);
+        }
+        jTable1.setModel(dftbReader);
+        
+
+        
+    }
+
+    private void sortByASC() {
+        listReader.removeAll(listReader);
+        listReader = readerDAO.getAll();
+        Vector v;
+
+        for (Reader reader : listReader) {
+            v = new Vector();
+            v.add(reader.getReaderId());
+            v.add(reader.getReaderName());
+            v.add(reader.getPhone());
+            v.add(reader.getEmail());
+            v.add(reader.getAddress());
+            v.add(reader.getAccount());
+            if (reader.getGender() == 1) {
+                v.add("Nam");
+            } else {
+                v.add("Nữ");
+            }
+            if (reader.getStatus() == 1) {
+                v.add("Được phép");
+            } else {
+                v.add("Bị cấm");
+            }
+            v.add(reader.getCreatedDate());
+
+            dftbReader.addRow(v);
+        }
+
+//        listBook.forEach(s->System.out.println(s.toString()));
+        jTable1.setModel(dftbReader);
+    }
+
+    private void sortByDESC() {
+        listReader.removeAll(listReader);
+        listReader = readerDAO.getAll();
+        Vector v;
+
+        for (Reader reader : listReader) {
+            v = new Vector();
+            v.add(reader.getReaderId());
+            v.add(reader.getReaderName());
+            v.add(reader.getPhone());
+            v.add(reader.getEmail());
+            v.add(reader.getAddress());
+            v.add(reader.getAccount());
+            if (reader.getGender() == 1) {
+                v.add("Nam");
+            } else {
+                v.add("Nữ");
+            }
+            if (reader.getStatus() == 1) {
+                v.add("Được phép");
+            } else {
+                v.add("Bị cấm");
+            }
+            v.add(reader.getCreatedDate());
+
+            dftbReader.addRow(v);
+        }
+
+//        listBook.forEach(s->System.out.println(s.toString()));
+        jTable1.setModel(dftbReader);
+    }
+
+    private int getValueRadioGender() {
+        if (rdNam.isSelected()) {
+            return 1;
+        } else if (rdNu.isSelected()) {
+            return 0;
+        } else {
+            return 0;
+        }
+    }
+
+    private int getValueRadioStatus() {
+        if (rdConfirm.isSelected()) {
+            return 1;
+        } else if (rdBan.isSelected()) {
+            return 0;
+        } else {
+            return 0;
+        }
     }
 
     /**
@@ -28,43 +181,62 @@ public class ManagerReaders extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
+        jPopupMenu1 = new javax.swing.JPopupMenu();
+        jmnEdit = new javax.swing.JMenuItem();
+        jmnDelete = new javax.swing.JMenuItem();
         kGradientPanel1 = new keeptoo.KGradientPanel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtName = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        txtPhone = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        txtEmail = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
+        txtAddress = new javax.swing.JTextField();
+        txtMoney = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
         jLabel16 = new javax.swing.JLabel();
-        kButton2 = new keeptoo.KButton();
-        kButton3 = new keeptoo.KButton();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        btnAdd = new keeptoo.KButton();
+        btnEdit = new keeptoo.KButton();
+        rdBan = new javax.swing.JRadioButton();
+        rdConfirm = new javax.swing.JRadioButton();
+        rdNu = new javax.swing.JRadioButton();
+        rdNam = new javax.swing.JRadioButton();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jComboBox3 = new javax.swing.JComboBox<>();
-        kButton5 = new keeptoo.KButton();
         kButton6 = new keeptoo.KButton();
         jTextField1 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
+        jmnEdit.setText("Sửa");
+        jmnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmnEditActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(jmnEdit);
+
+        jmnDelete.setText("Xóa");
+        jmnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmnDeleteActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(jmnDelete);
+
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
+        setPreferredSize(new java.awt.Dimension(1100, 580));
 
         kGradientPanel1.setkBorderRadius(0);
         kGradientPanel1.setkEndColor(new java.awt.Color(51, 153, 0));
@@ -77,105 +249,127 @@ public class ManagerReaders extends javax.swing.JInternalFrame {
         jLabel6.setText("Quản lý độc giả");
         jLabel6.setPreferredSize(new java.awt.Dimension(215, 29));
 
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Tài khoản");
-
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Tài khoản");
+        jLabel9.setText("Họ và tên");
 
-        jTextField2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
-        jTextField2.setCaretColor(new java.awt.Color(204, 0, 255));
-        jTextField2.setBackground(new java.awt.Color(0,0,0,0));
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        txtName.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtName.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        txtName.setCaretColor(new java.awt.Color(204, 0, 255));
+        txtName.setBackground(new java.awt.Color(0,0,0,0));
+        txtName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                txtNameActionPerformed(evt);
+            }
+        });
+        txtName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNameKeyReleased(evt);
             }
         });
 
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("Tài khoản");
+        jLabel10.setText("Số điện thoại");
 
-        jTextField3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField3.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
-        jTextField3.setCaretColor(new java.awt.Color(204, 0, 255));
-        jTextField3.setBackground(new java.awt.Color(0,0,0,0));
+        txtPhone.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtPhone.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        txtPhone.setCaretColor(new java.awt.Color(204, 0, 255));
+        txtPhone.setBackground(new java.awt.Color(0,0,0,0));
+        txtPhone.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPhoneKeyReleased(evt);
+            }
+        });
 
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Tài khoản");
+        jLabel11.setText("Email");
 
-        jTextField4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField4.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
-        jTextField4.setCaretColor(new java.awt.Color(204, 0, 255));
-        jTextField4.setBackground(new java.awt.Color(0,0,0,0));
+        txtEmail.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtEmail.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        txtEmail.setCaretColor(new java.awt.Color(204, 0, 255));
+        txtEmail.setBackground(new java.awt.Color(0,0,0,0));
+        txtEmail.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtEmailKeyReleased(evt);
+            }
+        });
 
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setText("Tài khoản");
+        jLabel12.setText("Địa chỉ");
 
-        jTextField5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField5.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
-        jTextField5.setCaretColor(new java.awt.Color(204, 0, 255));
-        jTextField5.setBackground(new java.awt.Color(0,0,0,0));
+        txtAddress.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtAddress.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        txtAddress.setCaretColor(new java.awt.Color(204, 0, 255));
+        txtAddress.setBackground(new java.awt.Color(0,0,0,0));
+        txtAddress.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtAddressKeyReleased(evt);
+            }
+        });
 
-        jTextField6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField6.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
-        jTextField6.setCaretColor(new java.awt.Color(204, 0, 255));
-        jTextField6.setBackground(new java.awt.Color(0,0,0,0));
+        txtMoney.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtMoney.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        txtMoney.setCaretColor(new java.awt.Color(204, 0, 255));
+        txtMoney.setBackground(new java.awt.Color(0,0,0,0));
+        txtMoney.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtMoneyKeyReleased(evt);
+            }
+        });
 
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel13.setText("Tài khoản");
+        jLabel13.setText("Số tiền");
 
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel14.setText("Tài khoản");
-
-        jTextField7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField7.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
-        jTextField7.setCaretColor(new java.awt.Color(204, 0, 255));
-        jTextField7.setBackground(new java.awt.Color(0,0,0,0));
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.setPreferredSize(new java.awt.Dimension(100, 25));
+        jLabel14.setText("Giới tính");
 
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel16.setText("Tài khoản");
+        jLabel16.setText("Trạng thái");
 
-        kButton2.setText("Thêm");
-        kButton2.setkBorderRadius(40);
-        kButton2.setkEndColor(new java.awt.Color(0, 204, 204));
-        kButton2.setkFillButton(false);
-        kButton2.setkHoverEndColor(new java.awt.Color(204, 0, 204));
-        kButton2.setkHoverForeGround(new java.awt.Color(255, 204, 255));
-        kButton2.setkHoverStartColor(new java.awt.Color(0, 204, 204));
-        kButton2.setkStartColor(new java.awt.Color(255, 255, 255));
-        kButton2.setPreferredSize(new java.awt.Dimension(80, 30));
-        kButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnAdd.setText("Thêm");
+        btnAdd.setkBorderRadius(40);
+        btnAdd.setkEndColor(new java.awt.Color(0, 204, 204));
+        btnAdd.setkFillButton(false);
+        btnAdd.setkHoverEndColor(new java.awt.Color(204, 0, 204));
+        btnAdd.setkHoverForeGround(new java.awt.Color(255, 204, 255));
+        btnAdd.setkHoverStartColor(new java.awt.Color(0, 204, 204));
+        btnAdd.setkStartColor(new java.awt.Color(255, 255, 255));
+        btnAdd.setPreferredSize(new java.awt.Dimension(80, 30));
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                kButton2ActionPerformed(evt);
+                btnAddActionPerformed(evt);
             }
         });
 
-        kButton3.setText("Sửa");
-        kButton3.setkBorderRadius(40);
-        kButton3.setkEndColor(new java.awt.Color(0, 204, 204));
-        kButton3.setkFillButton(false);
-        kButton3.setkHoverEndColor(new java.awt.Color(204, 0, 204));
-        kButton3.setkHoverForeGround(new java.awt.Color(255, 204, 255));
-        kButton3.setkHoverStartColor(new java.awt.Color(0, 204, 204));
-        kButton3.setkStartColor(new java.awt.Color(255, 255, 255));
-        kButton3.setPreferredSize(new java.awt.Dimension(80, 30));
-        kButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnEdit.setText("Sửa");
+        btnEdit.setkBorderRadius(40);
+        btnEdit.setkEndColor(new java.awt.Color(0, 204, 204));
+        btnEdit.setkFillButton(false);
+        btnEdit.setkHoverEndColor(new java.awt.Color(204, 0, 204));
+        btnEdit.setkHoverForeGround(new java.awt.Color(255, 204, 255));
+        btnEdit.setkHoverStartColor(new java.awt.Color(0, 204, 204));
+        btnEdit.setkStartColor(new java.awt.Color(255, 255, 255));
+        btnEdit.setPreferredSize(new java.awt.Dimension(80, 30));
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                kButton3ActionPerformed(evt);
+                btnEditActionPerformed(evt);
             }
         });
 
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setText("Bị cấm");
-        jRadioButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        buttonGroup1.add(rdBan);
+        rdBan.setText("Bị cấm");
+        rdBan.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setText("Được phép");
-        jRadioButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        buttonGroup1.add(rdConfirm);
+        rdConfirm.setSelected(true);
+        rdConfirm.setText("Được phép");
+        rdConfirm.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        buttonGroup2.add(rdNu);
+        rdNu.setText("Nữ");
+
+        buttonGroup2.add(rdNam);
+        rdNam.setSelected(true);
+        rdNam.setText("Nam");
 
         javax.swing.GroupLayout kGradientPanel1Layout = new javax.swing.GroupLayout(kGradientPanel1);
         kGradientPanel1.setLayout(kGradientPanel1Layout);
@@ -188,84 +382,80 @@ public class ManagerReaders extends javax.swing.JInternalFrame {
             .addGroup(kGradientPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtPhone)
+                    .addComponent(txtEmail)
+                    .addComponent(txtAddress)
+                    .addComponent(txtMoney)
+                    .addComponent(txtName)
                     .addGroup(kGradientPanel1Layout.createSequentialGroup()
                         .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField3)
-                            .addComponent(jTextField4)
-                            .addComponent(jTextField5)
-                            .addComponent(jTextField6)
-                            .addComponent(jTextField7)
-                            .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jRadioButton1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jRadioButton2)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jTextField2))
-                        .addContainerGap())
-                    .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel16)
-                        .addGap(92, 92, 92))
-                    .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                        .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                                .addComponent(kButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(kButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel16)
                             .addComponent(jLabel9)
                             .addComponent(jLabel10)
                             .addComponent(jLabel11)
                             .addComponent(jLabel12)
                             .addComponent(jLabel13)
-                            .addComponent(jLabel14))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jLabel14)
+                            .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(rdNam, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(rdConfirm, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)))
+                                .addGap(18, 18, 18)
+                                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(rdBan, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
+                                        .addComponent(rdNu, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         kGradientPanel1Layout.setVerticalGroup(
             kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(kGradientPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel16))
-                .addGap(1, 1, 1)
-                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel11)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel13)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtMoney, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(13, 13, 13)
                 .addComponent(jLabel14)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(71, 71, 71)
+                .addGap(6, 6, 6)
                 .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(kButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(kButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(23, Short.MAX_VALUE))
+                    .addComponent(rdNam)
+                    .addComponent(rdNu))
+                .addGap(17, 17, 17)
+                .addComponent(jLabel16)
+                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(rdBan))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(rdConfirm)))
+                .addGap(18, 18, 18)
+                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         getContentPane().add(kGradientPanel1, java.awt.BorderLayout.LINE_START);
@@ -288,7 +478,7 @@ public class ManagerReaders extends javax.swing.JInternalFrame {
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 445, Short.MAX_VALUE)
+            .addGap(0, 488, Short.MAX_VALUE)
         );
 
         jPanel3.add(jPanel4, java.awt.BorderLayout.LINE_START);
@@ -298,21 +488,6 @@ public class ManagerReaders extends javax.swing.JInternalFrame {
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sắp xếp", "A-Z", "Z-A" }));
         jComboBox3.setPreferredSize(new java.awt.Dimension(80, 30));
         jPanel5.add(jComboBox3);
-
-        kButton5.setText("Xóa");
-        kButton5.setkBorderRadius(0);
-        kButton5.setkEndColor(new java.awt.Color(51, 153, 0));
-        kButton5.setkHoverEndColor(new java.awt.Color(204, 0, 204));
-        kButton5.setkHoverForeGround(new java.awt.Color(255, 204, 255));
-        kButton5.setkHoverStartColor(new java.awt.Color(0, 204, 204));
-        kButton5.setkStartColor(new java.awt.Color(0, 204, 204));
-        kButton5.setPreferredSize(new java.awt.Dimension(80, 30));
-        kButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                kButton5ActionPerformed(evt);
-            }
-        });
-        jPanel5.add(kButton5);
 
         kButton6.setText("Tìm kiếm");
         kButton6.setkBorderRadius(0);
@@ -334,19 +509,23 @@ public class ManagerReaders extends javax.swing.JInternalFrame {
 
         jPanel3.add(jPanel5, java.awt.BorderLayout.PAGE_START);
 
-        jTable1.setForeground(new java.awt.Color(255, 255, 255));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Id", "Tên độc giả", "Số điện thoại", "Email", "Địa chỉ", "Số tiền ", "Giới tính ", "Trạng thái", "Ngày tạo"
             }
         ));
         jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jTable1MouseReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jPanel3.add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -358,30 +537,121 @@ public class ManagerReaders extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void txtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_txtNameActionPerformed
 
-    private void kButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_kButton2ActionPerformed
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        Float money = Float.valueOf(txtMoney.getText());
+        int gender = getValueRadioGender();
+        int status = getValueRadioStatus();
+        String name = txtName.getText();
+        String email = txtEmail.getText();
+        String address = txtAddress.getText();
+        String phone = txtPhone.getText();
+        reader = new Reader(name, phone, email, address, money, status, gender);
+        readerDAO.save(reader);
 
-    private void kButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_kButton3ActionPerformed
+        Myultis.clearTable(dftbReader);
+        preapareGUI();
+        loadData();
+    }//GEN-LAST:event_btnAddActionPerformed
 
-    private void kButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_kButton5ActionPerformed
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        Float money = Float.valueOf(txtMoney.getText());
+        int gender = getValueRadioGender();
+        int status = getValueRadioStatus();
+        int id = Integer.valueOf(idReader);
+        String name = txtName.getText();
+        String email = txtEmail.getText();
+        String address = txtAddress.getText();
+        String phone = txtPhone.getText();
+        reader = new Reader(id, name, phone, email, address, money, status, gender);
+        readerDAO.update(reader);
+
+        Myultis.clearTable(dftbReader);
+        preapareGUI();
+        loadData();
+    }//GEN-LAST:event_btnEditActionPerformed
 
     private void kButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton6ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_kButton6ActionPerformed
 
+    private void jmnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnEditActionPerformed
+        int pos = jTable1.getSelectedRow();
+        idReader = dftbReader.getValueAt(pos, 0).toString();
+        txtName.setText(dftbReader.getValueAt(pos, 1).toString());
+        txtPhone.setText(dftbReader.getValueAt(pos, 2).toString());
+        txtEmail.setText(dftbReader.getValueAt(pos, 3).toString());
+        txtAddress.setText(dftbReader.getValueAt(pos, 4).toString());
+        txtMoney.setText(dftbReader.getValueAt(pos, 5).toString());
+        if (dftbReader.getValueAt(pos, 6).toString().equals(rdNam.getActionCommand())) {
+            rdNam.setSelected(true);
+        } else if (dftbReader.getValueAt(pos, 6).toString().equals(rdNu.getActionCommand())) {
+            rdNu.setSelected(true);
+        } else {
+            rdNu.setSelected(true);
+        }
+        if (dftbReader.getValueAt(pos, 7).toString().equals(rdConfirm.getActionCommand())) {
+            rdConfirm.setSelected(true);
+        } else if (dftbReader.getValueAt(pos, 7).toString().equals(rdBan.getActionCommand())) {
+            rdBan.setSelected(true);
+        } else {
+            rdBan.setSelected(true);
+        }
+    }//GEN-LAST:event_jmnEditActionPerformed
+
+    private void jmnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnDeleteActionPerformed
+        int pos = jTable1.getSelectedRow();
+        String readerName = dftbReader.getValueAt(pos, 1).toString();
+        int choose = JOptionPane.showConfirmDialog(rootPane, "Bạn chắc chắn muốn xóa " + readerName, "", JOptionPane.OK_CANCEL_OPTION);
+        if (choose == JOptionPane.OK_OPTION) {
+            idReader = dftbReader.getValueAt(pos, 0).toString();
+            int id = Integer.valueOf(idReader);
+            reader = new Reader();
+            reader.setReaderId(id);
+            readerDAO.delete(reader);
+            Myultis.clearTable(dftbReader);
+            preapareGUI();
+            loadData();
+        } else {
+            System.out.println(".");
+        }
+    }//GEN-LAST:event_jmnDeleteActionPerformed
+
+    private void txtNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNameKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNameKeyReleased
+
+    private void txtPhoneKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPhoneKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPhoneKeyReleased
+
+    private void txtEmailKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEmailKeyReleased
+
+    private void txtAddressKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAddressKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtAddressKeyReleased
+
+    private void txtMoneyKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMoneyKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtMoneyKeyReleased
+
+    private void jTable1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseReleased
+        if (evt.isPopupTrigger()) {
+            jPopupMenu1.show(jTable1, evt.getX(), evt.getY());
+        }
+    }//GEN-LAST:event_jTable1MouseReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private keeptoo.KButton btnAdd;
+    private keeptoo.KButton btnEdit;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -390,28 +660,28 @@ public class ManagerReaders extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private keeptoo.KButton kButton2;
-    private keeptoo.KButton kButton3;
-    private keeptoo.KButton kButton5;
+    private javax.swing.JMenuItem jmnDelete;
+    private javax.swing.JMenuItem jmnEdit;
     private keeptoo.KButton kButton6;
     private keeptoo.KGradientPanel kGradientPanel1;
+    private javax.swing.JRadioButton rdBan;
+    private javax.swing.JRadioButton rdConfirm;
+    private javax.swing.JRadioButton rdNam;
+    private javax.swing.JRadioButton rdNu;
+    private javax.swing.JTextField txtAddress;
+    private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtMoney;
+    private javax.swing.JTextField txtName;
+    private javax.swing.JTextField txtPhone;
     // End of variables declaration//GEN-END:variables
 }

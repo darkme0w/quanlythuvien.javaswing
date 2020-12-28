@@ -36,6 +36,32 @@ public class Reader {
         this.gender = gender;
     }
 
+    public Reader(int readerId, String readerName, String phone, String email, String address, float account, int status, int gender) {
+        this.readerId = readerId;
+        this.readerName = readerName;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.account = account;
+        this.status = status;
+        this.gender = gender;
+    }
+
+    public Reader(int readerId, String readerName, String phone, String email, String address, float account, int status, int gender, LocalDate createdDate) {
+        this.readerId = readerId;
+        this.readerName = readerName;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.account = account;
+        this.status = status;
+        this.gender = gender;
+        this.createdDate = createdDate;
+    }
+
+    
+    
+    
     public int getReaderId() {
         return readerId;
     }

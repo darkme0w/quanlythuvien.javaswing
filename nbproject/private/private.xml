@@ -2,6 +2,12 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/phamh/OneDrive/Documents/NetBeansProjects/quanlythuvien.javaswing/src/dao/impl/ReaderDAO.java</file>
+            <file>file:/C:/Users/phamh/OneDrive/Documents/NetBeansProjects/quanlythuvien.javaswing/src/dao/impl/AbstractDAO.java</file>
+            <file>file:/C:/Users/phamh/OneDrive/Documents/NetBeansProjects/quanlythuvien.javaswing/src/mapper/RowMapper.java</file>
+            <file>file:/C:/Users/phamh/OneDrive/Documents/NetBeansProjects/quanlythuvien.javaswing/src/mapper/ReaderMapper.java</file>
+            <file>file:/C:/Users/phamh/OneDrive/Documents/NetBeansProjects/quanlythuvien.javaswing/src/theme/ManagerReaders.java</file>
+        </group>
     </open-files>
 </project-private>
