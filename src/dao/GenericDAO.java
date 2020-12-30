@@ -16,4 +16,5 @@ public interface GenericDAO<T> {
        <T> List <T> query(String sql, RowMapper<T> rowMapper, Object... parameter);
        void update(String sql, Object... parameters);
        void insert(String sql, Object... parameters);
+       Integer insertReturnId(String sql, Object... parameters);
 }

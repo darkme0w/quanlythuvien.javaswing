@@ -5,6 +5,7 @@
  */
 package dao;
 
+import java.util.List;
 import models.Bills;
 
 /**
@@ -12,5 +13,9 @@ import models.Bills;
  * @author admin
  */
 public interface IBillsDAO extends GenericDAO<Bills>{
-    
+    List<Bills> getAll();
+    Bills findOne(Integer id);
+    Integer save(Bills bills);
+    void update(Bills bills);
+    void delete(Bills bills);
 }
