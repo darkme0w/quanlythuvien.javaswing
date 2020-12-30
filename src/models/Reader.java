@@ -133,6 +133,11 @@ public class Reader {
     public void setCreatedDate(LocalDate createdDate) {
         this.createdDate = createdDate;
     }
+
+    @Override
+    public String toString() {
+        return this.phone;
+    }
     
     
 }

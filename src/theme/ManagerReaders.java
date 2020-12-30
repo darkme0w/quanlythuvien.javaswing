@@ -212,7 +212,7 @@ public class ManagerReaders extends javax.swing.JInternalFrame {
         jPanel5 = new javax.swing.JPanel();
         jComboBox3 = new javax.swing.JComboBox<>();
         kButton6 = new keeptoo.KButton();
-        jTextField1 = new javax.swing.JTextField();
+        txtSearch = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
@@ -504,8 +504,18 @@ public class ManagerReaders extends javax.swing.JInternalFrame {
         });
         jPanel5.add(kButton6);
 
-        jTextField1.setPreferredSize(new java.awt.Dimension(200, 30));
-        jPanel5.add(jTextField1);
+        txtSearch.setPreferredSize(new java.awt.Dimension(200, 30));
+        txtSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSearchActionPerformed(evt);
+            }
+        });
+        txtSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtSearchKeyReleased(evt);
+            }
+        });
+        jPanel5.add(txtSearch);
 
         jPanel3.add(jPanel5, java.awt.BorderLayout.PAGE_START);
 
@@ -646,6 +656,15 @@ public class ManagerReaders extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jTable1MouseReleased
 
+    private void txtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSearchActionPerformed
+
+    private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
+        String query = txtSearch.getText();
+        Myultis.filter(query, dftbReader, jTable1);
+    }//GEN-LAST:event_txtSearchKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private keeptoo.KButton btnAdd;
@@ -669,7 +688,6 @@ public class ManagerReaders extends javax.swing.JInternalFrame {
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JMenuItem jmnDelete;
     private javax.swing.JMenuItem jmnEdit;
     private keeptoo.KButton kButton6;
@@ -683,5 +701,6 @@ public class ManagerReaders extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtMoney;
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtPhone;
+    private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 }

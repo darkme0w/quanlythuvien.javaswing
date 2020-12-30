@@ -20,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
 import models.Book;
 import models.Location;
 import models.Publicser;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import utils.Myultis;
 
 /**
@@ -64,12 +65,12 @@ public class CreateBook extends javax.swing.JInternalFrame {
         listLocation = locationDAO.getAll();
         for (Location location1 : listLocation) {
             cbLocation.addItem(location1);
-
         }
         for (Publicser publicser1 : listPublicser) {
             cbPublicser.addItem(publicser1);
         }
-
+        AutoCompleteDecorator.decorate(cbLocation);
+        AutoCompleteDecorator.decorate(cbPublicser);
     }
 
     private void preapareGUI() {
@@ -368,7 +369,6 @@ public class CreateBook extends javax.swing.JInternalFrame {
         });
 
         btnEdit.setText("Sửa");
-        btnEdit.setEnabled(false);
         btnEdit.setkBorderRadius(40);
         btnEdit.setkEndColor(new java.awt.Color(0, 204, 204));
         btnEdit.setkFillButton(false);
@@ -647,12 +647,12 @@ public class CreateBook extends javax.swing.JInternalFrame {
                 Myultis.clearTable(dftbBook);
                 preapareGUI();
                 loadData();
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(rootPane, "Vui lòng xem lại các trường dữ liệu");
             }
 
         } else {
-             JOptionPane.showMessageDialog(rootPane, "Hãy nhập đủ các trường trước khi thêm");
+            JOptionPane.showMessageDialog(rootPane, "Hãy nhập đủ các trường trước khi thêm");
         }
 
 
