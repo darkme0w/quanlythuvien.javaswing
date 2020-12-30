@@ -7,32 +7,37 @@ package theme;
 
 import dao.ILibrarianDAO;
 import dao.impl.LibrarianDAO;
-import java.awt.Color;
-import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import models.Librarian;
 
 /**
  *
  * @author admin
  */
-public class Login extends javax.swing.JFrame {
+public class Login extends javax.swing.JDialog {
 
-    /**
-     * Creates new form Login
-     */
     private List<Librarian> listLibrarian = new ArrayList<Librarian>();
     private ILibrarianDAO librarianDAO;
     private Librarian librarian;
-    
-    public Login() {
+    private boolean checkdn = false;
+
+    /**
+     * Creates new form NewJDialog
+     */
+    public Login(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
         librarianDAO = new LibrarianDAO();
+    }
+
+    public Login() {
+
+    }
+
+    public boolean icheck() {
+        return checkdn;
     }
 
     /**
@@ -54,19 +59,8 @@ public class Login extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         btn_exit = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setLocationByPlatform(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
-        addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseDragged(java.awt.event.MouseEvent evt) {
-                formMouseDragged(evt);
-            }
-        });
-        addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                formMousePressed(evt);
-            }
-        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         login.setkEndColor(new java.awt.Color(51, 153, 0));
@@ -87,7 +81,7 @@ public class Login extends javax.swing.JFrame {
         txtuser.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         txtuser.setCaretColor(new java.awt.Color(204, 0, 255));
         txtuser.setOpaque(false);
-        txtuser.setBackground(new Color(0,0,0,0));
+        txtuser.setBackground(new java.awt.Color(0,0,0,0) );
         txtuser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtuserActionPerformed(evt);
@@ -98,8 +92,8 @@ public class Login extends javax.swing.JFrame {
         txtpassword.setForeground(new java.awt.Color(255, 255, 255));
         txtpassword.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         txtpassword.setCaretColor(new java.awt.Color(204, 0, 255));
+        txtpassword.setBackground(new java.awt.Color(0,0,0,0) );
         txtpassword.setOpaque(false);
-        txtpassword.setBackground(new Color(0,0,0,0));
 
         jLabel1.setForeground(new java.awt.Color(204, 204, 204));
         jLabel1.setText("Tài khoản");
@@ -198,44 +192,39 @@ public class Login extends javax.swing.JFrame {
 
     }//GEN-LAST:event_txtuserActionPerformed
 
+    private void btnloginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnloginActionPerformed
+        listLibrarian = librarianDAO.getAll();
+        char[] getpassword = txtpassword.getPassword();
+        String getuser = txtuser.getText();
+        for (Librarian librarian : listLibrarian) {
+            System.out.println(librarian.getUserName());
+            System.out.println(librarian.getPassword());
+            if (librarian.getUserName().equals(getuser) && librarian.getPassword().equals(String.valueOf(getpassword))) {
+                checkdn = true;
+                Login lg = new Login();
+
+                lg.dispose();
+                
+                System.out.println("dang nhap thanh cong");
+                new Home().setVisible(true);
+            }
+        }
+
+
+    }//GEN-LAST:event_btnloginActionPerformed
+
     private void btn_exitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_exitMouseClicked
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_btn_exitMouseClicked
 
-    private void formMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseDragged
+    private void loginMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginMouseDragged
         // TODO add your handling code here:
-
-    }//GEN-LAST:event_formMouseDragged
-
-    private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_formMousePressed
+    }//GEN-LAST:event_loginMouseDragged
 
     private void loginMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginMousePressed
         // TODO add your handling code here:
     }//GEN-LAST:event_loginMousePressed
-
-    private void loginMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginMouseDragged
-        // TODO add your handling code here:     
-    }//GEN-LAST:event_loginMouseDragged
-
-    private void btnloginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnloginActionPerformed
-        listLibrarian = librarianDAO.getAll();
-        for (Librarian librarian : listLibrarian) {
-            char[] getpassword = txtpassword.getPassword();
-            String getuser = txtuser.getText();
-            if (librarian.getUserName().equals(getuser)&&librarian.getPassword().equals(String.valueOf(getpassword))) {
-                Home home = new Home();
-                home.setVisible(true);
-                Login login = new Login();
-                login.setVisible(false);
-                dispose();
-            }
-        }
-
-    }//GEN-LAST:event_btnloginActionPerformed
 
     /**
      * @param args the command line arguments
@@ -263,11 +252,19 @@ public class Login extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
-        /* Create and display the form */
+        /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login().setVisible(true);
+                Login dialog = new Login(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }
@@ -279,8 +276,8 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private keeptoo.KGradientPanel login;
-    private javax.swing.JPasswordField txtpassword;
-    private javax.swing.JTextField txtuser;
+    public static keeptoo.KGradientPanel login;
+    public static javax.swing.JPasswordField txtpassword;
+    public static javax.swing.JTextField txtuser;
     // End of variables declaration//GEN-END:variables
 }

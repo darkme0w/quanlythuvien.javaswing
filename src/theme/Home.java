@@ -20,10 +20,15 @@ public class Home extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         //this.setExtendedState(Home.MAXIMIZED_BOTH); 
-        Login login = new Login();
-        if (rootPaneCheckingEnabled) {
-            
-        }
+//        Login login = new Login(this, true);
+//        login.setVisible(true);
+//        if (login.icheck() == true) {
+//            login.dispose();
+//            Home home = new Home();
+//            home.initComponents();
+//            this.setLocationRelativeTo(null);
+//        }
+
     }
 
     /**
@@ -227,7 +232,7 @@ public class Home extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel2.add(pnlquanlynhaxuatban, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 150, 40));
+        jPanel2.add(pnlquanlynhaxuatban, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 150, 40));
 
         pnlquanlydanhmuc.setBackground(new java.awt.Color(255, 255, 255));
         pnlquanlydanhmuc.addMouseListener(new java.awt.event.MouseAdapter() {
