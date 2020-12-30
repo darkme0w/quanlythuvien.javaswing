@@ -5,6 +5,7 @@
  */
 package dao;
 
+import java.util.List;
 import models.Reader;
 
 /**
@@ -12,5 +13,10 @@ import models.Reader;
  * @author admin
  */
 public interface IReaderDAO extends GenericDAO<Reader>{
-    
+    List<Reader> getAll();
+    void delete(Reader reader);
+    void update(Reader reader);
+    void save(Reader reader);
+    List<Reader> sortAsc();
+    List<Reader> sortDesc();
 }

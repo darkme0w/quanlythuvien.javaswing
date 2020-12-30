@@ -470,7 +470,6 @@
         <Component class="keeptoo.KButton" name="btnEdit">
           <Properties>
             <Property name="text" type="java.lang.String" value="S&#x1eed;a"/>
-            <Property name="enabled" type="boolean" value="false"/>
             <Property name="kBorderRadius" type="int" value="40"/>
             <Property name="kEndColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="cc" green="cc" red="0" type="rgb"/>

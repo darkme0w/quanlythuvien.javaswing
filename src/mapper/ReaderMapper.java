@@ -22,12 +22,12 @@ public class ReaderMapper implements RowMapper<Reader> {
         try {
             reader.setReaderId(rs.getInt("ReaderID"));
             reader.setReaderName(rs.getNString("ReaderName"));
-            reader.setEmail(rs.getNString("Email"));
+            reader.setPhone(rs.getString("Phone"));
+            reader.setEmail(rs.getString("Email"));
             reader.setAddress(rs.getNString("Address"));
             reader.setAccount(rs.getFloat("Account"));
             reader.setStatus(rs.getInt("Status"));
-            reader.setPhone(rs.getString("Phone"));
-            reader.setGender(rs.getInt("Gennder"));
+            reader.setGender(rs.getInt("Gender"));
             Date cDate = rs.getDate("CreatedDate");
             reader.setCreatedDate(cDate.toLocalDate());
             return reader;
