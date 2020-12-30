@@ -391,7 +391,6 @@ public class MangagerPublicser extends javax.swing.JInternalFrame {
         publicser.setAddress(txtdiachi.getText());
         publicser.setPublicserId(getid);
         publicserDAO.update(publicser);
-        System.out.println(getid);
         Myultis.clearTable(dtfPublicser);
         preapareGUI();
         loadData();

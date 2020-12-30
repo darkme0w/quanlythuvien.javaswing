@@ -19,7 +19,11 @@ public class Home extends javax.swing.JFrame {
     public Home() {
         initComponents();
         this.setLocationRelativeTo(null);
-//        this.setExtendedState(Home.MAXIMIZED_BOTH);
+        //this.setExtendedState(Home.MAXIMIZED_BOTH); 
+        Login login = new Login();
+        if (rootPaneCheckingEnabled) {
+            
+        }
     }
 
     /**
@@ -524,9 +528,8 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel22MouseClicked
 
     private void pnlquanlysachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlquanlysachMouseClicked
- 
-        
-          CreateBook createBook = new CreateBook();
+
+        CreateBook createBook = new CreateBook();
 //        boolean flag = false;
 //        for (Component component : jPanel4.getComponents()) {
 //            if (component instanceof CreateBook) {
@@ -535,8 +538,8 @@ public class Home extends javax.swing.JFrame {
 //            }
 //        }
 //        if (!flag) {
-            jPanel4.add(createBook);
-            createBook.setVisible(true);
+        jPanel4.add(createBook);
+        createBook.setVisible(true);
 //        }
 
 

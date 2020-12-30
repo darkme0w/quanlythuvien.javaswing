@@ -5,7 +5,16 @@
  */
 package theme;
 
+import dao.ILibrarianDAO;
+import dao.impl.LibrarianDAO;
 import java.awt.Color;
+import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import models.Librarian;
 
 /**
  *
@@ -16,9 +25,14 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
+    private List<Librarian> listLibrarian = new ArrayList<Librarian>();
+    private ILibrarianDAO librarianDAO;
+    private Librarian librarian;
+    
     public Login() {
         initComponents();
         this.setLocationRelativeTo(null);
+        librarianDAO = new LibrarianDAO();
     }
 
     /**
@@ -31,11 +45,11 @@ public class Login extends javax.swing.JFrame {
     private void initComponents() {
 
         login = new keeptoo.KGradientPanel();
-        jTextField1 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        txtuser = new javax.swing.JTextField();
+        txtpassword = new javax.swing.JPasswordField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        kButton2 = new keeptoo.KButton();
+        btnlogin = new keeptoo.KButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         btn_exit = new javax.swing.JLabel();
@@ -68,24 +82,24 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
-        jTextField1.setCaretColor(new java.awt.Color(204, 0, 255));
-        jTextField1.setOpaque(false);
-        jTextField1.setBackground(new Color(0,0,0,0));
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txtuser.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtuser.setForeground(new java.awt.Color(255, 255, 255));
+        txtuser.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        txtuser.setCaretColor(new java.awt.Color(204, 0, 255));
+        txtuser.setOpaque(false);
+        txtuser.setBackground(new Color(0,0,0,0));
+        txtuser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txtuserActionPerformed(evt);
             }
         });
 
-        jPasswordField1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jPasswordField1.setForeground(new java.awt.Color(255, 255, 255));
-        jPasswordField1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
-        jPasswordField1.setCaretColor(new java.awt.Color(204, 0, 255));
-        jPasswordField1.setOpaque(false);
-        jPasswordField1.setBackground(new Color(0,0,0,0));
+        txtpassword.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtpassword.setForeground(new java.awt.Color(255, 255, 255));
+        txtpassword.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        txtpassword.setCaretColor(new java.awt.Color(204, 0, 255));
+        txtpassword.setOpaque(false);
+        txtpassword.setBackground(new Color(0,0,0,0));
 
         jLabel1.setForeground(new java.awt.Color(204, 204, 204));
         jLabel1.setText("Tài khoản");
@@ -93,14 +107,19 @@ public class Login extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(204, 204, 204));
         jLabel2.setText("Mật khẩu");
 
-        kButton2.setText("Đăng nhập");
-        kButton2.setkBorderRadius(40);
-        kButton2.setkEndColor(new java.awt.Color(0, 204, 204));
-        kButton2.setkFillButton(false);
-        kButton2.setkHoverEndColor(new java.awt.Color(204, 0, 204));
-        kButton2.setkHoverForeGround(new java.awt.Color(255, 204, 255));
-        kButton2.setkHoverStartColor(new java.awt.Color(0, 204, 204));
-        kButton2.setkStartColor(new java.awt.Color(255, 255, 255));
+        btnlogin.setText("Đăng nhập");
+        btnlogin.setkBorderRadius(40);
+        btnlogin.setkEndColor(new java.awt.Color(0, 204, 204));
+        btnlogin.setkFillButton(false);
+        btnlogin.setkHoverEndColor(new java.awt.Color(204, 0, 204));
+        btnlogin.setkHoverForeGround(new java.awt.Color(255, 204, 255));
+        btnlogin.setkHoverStartColor(new java.awt.Color(0, 204, 204));
+        btnlogin.setkStartColor(new java.awt.Color(255, 255, 255));
+        btnlogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnloginActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Gabriola", 0, 36)); // NOI18N
         jLabel4.setText("library");
@@ -137,15 +156,15 @@ public class Login extends javax.swing.JFrame {
                         .addGroup(loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addGroup(loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jPasswordField1, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtpassword, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(loginLayout.createSequentialGroup()
                                     .addGap(0, 0, Short.MAX_VALUE)
                                     .addGroup(loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel1)
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addComponent(txtuser, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGap(236, 236, 236))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginLayout.createSequentialGroup()
-                        .addComponent(kButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnlogin, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(342, 342, 342))))
         );
         loginLayout.setVerticalGroup(
@@ -160,13 +179,13 @@ public class Login extends javax.swing.JFrame {
                 .addGap(88, 88, 88)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtuser, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtpassword, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
-                .addComponent(kButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnlogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(61, Short.MAX_VALUE))
         );
 
@@ -175,9 +194,9 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txtuserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtuserActionPerformed
 
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txtuserActionPerformed
 
     private void btn_exitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_exitMouseClicked
         // TODO add your handling code here:
@@ -186,12 +205,12 @@ public class Login extends javax.swing.JFrame {
 
     private void formMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseDragged
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_formMouseDragged
 
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_formMousePressed
 
     private void loginMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginMousePressed
@@ -201,6 +220,22 @@ public class Login extends javax.swing.JFrame {
     private void loginMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginMouseDragged
         // TODO add your handling code here:     
     }//GEN-LAST:event_loginMouseDragged
+
+    private void btnloginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnloginActionPerformed
+        listLibrarian = librarianDAO.getAll();
+        for (Librarian librarian : listLibrarian) {
+            char[] getpassword = txtpassword.getPassword();
+            String getuser = txtuser.getText();
+            if (librarian.getUserName().equals(getuser)&&librarian.getPassword().equals(String.valueOf(getpassword))) {
+                Home home = new Home();
+                home.setVisible(true);
+                Login login = new Login();
+                login.setVisible(false);
+                dispose();
+            }
+        }
+
+    }//GEN-LAST:event_btnloginActionPerformed
 
     /**
      * @param args the command line arguments
@@ -239,13 +274,13 @@ public class Login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btn_exit;
+    private keeptoo.KButton btnlogin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
-    private keeptoo.KButton kButton2;
     private keeptoo.KGradientPanel login;
+    private javax.swing.JPasswordField txtpassword;
+    private javax.swing.JTextField txtuser;
     // End of variables declaration//GEN-END:variables
 }

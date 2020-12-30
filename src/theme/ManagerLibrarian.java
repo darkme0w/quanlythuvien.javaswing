@@ -51,7 +51,7 @@ public class ManagerLibrarian extends javax.swing.JInternalFrame {
         dtfLibrarian.addColumn("Ngày tạo");
 
     }
-    
+
     private int getValueRadioPermission() {
         if (rdqtv.isSelected()) {
             return 1;
@@ -61,6 +61,7 @@ public class ManagerLibrarian extends javax.swing.JInternalFrame {
             return 0;
         }
     }
+
     private int getValueRadioGender() {
         if (rdnam.isSelected()) {
             return 1;
@@ -74,6 +75,42 @@ public class ManagerLibrarian extends javax.swing.JInternalFrame {
     private void loadData() {
         listLibrarian.removeAll(listLibrarian);
         listLibrarian = librarianDAO.getAll();
+        Vector v;
+
+        for (Librarian librarian : listLibrarian) {
+            System.out.println(librarian.getUserName());
+            System.out.println(librarian.getPassword());
+            v = new Vector();
+            v.add(librarian.getLibrarianId());
+            v.add(librarian.getLibrarianName());
+            v.add(librarian.getUserName());
+            v.add(librarian.getPassword());
+            v.add(librarian.getPhone());
+            if (librarian.getGender() == 1) {
+                v.add("Nam");
+            }
+            if (librarian.getGender() == 2) {
+                v.add("Nữ");
+            }
+
+            if (librarian.getPermission() == 1) {
+                v.add("Quản trị viên");
+            }
+            if (librarian.getPermission() == 2) {
+                v.add("Thủ thư");
+            }
+            v.add(librarian.getCreatedDate());
+            dtfLibrarian.addRow(v);
+        }
+
+        jTable1.setModel(dtfLibrarian);
+
+    }
+    
+    
+    private void sortByASC() {
+        listLibrarian.removeAll(listLibrarian);
+        listLibrarian = librarianDAO.sortAsc();
         Vector v;
 
         for (Librarian librarian : listLibrarian) {
@@ -102,6 +139,38 @@ public class ManagerLibrarian extends javax.swing.JInternalFrame {
 
         jTable1.setModel(dtfLibrarian);
 
+    }
+    
+    private void sortByDESC() {
+        listLibrarian.removeAll(listLibrarian);
+        listLibrarian = librarianDAO.sortDesc();
+        Vector v;
+
+        for (Librarian librarian : listLibrarian) {
+            v = new Vector();
+            v.add(librarian.getLibrarianId());
+            v.add(librarian.getLibrarianName());
+            v.add(librarian.getUserName());
+            v.add(librarian.getPassword());
+            v.add(librarian.getPhone());
+            if (librarian.getGender() == 1) {
+                v.add("Nam");
+            }
+            if (librarian.getGender() == 2) {
+                v.add("Nữ");
+            }
+
+            if (librarian.getPermission() == 1) {
+                v.add("Quản trị viên");
+            }
+            if (librarian.getPermission() == 2) {
+                v.add("Thủ thư");
+            }
+            v.add(librarian.getCreatedDate());
+            dtfLibrarian.addRow(v);
+        }
+
+        jTable1.setModel(dtfLibrarian);
 
     }
 
@@ -139,6 +208,8 @@ public class ManagerLibrarian extends javax.swing.JInternalFrame {
         jLabel18 = new javax.swing.JLabel();
         rdqtv = new javax.swing.JRadioButton();
         rdtt = new javax.swing.JRadioButton();
+        jLabel15 = new javax.swing.JLabel();
+        pnlma = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -147,7 +218,7 @@ public class ManagerLibrarian extends javax.swing.JInternalFrame {
         jComboBox3 = new javax.swing.JComboBox<>();
         kButton5 = new keeptoo.KButton();
         jLabel17 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtfilter = new javax.swing.JTextField();
         jTextField8 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -311,81 +382,98 @@ public class ManagerLibrarian extends javax.swing.JInternalFrame {
         rdtt.setText("Thủ thư");
         rdtt.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setText("Mã thủ thư");
+
+        pnlma.setForeground(new java.awt.Color(255, 255, 255));
+        pnlma.setText("...");
+
         javax.swing.GroupLayout kGradientPanel1Layout = new javax.swing.GroupLayout(kGradientPanel1);
         kGradientPanel1.setLayout(kGradientPanel1Layout);
         kGradientPanel1Layout.setHorizontalGroup(
             kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel1Layout.createSequentialGroup()
-                .addContainerGap(35, Short.MAX_VALUE)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34))
             .addGroup(kGradientPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtName)
-                    .addComponent(txtPhone)
-                    .addComponent(txtAddress)
-                    .addComponent(txtUser)
-                    .addComponent(txtPassword)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34))
                     .addGroup(kGradientPanel1Layout.createSequentialGroup()
                         .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel12)
-                            .addComponent(jLabel13)
-                            .addComponent(jLabel14)
-                            .addComponent(jLabel18)
-                            .addComponent(jLabel16))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                        .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(rdqtv, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnAdd, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                            .addComponent(rdnam, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(rdnu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnEdit, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)))
-                            .addComponent(rdtt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap())
+                            .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel10)
+                                .addComponent(jLabel11)
+                                .addComponent(jLabel12)
+                                .addComponent(jLabel13)
+                                .addComponent(jLabel14)
+                                .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel15)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(pnlma))
+                                .addComponent(jLabel18)
+                                .addComponent(jLabel16)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel1Layout.createSequentialGroup()
+                                    .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, kGradientPanel1Layout.createSequentialGroup()
+                                            .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addComponent(btnEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                                            .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(rdnam, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(rdqtv, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGap(10, 10, 10)
+                                            .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(rdnu, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(rdtt, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGap(46, 46, 46)))
+                            .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(txtAddress, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
+                                .addComponent(txtUser, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         kGradientPanel1Layout.setVerticalGroup(
             kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(kGradientPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(41, 41, 41)
+                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel15)
+                    .addComponent(pnlma))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel12)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel13)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel14)
-                .addGap(12, 12, 12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel18)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rdqtv)
                     .addComponent(rdtt))
-                .addGap(8, 8, 8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel16)
-                .addGap(4, 4, 4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rdnam)
                     .addComponent(rdnu))
@@ -393,7 +481,7 @@ public class ManagerLibrarian extends javax.swing.JInternalFrame {
                 .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
 
         getContentPane().add(kGradientPanel1, java.awt.BorderLayout.LINE_START);
@@ -416,7 +504,7 @@ public class ManagerLibrarian extends javax.swing.JInternalFrame {
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 423, Short.MAX_VALUE)
+            .addGap(0, 430, Short.MAX_VALUE)
         );
 
         jPanel3.add(jPanel4, java.awt.BorderLayout.LINE_START);
@@ -425,6 +513,11 @@ public class ManagerLibrarian extends javax.swing.JInternalFrame {
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sắp xếp", "A-Z", "Z-A" }));
         jComboBox3.setPreferredSize(new java.awt.Dimension(80, 30));
+        jComboBox3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox3ActionPerformed(evt);
+            }
+        });
         jPanel5.add(jComboBox3);
 
         kButton5.setText("Tải lại");
@@ -446,8 +539,18 @@ public class ManagerLibrarian extends javax.swing.JInternalFrame {
         jLabel17.setText("Tìm kiếm");
         jPanel5.add(jLabel17);
 
-        jTextField1.setPreferredSize(new java.awt.Dimension(200, 30));
-        jPanel5.add(jTextField1);
+        txtfilter.setPreferredSize(new java.awt.Dimension(200, 30));
+        txtfilter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtfilterActionPerformed(evt);
+            }
+        });
+        txtfilter.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtfilterKeyReleased(evt);
+            }
+        });
+        jPanel5.add(txtfilter);
 
         jTextField8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTextField8.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
@@ -490,6 +593,7 @@ public class ManagerLibrarian extends javax.swing.JInternalFrame {
         librarian.setLibrarianName(txtName.getText());
         librarian.setUserName(txtUser.getText());
         librarian.setPassword(txtPassword.getText());
+        librarian.setPhone(txtPhone.getText());
         librarian.setAddress(txtAddress.getText());
         librarian.setGender(getValueRadioGender());
         librarian.setPermission(getValueRadioPermission());
@@ -500,14 +604,16 @@ public class ManagerLibrarian extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-       librarian = new Librarian();
+        librarian = new Librarian();
         librarian.setLibrarianName(txtName.getText());
         librarian.setUserName(txtUser.getText());
         librarian.setPassword(txtPassword.getText());
+        librarian.setPhone(txtPhone.getText());
         librarian.setAddress(txtAddress.getText());
         librarian.setGender(getValueRadioGender());
         librarian.setPermission(getValueRadioPermission());
-        librarian.setLibrarianId(FRAMEBITS);
+        int getid = new Integer(pnlma.getText());
+        librarian.setLibrarianId(getid);
         librarianDAO.update(librarian);
         Myultis.clearTable(dtfLibrarian);
         preapareGUI();
@@ -515,7 +621,9 @@ public class ManagerLibrarian extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void kButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton5ActionPerformed
-        // TODO add your handling code here:
+        Myultis.clearTable(dtfLibrarian);
+        preapareGUI();
+        loadData();
     }//GEN-LAST:event_kButton5ActionPerformed
 
     private void rdnamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdnamActionPerformed
@@ -527,12 +635,13 @@ public class ManagerLibrarian extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_rdqtvActionPerformed
 
     private void txtAddressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAddressActionPerformed
-        
+
     }//GEN-LAST:event_txtAddressActionPerformed
 
     private void jmnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnEditActionPerformed
         int pos = jTable1.getSelectedRow();
         idLibrarian = dtfLibrarian.getValueAt(pos, 0).toString();
+        pnlma.setText(dtfLibrarian.getValueAt(pos, 0).toString());
         txtName.setText(dtfLibrarian.getValueAt(pos, 1).toString());
         txtPhone.setText(dtfLibrarian.getValueAt(pos, 2).toString());
         txtAddress.setText(dtfLibrarian.getValueAt(pos, 3).toString());
@@ -545,7 +654,7 @@ public class ManagerLibrarian extends javax.swing.JInternalFrame {
         } else {
             rdnam.setSelected(true);
         }
-        
+
         if (dtfLibrarian.getValueAt(pos, 6).toString().equals(rdqtv.getActionCommand())) {
             rdqtv.setSelected(true);
         } else if (dtfLibrarian.getValueAt(pos, 6).toString().equals(rdtt.getActionCommand())) {
@@ -553,12 +662,12 @@ public class ManagerLibrarian extends javax.swing.JInternalFrame {
         } else {
             rdqtv.setSelected(true);
         }
-        
+
     }//GEN-LAST:event_jmnEditActionPerformed
 
     private void jmnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnDeleteActionPerformed
         int pos = jTable1.getSelectedRow();
-        String name = dtfLibrarian.getValueAt(pos, 2).toString();
+        String name = dtfLibrarian.getValueAt(pos, 1).toString();
         int choose = JOptionPane.showConfirmDialog(rootPane, "Bạn chắc chắn muốn xóa " + name, "", JOptionPane.OK_CANCEL_OPTION);
         if (choose == JOptionPane.OK_OPTION) {
             idLibrarian = dtfLibrarian.getValueAt(pos, 0).toString();
@@ -596,6 +705,33 @@ public class ManagerLibrarian extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPasswordActionPerformed
 
+    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
+        if (evt.getSource() == jComboBox3) {
+            String msg = (String) jComboBox3.getSelectedItem();
+            switch (msg) {
+                case "A-Z":
+                    Myultis.clearTable(dtfLibrarian);
+                    preapareGUI();
+                    sortByASC();
+                    break;
+                case "Z-A":
+                    Myultis.clearTable(dtfLibrarian);
+                    preapareGUI();
+                    sortByDESC();
+                    break;
+            }
+        }
+    }//GEN-LAST:event_jComboBox3ActionPerformed
+
+    private void txtfilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfilterActionPerformed
+        
+    }//GEN-LAST:event_txtfilterActionPerformed
+
+    private void txtfilterKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtfilterKeyReleased
+        String query = txtfilter.getText();
+        Myultis.filter(query, dtfLibrarian, jTable1);
+    }//GEN-LAST:event_txtfilterKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private keeptoo.KButton btnAdd;
@@ -608,6 +744,7 @@ public class ManagerLibrarian extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
@@ -620,12 +757,12 @@ public class ManagerLibrarian extends javax.swing.JInternalFrame {
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JMenuItem jmnDelete;
     private javax.swing.JMenuItem jmnEdit;
     private keeptoo.KButton kButton5;
     private keeptoo.KGradientPanel kGradientPanel1;
+    private javax.swing.JLabel pnlma;
     private javax.swing.JRadioButton rdnam;
     private javax.swing.JRadioButton rdnu;
     private javax.swing.JRadioButton rdqtv;
@@ -635,5 +772,6 @@ public class ManagerLibrarian extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtPassword;
     private javax.swing.JTextField txtPhone;
     private javax.swing.JTextField txtUser;
+    private javax.swing.JTextField txtfilter;
     // End of variables declaration//GEN-END:variables
 }
