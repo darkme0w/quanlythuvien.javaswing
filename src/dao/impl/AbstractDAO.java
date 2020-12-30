@@ -9,8 +9,10 @@ import dao.GenericDAO;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -74,7 +76,28 @@ public class AbstractDAO<T> implements GenericDAO<T> {
                 } else if (parameter instanceof Boolean) {
                     cstm.setBoolean(index, (boolean) parameter);
                 } else if (parameter instanceof LocalDate) {
-                    cstm.setDate(index, (Date) parameter);
+                    cstm.setDate(index, (Date.valueOf((LocalDate) parameter)));
+                }
+            }
+        } catch (SQLException e) {
+        }
+    }
+
+    private void setParameterP(PreparedStatement pstm, Object... parameters) {
+        try {
+            for (int i = 0; i < parameters.length; i++) {
+                Object parameter = parameters[i];
+                int index = i + 1;
+                if (parameter instanceof Integer) {
+                    pstm.setInt(index, (int) parameter);
+                } else if (parameter instanceof String) {
+                    pstm.setNString(index, (String) parameter);
+                } else if (parameter instanceof Float) {
+                    pstm.setFloat(index, (float) parameter);
+                } else if (parameter instanceof Boolean) {
+                    pstm.setBoolean(index, (boolean) parameter);
+                } else if (parameter instanceof LocalDate) {
+                    pstm.setDate(index, (Date.valueOf((LocalDate) parameter)));
                 }
             }
         } catch (SQLException e) {
@@ -103,7 +126,7 @@ public class AbstractDAO<T> implements GenericDAO<T> {
                 }
             }
             Logger.getLogger(AbstractDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally{
+        } finally {
             try {
                 if (conn != null) {
                     conn.close();
@@ -143,7 +166,7 @@ public class AbstractDAO<T> implements GenericDAO<T> {
                 }
             }
             Logger.getLogger(AbstractDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally{
+        } finally {
             try {
                 if (conn != null) {
                     conn.close();
@@ -158,6 +181,51 @@ public class AbstractDAO<T> implements GenericDAO<T> {
                 // TODO: handle exception
             }
         }
+    }
+
+    @Override
+    public Integer insertReturnId(String sql, Object... parameters) {
+        ResultSet rs = null;
+        Integer id = null;
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        try {
+            conn = DBConnect.getInstance().getConnection();
+            conn.setAutoCommit(false);
+            pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            setParameterP(pstmt, parameters);
+            pstmt.executeUpdate();
+            rs = pstmt.getGeneratedKeys();
+            if (rs.next()) {
+                id = rs.getInt(1);
+            }
+            conn.commit();
+            return id;
+        } catch (SQLException e) {
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                } catch (SQLException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
+            }
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                // TODO: handle exception
+            }
+        }
+        return null;
     }
 
 }

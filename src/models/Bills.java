@@ -13,6 +13,8 @@ import java.time.LocalDate;
  */
 public class Bills {
     private int billsId;
+    private int readerId;
+    private int librarianId;
     private LocalDate createdDate;
     private LocalDate payDay;
 
@@ -22,6 +24,28 @@ public class Bills {
     public Bills(LocalDate createdDate, LocalDate payDay) {
         this.createdDate = createdDate;
         this.payDay = payDay;
+    }
+
+    public Bills(int readerId, LocalDate createdDate, LocalDate payDay) {
+        this.readerId = readerId;
+        this.createdDate = createdDate;
+        this.payDay = payDay;
+    }
+
+    public int getReaderId() {
+        return readerId;
+    }
+
+    public void setReaderId(int readerId) {
+        this.readerId = readerId;
+    }
+
+    public int getLibrarianId() {
+        return librarianId;
+    }
+
+    public void setLibrarianId(int librarianId) {
+        this.librarianId = librarianId;
     }
 
     public int getBillsId() {

@@ -5,18 +5,19 @@
  */
 package theme;
 
+import dao.IBillsDAO;
+import dao.IBooksDAO;
 import dao.IReaderDAO;
+import dao.impl.BiilsDAO;
+import dao.impl.BookDAO;
 import dao.impl.ReaderDAO;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import models.Bills;
+import models.Book;
 import models.Reader;
-import org.jdesktop.swingx.JXDatePicker;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import utils.Myultis;
 
@@ -33,20 +34,29 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
     private IReaderDAO readerDAO;
     private Reader reader;
 
+    private List<Book> listBook = new ArrayList<>();
+    private IBooksDAO bookDAO;
+    private Book book;
+
+    private Bills bills;
+    private IBillsDAO billDAO;
+
     public ManagerBiils() {
         initComponents();
         readerDAO = new ReaderDAO();
+        bookDAO = new BookDAO();
         loadComboBox();
     }
 
     private void loadComboBox() {
         listReader.removeAll(listReader);
+        listBook.removeAll(listBook);
         listReader = readerDAO.getAll();
-
-        for (Reader reader1 : listReader) {
-            cbReader.addItem(reader1);
-        }
+        listBook = bookDAO.getAll();
+        listReader.forEach(cbReader::addItem);
+        listBook.forEach(cbBook::addItem);
         AutoCompleteDecorator.decorate(cbReader);
+        AutoCompleteDecorator.decorate(cbBook);
     }
 
     /**
@@ -71,6 +81,9 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         btnAddDetailBills = new javax.swing.JButton();
+        cbBook = new javax.swing.JComboBox<>();
+        lbNameBook = new javax.swing.JLabel();
+        lbNXB = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         btnConfirmReader = new javax.swing.JButton();
@@ -80,6 +93,8 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
         cbReader = new javax.swing.JComboBox<>();
         dpEndDate = new org.jdesktop.swingx.JXDatePicker();
         dpStartDate = new org.jdesktop.swingx.JXDatePicker();
+        jLabel6 = new javax.swing.JLabel();
+        lbIdBill = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -107,6 +122,17 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
         jLabel17.setText("Nhà xuất bản");
 
         btnAddDetailBills.setText("Thêm");
+        btnAddDetailBills.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddDetailBillsActionPerformed(evt);
+            }
+        });
+
+        cbBook.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbBookActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -115,12 +141,17 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel15)
-                        .addGap(205, 205, 205)
-                        .addComponent(jLabel16))
                     .addComponent(jLabel17)
-                    .addComponent(btnAddDetailBills, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnAddDetailBills, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel15)
+                            .addComponent(cbBook, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(63, 63, 63)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbNameBook)
+                            .addComponent(jLabel16)))
+                    .addComponent(lbNXB))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -130,22 +161,25 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
                     .addComponent(jLabel16))
-                .addGap(87, 87, 87)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbBook, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbNameBook))
+                .addGap(58, 58, 58)
                 .addComponent(jLabel17)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lbNXB)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addComponent(btnAddDetailBills)
                 .addGap(36, 36, 36))
         );
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
-                "Mã sách", "Tên sách"
+                "Id", "Mã sách", "Tên sách"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -164,6 +198,7 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
 
         lbReaderName.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
 
+        cbReader.setForeground(new java.awt.Color(255, 255, 255));
         cbReader.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 cbReaderMouseClicked(evt);
@@ -177,6 +212,8 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
                 cbReaderActionPerformed(evt);
             }
         });
+
+        jLabel6.setText("Mã phiếu:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -194,16 +231,21 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
                                 .addComponent(dpStartDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGap(60, 60, 60)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(dpEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(lbReaderId, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE))
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(lbReaderId, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE))
+                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGap(109, 109, 109)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addComponent(jLabel6)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(lbIdBill, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addComponent(lbReaderName)
-                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addComponent(dpEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addComponent(btnConfirmReader, javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(btnSaveBills))
@@ -230,7 +272,9 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
                         .addGap(19, 19, 19)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(jLabel5))
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6)
+                            .addComponent(lbIdBill))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(dpEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -286,17 +330,42 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cbReaderMouseReleased
 
     private void btnConfirmReaderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmReaderActionPerformed
+        billDAO = new BiilsDAO();
         LocalDate startDate = Myultis.convertDatetoLocalDate(dpStartDate.getDate());
         LocalDate endDate = Myultis.convertDatetoLocalDate(dpEndDate.getDate());
-        
+        int readerId = Integer.valueOf(lbReaderId.getText());
+        bills = new Bills(readerId, startDate, endDate);
+        int newId = billDAO.save(bills);
+        bills = billDAO.findOne(newId);
+        String bId = String.valueOf(bills.getBillsId());
+        lbIdBill.setText(bId);
 
     }//GEN-LAST:event_btnConfirmReaderActionPerformed
+
+    private void cbBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbBookActionPerformed
+        Book selectBook = (Book) cbBook.getSelectedItem();
+        String bookName = selectBook.getBooksName();
+        String bookNXB = selectBook.getPublicserName();
+        lbNameBook.setText(bookName);
+        lbNXB.setText(bookNXB);
+    }//GEN-LAST:event_cbBookActionPerformed
+
+    private void btnAddDetailBillsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddDetailBillsActionPerformed
+        Book selectBook = (Book) cbBook.getSelectedItem();
+        String bookId = String.valueOf(selectBook.getBookId());
+        String bookName = selectBook.getBooksName();
+        String bookCode = selectBook.getBooksCode();
+        Object[] row = {bookId, bookCode, bookName};
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.addRow(row);
+    }//GEN-LAST:event_btnAddDetailBillsActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddDetailBills;
     private javax.swing.JButton btnConfirmReader;
     private javax.swing.JButton btnSaveBills;
+    private javax.swing.JComboBox<Book> cbBook;
     private javax.swing.JComboBox<Reader> cbReader;
     private org.jdesktop.swingx.JXDatePicker dpEndDate;
     private org.jdesktop.swingx.JXDatePicker dpStartDate;
@@ -308,11 +377,15 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lbIdBill;
+    private javax.swing.JLabel lbNXB;
+    private javax.swing.JLabel lbNameBook;
     private javax.swing.JLabel lbReaderId;
     private javax.swing.JLabel lbReaderName;
     private javax.swing.JPanel pnlAddBill;

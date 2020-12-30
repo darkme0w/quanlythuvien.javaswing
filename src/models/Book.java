@@ -150,7 +150,7 @@ public class Book {
 
     @Override
     public String toString() {
-        return this.publicserName +"" +this.locationName;
+        return this.booksCode;
     }
 
     

@@ -21,6 +21,8 @@ public class BillsMapper implements RowMapper<Bills>{
         Bills bills = new Bills();
         try {
             bills.setBillsId(rs.getInt("BillsID"));
+            bills.setReaderId(rs.getInt("ReaderID"));
+            bills.setLibrarianId(rs.getInt("LirarianID"));
             Date cdate = rs.getDate("CreatedDate");
             Date pdate = rs.getDate("PayDay");
             bills.setCreatedDate(cdate.toLocalDate());
