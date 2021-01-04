@@ -17,18 +17,13 @@ public class Home extends javax.swing.JFrame {
      * Creates new form Home
      */
     public Home() {
-        initComponents();
-        this.setLocationRelativeTo(null);
+//        initComponents();
+        // this.setLocationRelativeTo(null);
         //this.setExtendedState(Home.MAXIMIZED_BOTH); 
-//        Login login = new Login(this, true);
-//        login.setVisible(true);
-//        if (login.icheck() == true) {
-//            login.dispose();
-//            Home home = new Home();
-//            home.initComponents();
-//            this.setLocationRelativeTo(null);
-//        }
-
+        Login login = new Login(this, true);
+        login.setVisible(true);
+        
+        System.out.println(login.checkdn);
     }
 
     /**

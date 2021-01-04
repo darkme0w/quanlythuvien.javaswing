@@ -20,7 +20,7 @@ public class Login extends javax.swing.JDialog {
     private List<Librarian> listLibrarian = new ArrayList<Librarian>();
     private ILibrarianDAO librarianDAO;
     private Librarian librarian;
-    private boolean checkdn = false;
+    boolean checkdn;
 
     /**
      * Creates new form NewJDialog
@@ -37,6 +37,18 @@ public class Login extends javax.swing.JDialog {
     }
 
     public boolean icheck() {
+        listLibrarian = librarianDAO.getAll();
+        char[] getpassword = txtpassword.getPassword();
+        String getuser = txtuser.getText();
+        for (Librarian librarian : listLibrarian) {
+            
+            if (librarian.getUserName().equals(getuser) && librarian.getPassword().equals(String.valueOf(getpassword))) {
+                checkdn = true;
+                new Home().setVisible(true);
+            }
+        }
+
+        System.out.println(checkdn);
         return checkdn;
     }
 
@@ -193,24 +205,7 @@ public class Login extends javax.swing.JDialog {
     }//GEN-LAST:event_txtuserActionPerformed
 
     private void btnloginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnloginActionPerformed
-        listLibrarian = librarianDAO.getAll();
-        char[] getpassword = txtpassword.getPassword();
-        String getuser = txtuser.getText();
-        for (Librarian librarian : listLibrarian) {
-            System.out.println(librarian.getUserName());
-            System.out.println(librarian.getPassword());
-            if (librarian.getUserName().equals(getuser) && librarian.getPassword().equals(String.valueOf(getpassword))) {
-                checkdn = true;
-                Login lg = new Login();
-
-                lg.dispose();
-                
-                System.out.println("dang nhap thanh cong");
-                new Home().setVisible(true);
-            }
-        }
-
-
+        icheck();
     }//GEN-LAST:event_btnloginActionPerformed
 
     private void btn_exitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_exitMouseClicked
