@@ -11,9 +11,14 @@ import dao.IReaderDAO;
 import dao.impl.BiilsDAO;
 import dao.impl.BookDAO;
 import dao.impl.ReaderDAO;
+import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import models.Bills;
 import models.Book;
@@ -40,6 +45,8 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
 
     private Bills bills;
     private IBillsDAO billDAO;
+
+    private DefaultTableModel defaultTableModel;
 
     public ManagerBiils() {
         initComponents();
@@ -181,7 +188,15 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
             new String [] {
                 "Id", "Mã sách", "Tên sách"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         btnConfirmReader.setText("Xác nhận thông tin người mượn");
@@ -193,6 +208,11 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
 
         btnSaveBills.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_save_16px_1.png"))); // NOI18N
         btnSaveBills.setText("Lưu phiếu");
+        btnSaveBills.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveBillsActionPerformed(evt);
+            }
+        });
 
         lbReaderId.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
 
@@ -352,13 +372,31 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
 
     private void btnAddDetailBillsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddDetailBillsActionPerformed
         Book selectBook = (Book) cbBook.getSelectedItem();
-        String bookId = String.valueOf(selectBook.getBookId());
-        String bookName = selectBook.getBooksName();
-        String bookCode = selectBook.getBooksCode();
-        Object[] row = {bookId, bookCode, bookName};
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.addRow(row);
+//        Book bRow = new Book(selectBook.getBookId(), selectBook.getBooksCode(), selectBook.getBooksName());
+//        List v = new Vector();
+//        v.add(bRow.getBookId());
+//        v.add(bRow.getBooksCode());
+//        v.add(bRow.getBooksName());
+        Object[] row = {selectBook.getBookId(), selectBook.getBooksCode(), selectBook.getBooksName()};
+        for (Object obj : row) {
+            Book b = new Book();
+            b.convert(obj);
+        }
+        
+        defaultTableModel = (DefaultTableModel) jTable1.getModel();
+        defaultTableModel.addRow(row);
+
     }//GEN-LAST:event_btnAddDetailBillsActionPerformed
+
+    private void btnSaveBillsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveBillsActionPerformed
+
+        Vector data = defaultTableModel.getDataVector();
+        for (int i = 0; i < data.size(); i++) {
+            System.out.println(data.elementAt(i));
+            
+        }
+
+    }//GEN-LAST:event_btnSaveBillsActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
