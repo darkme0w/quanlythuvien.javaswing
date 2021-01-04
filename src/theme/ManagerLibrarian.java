@@ -78,8 +78,7 @@ public class ManagerLibrarian extends javax.swing.JInternalFrame {
         Vector v;
 
         for (Librarian librarian : listLibrarian) {
-            System.out.println(librarian.getUserName());
-            System.out.println(librarian.getPassword());
+          
             v = new Vector();
             v.add(librarian.getLibrarianId());
             v.add(librarian.getLibrarianName());
