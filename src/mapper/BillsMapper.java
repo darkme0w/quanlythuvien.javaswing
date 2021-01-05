@@ -14,26 +14,28 @@ import models.Bills;
  *
  * @author admin
  */
-public class BillsMapper implements RowMapper<Bills>{
-
+public class BillsMapper implements RowMapper<Bills> {
+    
     @Override
     public Bills mapRow(ResultSet rs) {
         Bills bills = new Bills();
         try {
             bills.setBillsId(rs.getInt("BillsID"));
-            bills.setReaderId(rs.getInt("ReaderID"));
-            bills.setLibrarianId(rs.getInt("LirarianID"));
+//            bills.setReaderId(rs.getInt("ReaderID"));
+//            bills.setLibrarianId(rs.getInt("LirarianID"));
             Date cdate = rs.getDate("CreatedDate");
             Date pdate = rs.getDate("PayDay");
             bills.setCreatedDate(cdate.toLocalDate());
             bills.setPayDay(pdate.toLocalDate());
+            bills.setReaderName(rs.getNString("ReaderName"));
+            bills.setGender(rs.getInt("Gender"));
+            bills.setPhone(rs.getString("Phone"));
+            bills.setAddress(rs.getNString("Address"));
             return bills;
         } catch (SQLException ex) {
             return null;
         }
-      
-       
-       
+        
     }
     
 }

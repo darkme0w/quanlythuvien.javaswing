@@ -6,21 +6,20 @@
 package theme;
 
 import dao.IBillsDAO;
+import dao.IBillsDetailDAO;
 import dao.IBooksDAO;
 import dao.IReaderDAO;
 import dao.impl.BiilsDAO;
+import dao.impl.BillsDetailDAO;
 import dao.impl.BookDAO;
 import dao.impl.ReaderDAO;
-import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import models.Bills;
+import models.BillsDetail;
 import models.Book;
 import models.Reader;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
@@ -43,16 +42,21 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
     private IBooksDAO bookDAO;
     private Book book;
 
+    private List<Bills> listBill = new ArrayList<>();
     private Bills bills;
     private IBillsDAO billDAO;
-
+    private IBillsDetailDAO billsDetailDAO;
     private DefaultTableModel defaultTableModel;
+    private DefaultTableModel dftbBills;
 
     public ManagerBiils() {
         initComponents();
         readerDAO = new ReaderDAO();
         bookDAO = new BookDAO();
+        billDAO = new BiilsDAO();
         loadComboBox();
+        preapareGUI();
+        loadData();
     }
 
     private void loadComboBox() {
@@ -64,6 +68,44 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
         listBook.forEach(cbBook::addItem);
         AutoCompleteDecorator.decorate(cbReader);
         AutoCompleteDecorator.decorate(cbBook);
+        spnQuantity.setValue(1);
+
+    }
+
+    private void preapareGUI() {
+        dftbBills = new DefaultTableModel();
+        dftbBills.addColumn("Mã phiếu");
+        dftbBills.addColumn("Ngày mượn");
+        dftbBills.addColumn("Ngày trả");
+        dftbBills.addColumn("Tên người mượn");
+        dftbBills.addColumn("Số điện thoại");
+        dftbBills.addColumn("Địa chỉ");
+        dftbBills.addColumn("Giới tính");
+    }
+
+    private void loadData() {
+        listBill = billDAO.getAll();
+        Vector v;
+
+        for (Bills bills1 : listBill) {
+            v = new Vector();
+            v.add(bills1.getBillsId());
+            v.add(bills1.getCreatedDate());
+            v.add(bills1.getPayDay());
+            v.add(bills1.getReaderName());
+            v.add(bills1.getPhone());
+            v.add(bills1.getAddress());
+            if (bills1.getGender() == 1) {
+                v.add("Nam");
+            } else {
+                v.add("Nữ");
+            }
+
+            dftbBills.addRow(v);
+        }
+
+//        listBook.forEach(s->System.out.println(s.toString()));
+        jTable2.setModel(dftbBills);
     }
 
     /**
@@ -91,6 +133,7 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
         cbBook = new javax.swing.JComboBox<>();
         lbNameBook = new javax.swing.JLabel();
         lbNXB = new javax.swing.JLabel();
+        spnQuantity = new javax.swing.JSpinner();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         btnConfirmReader = new javax.swing.JButton();
@@ -102,11 +145,17 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
         dpStartDate = new org.jdesktop.swingx.JXDatePicker();
         jLabel6 = new javax.swing.JLabel();
         lbIdBill = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        jXSearchField1 = new org.jdesktop.swingx.JXSearchField();
 
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
+
+        pnlAddBill.setPreferredSize(new java.awt.Dimension(1500, 617));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Thông tin phiếu mượn"));
 
@@ -141,6 +190,8 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
             }
         });
 
+        spnQuantity.setPreferredSize(new java.awt.Dimension(15, 22));
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -148,18 +199,19 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel17)
                     .addComponent(btnAddDetailBills, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbNXB)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel15)
-                            .addComponent(cbBook, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cbBook, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel17))
                         .addGap(63, 63, 63)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lbNameBook)
-                            .addComponent(jLabel16)))
-                    .addComponent(lbNXB))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(spnQuantity, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(361, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -172,8 +224,10 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbBook, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbNameBook))
-                .addGap(58, 58, 58)
-                .addComponent(jLabel17)
+                .addGap(55, 55, 55)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel17)
+                    .addComponent(spnQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lbNXB)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
@@ -186,11 +240,11 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Id", "Mã sách", "Tên sách"
+                "Id", "Mã sách", "Tên sách", "Số lượng"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -316,7 +370,7 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
             .addGroup(pnlAddBillLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
         pnlAddBillLayout.setVerticalGroup(
             pnlAddBillLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -328,6 +382,56 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
 
         jTabbedPane1.addTab("Thêm phiếu mượn", pnlAddBill);
 
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Mã phiếu", "Ngày mượn", "Ngày trả", "Tên độc giả", "Địa chỉ", "Số điện thoại", "Giới tính"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(jTable2);
+
+        jXSearchField1.setText("jXSearchField1");
+        jXSearchField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jXSearchField1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1251, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jXSearchField1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jXSearchField1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(248, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Danh sách phiếu mượn", jPanel3);
+
         getContentPane().add(jTabbedPane1, java.awt.BorderLayout.CENTER);
 
         pack();
@@ -338,7 +442,7 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
         String readerId = String.valueOf(selectReader.getReaderId());
         lbReaderId.setText(readerId);
         lbReaderName.setText(selectReader.getReaderName());
-        System.out.println("" + selectReader.getReaderName());
+//        System.out.println("" + selectReader.getReaderName());
     }//GEN-LAST:event_cbReaderActionPerformed
 
     private void cbReaderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbReaderMouseClicked
@@ -372,31 +476,31 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
 
     private void btnAddDetailBillsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddDetailBillsActionPerformed
         Book selectBook = (Book) cbBook.getSelectedItem();
-//        Book bRow = new Book(selectBook.getBookId(), selectBook.getBooksCode(), selectBook.getBooksName());
-//        List v = new Vector();
-//        v.add(bRow.getBookId());
-//        v.add(bRow.getBooksCode());
-//        v.add(bRow.getBooksName());
-        Object[] row = {selectBook.getBookId(), selectBook.getBooksCode(), selectBook.getBooksName()};
-        for (Object obj : row) {
-            Book b = new Book();
-            b.convert(obj);
-        }
-        
+        int quantity = (int) spnQuantity.getValue();
+        Object[] row = {selectBook.getBookId(), selectBook.getBooksCode(), selectBook.getBooksName(), quantity};
         defaultTableModel = (DefaultTableModel) jTable1.getModel();
         defaultTableModel.addRow(row);
 
     }//GEN-LAST:event_btnAddDetailBillsActionPerformed
 
     private void btnSaveBillsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveBillsActionPerformed
-
+        billsDetailDAO = new BillsDetailDAO();
         Vector data = defaultTableModel.getDataVector();
+        int billId = Integer.valueOf(lbIdBill.getText());
         for (int i = 0; i < data.size(); i++) {
-            System.out.println(data.elementAt(i));
-            
+            Object objBookId = ((Vector) data.elementAt(i)).elementAt(0);
+            Object objQuantity = ((Vector) data.elementAt(i)).elementAt(3);
+            int bookId = (int) objBookId;
+            int quantity = (int) objQuantity;
+            BillsDetail billsDetail = new BillsDetail(billId, bookId, quantity);
+            billsDetailDAO.save(billsDetail);
         }
 
     }//GEN-LAST:event_btnSaveBillsActionPerformed
+
+    private void jXSearchField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jXSearchField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jXSearchField1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -418,14 +522,20 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
+    private org.jdesktop.swingx.JXSearchField jXSearchField1;
     private javax.swing.JLabel lbIdBill;
     private javax.swing.JLabel lbNXB;
     private javax.swing.JLabel lbNameBook;
     private javax.swing.JLabel lbReaderId;
     private javax.swing.JLabel lbReaderName;
     private javax.swing.JPanel pnlAddBill;
+    private javax.swing.JSpinner spnQuantity;
     // End of variables declaration//GEN-END:variables
+
 }
