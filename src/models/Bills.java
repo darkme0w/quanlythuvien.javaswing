@@ -17,6 +17,43 @@ public class Bills {
     private int librarianId;
     private LocalDate createdDate;
     private LocalDate payDay;
+    private String readerName;
+    private String address;
+    private String phone;
+    private int gender;
+
+    public String getReaderName() {
+        return readerName;
+    }
+
+    public void setReaderName(String readerName) {
+        this.readerName = readerName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public int getGender() {
+        return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
+    }
+    
 
     public Bills() {
     }
@@ -24,6 +61,16 @@ public class Bills {
     public Bills(LocalDate createdDate, LocalDate payDay) {
         this.createdDate = createdDate;
         this.payDay = payDay;
+    }
+
+    public Bills(int billsId, LocalDate createdDate, LocalDate payDay, String readerName, String address, String phone, int gender) {
+        this.billsId = billsId;
+        this.createdDate = createdDate;
+        this.payDay = payDay;
+        this.readerName = readerName;
+        this.address = address;
+        this.phone = phone;
+        this.gender = gender;
     }
 
     public Bills(int readerId, LocalDate createdDate, LocalDate payDay) {

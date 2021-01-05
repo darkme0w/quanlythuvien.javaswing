@@ -3,18 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
             <file>file:/C:/Users/phamh/OneDrive/Documents/NetBeansProjects/quanlythuvien.javaswing/src/dao/impl/BiilsDAO.java</file>
             <file>file:/C:/Users/phamh/OneDrive/Documents/NetBeansProjects/quanlythuvien.javaswing/src/models/BillsDetail.java</file>
+            <file>file:/C:/Users/phamh/OneDrive/Documents/NetBeansProjects/quanlythuvien.javaswing/src/dao/IBillsDetailDAO.java</file>
+            <file>file:/C:/Users/phamh/OneDrive/Documents/NetBeansProjects/quanlythuvien.javaswing/src/mapper/BillsDetailMapper.java</file>
             <file>file:/C:/Users/phamh/OneDrive/Documents/NetBeansProjects/quanlythuvien.javaswing/src/theme/ManagerBiils.java</file>
             <file>file:/C:/Users/phamh/OneDrive/Documents/NetBeansProjects/quanlythuvien.javaswing/src/models/Bills.java</file>
-            <file>file:/C:/Users/phamh/OneDrive/Documents/NetBeansProjects/quanlythuvien.javaswing/src/theme/CreateBook.java</file>
+            <file>file:/C:/Users/phamh/OneDrive/Documents/NetBeansProjects/quanlythuvien.javaswing/src/dao/impl/BillsDetailDAO.java</file>
+            <file>file:/C:/Users/phamh/OneDrive/Documents/NetBeansProjects/quanlythuvien.javaswing/src/dao/IBillsDAO.java</file>
             <file>file:/C:/Users/phamh/OneDrive/Documents/NetBeansProjects/quanlythuvien.javaswing/src/models/Book.java</file>
-=======
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/quanlythuvien.javaswing/src/theme/ManagerLibrarian.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/quanlythuvien.javaswing/src/theme/Home.java</file>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/quanlythuvien.javaswing/src/theme/Login.java</file>
->>>>>>> 5d889ac430f871cd6922f3ad3146ebe8e5523b97
         </group>
     </open-files>
 </project-private>

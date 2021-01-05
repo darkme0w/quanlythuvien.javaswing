@@ -18,7 +18,8 @@ public class BiilsDAO extends AbstractDAO<Bills> implements IBillsDAO{
 
     @Override
     public List<Bills> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = "{Call sp_getAll_Bills}";
+        return query(sql, new BillsMapper());
     }
 
     @Override
