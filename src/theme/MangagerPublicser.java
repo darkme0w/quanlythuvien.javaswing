@@ -82,7 +82,7 @@ public class MangagerPublicser extends javax.swing.JInternalFrame {
             dtfPublicser.addRow(v);
         }
 
-        jTable1.setModel(dtfPublicser);      
+        jTable1.setModel(dtfPublicser);
 
     }
 
@@ -103,8 +103,6 @@ public class MangagerPublicser extends javax.swing.JInternalFrame {
         jTable1.setModel(dtfPublicser);
 
     }
-
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -375,29 +373,43 @@ public class MangagerPublicser extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtnhaxuatbanActionPerformed
 
     private void kButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton2ActionPerformed
-        publicser = new Publicser();
-        publicser.setPublicserName(txtnhaxuatban.getText());
-        publicser.setAddress(txtdiachi.getText());
-        publicserDAO.save(publicser);
-        Myultis.clearTable(dtfPublicser);
-        preapareGUI();
-        loadData();
+        if (txtnhaxuatban.getText().length() > 0
+                && txtnhaxuatban.getText().length() < 255
+                && txtdiachi.getText().length() > 0
+                && txtdiachi.getText().length() < 255) {
+            publicser = new Publicser();
+            publicser.setPublicserName(txtnhaxuatban.getText());
+            publicser.setAddress(txtdiachi.getText());
+            publicserDAO.save(publicser);
+            Myultis.clearTable(dtfPublicser);
+            preapareGUI();
+            loadData();
+        } else {
+            JOptionPane.showMessageDialog(this, "nhà xuất bản và địa chỉ phải trên 0 kí tự và dưới 255 kí tự", "", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_kButton2ActionPerformed
 
     private void kButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton3ActionPerformed
-        publicser = new Publicser();
-        int getid = new Integer(lblid.getText());
-        publicser.setPublicserName(txtnhaxuatban.getText());
-        publicser.setAddress(txtdiachi.getText());
-        publicser.setPublicserId(getid);
-        publicserDAO.update(publicser);
-        Myultis.clearTable(dtfPublicser);
-        preapareGUI();
-        loadData();
+        if (txtnhaxuatban.getText().length() > 0
+                && txtnhaxuatban.getText().length() < 255
+                && txtdiachi.getText().length() > 0
+                && txtdiachi.getText().length() < 255) {
+            publicser = new Publicser();
+            int getid = new Integer(lblid.getText());
+            publicser.setPublicserName(txtnhaxuatban.getText());
+            publicser.setAddress(txtdiachi.getText());
+            publicser.setPublicserId(getid);
+            publicserDAO.update(publicser);
+            Myultis.clearTable(dtfPublicser);
+            preapareGUI();
+            loadData();
+        } else {
+            JOptionPane.showMessageDialog(this, "nhà xuất bản và địa chỉ phải trên 0 kí tự và dưới 255 kí tự", "", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_kButton3ActionPerformed
 
     private void txtfilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfilterActionPerformed
-       
+
     }//GEN-LAST:event_txtfilterActionPerformed
 
     private void txtdiachiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtdiachiActionPerformed

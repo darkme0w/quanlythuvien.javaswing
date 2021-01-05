@@ -5,7 +5,14 @@
  */
 package theme;
 
-import java.awt.Component;
+import dao.ILibrarianDAO;
+import dao.impl.LibrarianDAO;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import models.Librarian;
+import static theme.Login.login;
 
 /**
  *
@@ -16,14 +23,17 @@ public class Home extends javax.swing.JFrame {
     /**
      * Creates new form Home
      */
+    private List<Librarian> listLibrarian = new ArrayList<Librarian>();
+    private ILibrarianDAO librarianDAO;
+
     public Home() {
-//        initComponents();
-        // this.setLocationRelativeTo(null);
-        //this.setExtendedState(Home.MAXIMIZED_BOTH); 
+        initComponents();
+        this.setLocationRelativeTo(null);
+//        this.setExtendedState(Home.MAXIMIZED_BOTH); 
         Login login = new Login(this, true);
         login.setVisible(true);
-        
-        System.out.println(login.checkdn);
+        librarianDAO = new LibrarianDAO();
+        listLibrarian = librarianDAO.getAll();
     }
 
     /**
@@ -547,17 +557,25 @@ public class Home extends javax.swing.JFrame {
 
     private void pnlquanlytacgiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlquanlytacgiaMouseClicked
         ManagerAuthor managerAuthor = new ManagerAuthor();
-
         jPanel4.add(managerAuthor);
         managerAuthor.setVisible(true);
     }//GEN-LAST:event_pnlquanlytacgiaMouseClicked
 
     private void pnlquanlynhaxuatbanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlquanlynhaxuatbanMouseClicked
         MangagerPublicser mangagerPublicser = new MangagerPublicser();
-        jPanel4.add(mangagerPublicser);
-        mangagerPublicser.setVisible(true);
-
-
+        Login login = new Login();
+        String username = login.txtuser.getText();
+        String password = new String(login.txtpassword.getPassword());
+        for (Librarian librarian1 : listLibrarian) {
+            if (librarian1.getUserName().equals(username) && librarian1.getPassword().equals(password)) {
+                if (librarian1.getPermission() == 0) {
+                    JOptionPane.showMessageDialog(this, "bạn không có quyền truy cập", "", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    jPanel4.add(mangagerPublicser);
+                    mangagerPublicser.setVisible(true);
+                }
+            }
+        }
     }//GEN-LAST:event_pnlquanlynhaxuatbanMouseClicked
 
     private void pnlquanlydanhmucMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlquanlydanhmucMouseClicked
@@ -574,8 +592,19 @@ public class Home extends javax.swing.JFrame {
 
     private void pnlquanlythuthuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlquanlythuthuMouseClicked
         ManagerLibrarian managerLibrarian = new ManagerLibrarian();
-        jPanel4.add(managerLibrarian);
-        managerLibrarian.setVisible(true);
+        Login login = new Login();
+        String username = login.txtuser.getText();
+        String password = new String(login.txtpassword.getPassword());
+        for (Librarian librarian1 : listLibrarian) {
+            if (librarian1.getUserName().equals(username) && librarian1.getPassword().equals(password)) {
+                if (librarian1.getPermission() == 0) {
+                    JOptionPane.showMessageDialog(this, "bạn không có quyền truy cập", "", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    jPanel4.add(managerLibrarian);
+                    managerLibrarian.setVisible(true);
+                }
+            }
+        }
     }//GEN-LAST:event_pnlquanlythuthuMouseClicked
 
     private void pnlquanlyphieumuontraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlquanlyphieumuontraMouseClicked

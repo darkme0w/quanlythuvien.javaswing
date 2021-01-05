@@ -10,6 +10,7 @@ import dao.impl.LibrarianDAO;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -46,9 +47,9 @@ public class ManagerLibrarian extends javax.swing.JInternalFrame {
         dtfLibrarian.addColumn("Tên tài khoản");
         dtfLibrarian.addColumn("Mật khẩu");
         dtfLibrarian.addColumn("Số điện thoại");
+        dtfLibrarian.addColumn("Địa chỉ");
         dtfLibrarian.addColumn("Giới tính");
         dtfLibrarian.addColumn("Quyền");
-        dtfLibrarian.addColumn("Ngày tạo");
 
     }
 
@@ -78,35 +79,34 @@ public class ManagerLibrarian extends javax.swing.JInternalFrame {
         Vector v;
 
         for (Librarian librarian : listLibrarian) {
-          
+
             v = new Vector();
             v.add(librarian.getLibrarianId());
             v.add(librarian.getLibrarianName());
             v.add(librarian.getUserName());
             v.add(librarian.getPassword());
             v.add(librarian.getPhone());
+            v.add(librarian.getAddress());
             if (librarian.getGender() == 1) {
                 v.add("Nam");
             }
-            if (librarian.getGender() == 2) {
+            if (librarian.getGender() == 0) {
                 v.add("Nữ");
             }
 
             if (librarian.getPermission() == 1) {
                 v.add("Quản trị viên");
             }
-            if (librarian.getPermission() == 2) {
+            if (librarian.getPermission() == 0) {
                 v.add("Thủ thư");
             }
-            v.add(librarian.getCreatedDate());
             dtfLibrarian.addRow(v);
         }
 
         jTable1.setModel(dtfLibrarian);
 
     }
-    
-    
+
     private void sortByASC() {
         listLibrarian.removeAll(listLibrarian);
         listLibrarian = librarianDAO.sortAsc();
@@ -122,14 +122,14 @@ public class ManagerLibrarian extends javax.swing.JInternalFrame {
             if (librarian.getGender() == 1) {
                 v.add("Nam");
             }
-            if (librarian.getGender() == 2) {
+            if (librarian.getGender() == 0) {
                 v.add("Nữ");
             }
 
             if (librarian.getPermission() == 1) {
                 v.add("Quản trị viên");
             }
-            if (librarian.getPermission() == 2) {
+            if (librarian.getPermission() == 0) {
                 v.add("Thủ thư");
             }
             v.add(librarian.getCreatedDate());
@@ -139,7 +139,7 @@ public class ManagerLibrarian extends javax.swing.JInternalFrame {
         jTable1.setModel(dtfLibrarian);
 
     }
-    
+
     private void sortByDESC() {
         listLibrarian.removeAll(listLibrarian);
         listLibrarian = librarianDAO.sortDesc();
@@ -155,14 +155,14 @@ public class ManagerLibrarian extends javax.swing.JInternalFrame {
             if (librarian.getGender() == 1) {
                 v.add("Nam");
             }
-            if (librarian.getGender() == 2) {
+            if (librarian.getGender() == 0) {
                 v.add("Nữ");
             }
 
             if (librarian.getPermission() == 1) {
                 v.add("Quản trị viên");
             }
-            if (librarian.getPermission() == 2) {
+            if (librarian.getPermission() == 0) {
                 v.add("Thủ thư");
             }
             v.add(librarian.getCreatedDate());
@@ -277,6 +277,11 @@ public class ManagerLibrarian extends javax.swing.JInternalFrame {
         txtPhone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPhoneActionPerformed(evt);
+            }
+        });
+        txtPhone.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPhoneKeyReleased(evt);
             }
         });
 
@@ -588,6 +593,26 @@ public class ManagerLibrarian extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        StringBuilder sb = new StringBuilder();
+        if (txtName.equals("") && txtName.getText().length() > 255) {
+            sb.append("tên thủ thư không được để trống và dưới 255 kí tự\n");
+        }
+        if (txtPhone.equals("") && txtPhone.getText().length() >= 11) {
+            sb.append("số điện thoại không được để trống và dưới 12 kí\n");
+        }
+        if (txtAddress.equals("") && txtAddress.getText().length() > 255) {
+            sb.append("địa chỉ không được để trống và dưới 255 kí\n");
+        }
+        if (txtUser.equals("") && txtUser.getText().length() > 255) {
+            sb.append("tài khoản không được để trống và dưới 255 kí\n");
+        }
+        if (txtPassword.equals("") && txtPassword.getText().length() > 255) {
+            sb.append("mật khẩu không được để trống và dưới 255 kí\n");
+        }
+        if (sb.length() > 0) {
+            JOptionPane.showMessageDialog(this, sb.toString(), "", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         librarian = new Librarian();
         librarian.setLibrarianName(txtName.getText());
         librarian.setUserName(txtUser.getText());
@@ -639,13 +664,12 @@ public class ManagerLibrarian extends javax.swing.JInternalFrame {
 
     private void jmnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnEditActionPerformed
         int pos = jTable1.getSelectedRow();
-        idLibrarian = dtfLibrarian.getValueAt(pos, 0).toString();
         pnlma.setText(dtfLibrarian.getValueAt(pos, 0).toString());
         txtName.setText(dtfLibrarian.getValueAt(pos, 1).toString());
-        txtPhone.setText(dtfLibrarian.getValueAt(pos, 2).toString());
-        txtAddress.setText(dtfLibrarian.getValueAt(pos, 3).toString());
-        txtUser.setText(dtfLibrarian.getValueAt(pos, 4).toString());
-        txtPhone.setText(dtfLibrarian.getValueAt(pos, 5).toString());
+        txtUser.setText(dtfLibrarian.getValueAt(pos, 2).toString());
+        txtPassword.setText(dtfLibrarian.getValueAt(pos, 3).toString());
+        txtPhone.setText(dtfLibrarian.getValueAt(pos, 4).toString());
+        txtAddress.setText(dtfLibrarian.getValueAt(pos, 5).toString());
         if (dtfLibrarian.getValueAt(pos, 6).toString().equals(rdnam.getActionCommand())) {
             rdnam.setSelected(true);
         } else if (dtfLibrarian.getValueAt(pos, 6).toString().equals(rdnu.getActionCommand())) {
@@ -654,9 +678,9 @@ public class ManagerLibrarian extends javax.swing.JInternalFrame {
             rdnam.setSelected(true);
         }
 
-        if (dtfLibrarian.getValueAt(pos, 6).toString().equals(rdqtv.getActionCommand())) {
+        if (dtfLibrarian.getValueAt(pos, 7).toString().equals(rdqtv.getActionCommand())) {
             rdqtv.setSelected(true);
-        } else if (dtfLibrarian.getValueAt(pos, 6).toString().equals(rdtt.getActionCommand())) {
+        } else if (dtfLibrarian.getValueAt(pos, 7).toString().equals(rdtt.getActionCommand())) {
             rdtt.setSelected(true);
         } else {
             rdqtv.setSelected(true);
@@ -723,13 +747,17 @@ public class ManagerLibrarian extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jComboBox3ActionPerformed
 
     private void txtfilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfilterActionPerformed
-        
+
     }//GEN-LAST:event_txtfilterActionPerformed
 
     private void txtfilterKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtfilterKeyReleased
         String query = txtfilter.getText();
         Myultis.filter(query, dtfLibrarian, jTable1);
     }//GEN-LAST:event_txtfilterKeyReleased
+
+    private void txtPhoneKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPhoneKeyReleased
+
+    }//GEN-LAST:event_txtPhoneKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

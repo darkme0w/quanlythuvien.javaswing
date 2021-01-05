@@ -51,7 +51,7 @@ public class ManagerAuthor extends javax.swing.JInternalFrame {
 
     private void loadData() {
         listAuthor.removeAll(listAuthor);
-        
+
         listAuthor = authorDAO.getAll();
         Vector v;
 
@@ -64,7 +64,6 @@ public class ManagerAuthor extends javax.swing.JInternalFrame {
         }
 
         jTable1.setModel(dtfAuthor);
-
 
     }
 
@@ -134,7 +133,6 @@ public class ManagerAuthor extends javax.swing.JInternalFrame {
         }
 
     }
-
 
     private void search(String query) {
         TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(dtfAuthor);
@@ -381,24 +379,31 @@ public class ManagerAuthor extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txttentacgiaActionPerformed
 
     private void kButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton2ActionPerformed
-        author = new Author();
-        author.setAuthorName(txttentacgia.getText());
-        authorDAO.save(author);
-        Myultis.clearTable(dtfAuthor);
-        preapareGUI();
-        loadData();
-
+        if (txttentacgia.getText().length() > 0 && txttentacgia.getText().length() < 255) {
+            author = new Author();
+            author.setAuthorName(txttentacgia.getText());
+            authorDAO.save(author);
+            Myultis.clearTable(dtfAuthor);
+            preapareGUI();
+            loadData();
+        } else {
+            JOptionPane.showMessageDialog(this, "tên tác giả trên 0 kí tự và dưới 255 kí tự", "", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_kButton2ActionPerformed
 
     private void kButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton3ActionPerformed
-        author = new Author();
-        int getid = new Integer(lblid.getText());
-        author.setAuthorName(txttentacgia.getText());
-        author.setAuthorId(getid);
-        authorDAO.update(author);
-        Myultis.clearTable(dtfAuthor);
-        preapareGUI();
-        loadData();
+        if (txttentacgia.getText().length() > 0 && txttentacgia.getText().length() < 255) {
+            author = new Author();
+            int getid = new Integer(lblid.getText());
+            author.setAuthorName(txttentacgia.getText());
+            author.setAuthorId(getid);
+            authorDAO.update(author);
+            Myultis.clearTable(dtfAuthor);
+            preapareGUI();
+            loadData();
+        } else {
+            JOptionPane.showMessageDialog(this, "tên tác giả trên 0 kí tự và dưới 255 kí tự", "", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_kButton3ActionPerformed
 
     private void txtfilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfilterActionPerformed

@@ -9,6 +9,7 @@ import dao.ILibrarianDAO;
 import dao.impl.LibrarianDAO;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import models.Librarian;
 
 /**
@@ -17,39 +18,22 @@ import models.Librarian;
  */
 public class Login extends javax.swing.JDialog {
 
-    private List<Librarian> listLibrarian = new ArrayList<Librarian>();
-    private ILibrarianDAO librarianDAO;
-    private Librarian librarian;
-    boolean checkdn;
-
     /**
      * Creates new form NewJDialog
      */
+    private List<Librarian> listLibrarian = new ArrayList<Librarian>();
+    private ILibrarianDAO librarianDAO;
+
     public Login(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
         librarianDAO = new LibrarianDAO();
+
     }
 
     public Login() {
 
-    }
-
-    public boolean icheck() {
-        listLibrarian = librarianDAO.getAll();
-        char[] getpassword = txtpassword.getPassword();
-        String getuser = txtuser.getText();
-        for (Librarian librarian : listLibrarian) {
-            
-            if (librarian.getUserName().equals(getuser) && librarian.getPassword().equals(String.valueOf(getpassword))) {
-                checkdn = true;
-                new Home().setVisible(true);
-            }
-        }
-
-        System.out.println(checkdn);
-        return checkdn;
     }
 
     /**
@@ -159,15 +143,13 @@ public class Login extends javax.swing.JDialog {
                         .addComponent(jLabel5)
                         .addGap(394, 394, 394))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginLayout.createSequentialGroup()
-                        .addGroup(loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel2)
-                            .addGroup(loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(txtpassword, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(loginLayout.createSequentialGroup()
-                                    .addGap(0, 0, Short.MAX_VALUE)
-                                    .addGroup(loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel1)
-                                        .addComponent(txtuser, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(txtpassword)
+                            .addGroup(loginLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(txtuser, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel1))
                         .addGap(236, 236, 236))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginLayout.createSequentialGroup()
                         .addComponent(btnlogin, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -182,17 +164,17 @@ public class Login extends javax.swing.JDialog {
                     .addComponent(btn_exit, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29)
                 .addComponent(jLabel5)
-                .addGap(88, 88, 88)
+                .addGap(68, 68, 68)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtuser, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtpassword, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
+                .addGap(41, 41, 41)
                 .addComponent(btnlogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addContainerGap(81, Short.MAX_VALUE))
         );
 
         getContentPane().add(login, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -205,7 +187,33 @@ public class Login extends javax.swing.JDialog {
     }//GEN-LAST:event_txtuserActionPerformed
 
     private void btnloginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnloginActionPerformed
-        icheck();
+//        String password = new String(txtpassword.getPassword());
+//        listLibrarian = librarianDAO.getAll();
+//        for (Librarian librarian1 : listLibrarian) {
+//            if (librarian1.getUserName().equals(txtuser.getText()) && librarian1.getPassword().equals(password)) {
+//                dispose();
+//            }
+//        }
+        String username = txtuser.getText();
+        String password = new String(txtpassword.getPassword());
+        StringBuilder sb = new StringBuilder();
+        if (username.equals("")) {
+            sb.append("tài khoản không được để trống\n");
+        }
+        if (password.equals("")) {
+            sb.append("mật khẩu không được để trống\n");
+        }
+        if (sb.length() > 0) {
+            JOptionPane.showMessageDialog(this, sb.toString(), "", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        listLibrarian = librarianDAO.getAll();
+        for (Librarian librarian1 : listLibrarian) {
+            if (librarian1.getUserName().equals(username) && librarian1.getPassword().equals(password)) {
+                dispose();
+            }
+        }
+
     }//GEN-LAST:event_btnloginActionPerformed
 
     private void btn_exitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_exitMouseClicked

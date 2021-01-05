@@ -12,11 +12,13 @@ import dao.impl.CategoryDAO;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import models.Category;
+import utils.Myultis;
 
 /**
  *
@@ -31,6 +33,7 @@ public class ManagerCategory extends javax.swing.JInternalFrame {
     private List<Category> listCategory = new ArrayList<Category>();
     private ICategoryDAO categoryDAO;
     private Category category;
+    private String idCategory;
 
     public ManagerCategory() {
         initComponents();
@@ -60,23 +63,6 @@ public class ManagerCategory extends javax.swing.JInternalFrame {
         }
 
         jTable1.setModel(dtfCategory);
-
-        if (listCategory.size() > 0) {
-            jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-                @Override
-                public void valueChanged(ListSelectionEvent e) {
-                    int pos = jTable1.getSelectedRow();
-                    if (pos < 0) {
-                        pos = 0;
-                    }
-                    category = listCategory.get(pos);
-                    lblid.setText(String.valueOf(category.getCategoryId()));
-                    txtname.setText(category.getCategoryName());
-                }
-
-            });
-        }
-
     }
 
     private void sortByASC() {
@@ -94,23 +80,6 @@ public class ManagerCategory extends javax.swing.JInternalFrame {
         }
 
         jTable1.setModel(dtfCategory);
-
-        if (listCategory.size() > 0) {
-            jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-                @Override
-                public void valueChanged(ListSelectionEvent e) {
-                    int pos = jTable1.getSelectedRow();
-                    if (pos < 0) {
-                        pos = 0;
-                    }
-                    category = listCategory.get(pos);
-                    lblid.setText(String.valueOf(category.getCategoryId()));
-                    txtname.setText(category.getCategoryName());
-                }
-
-            });
-        }
-
     }
 
     private void sortByDESC() {
@@ -128,23 +97,6 @@ public class ManagerCategory extends javax.swing.JInternalFrame {
         }
 
         jTable1.setModel(dtfCategory);
-
-        if (listCategory.size() > 0) {
-            jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-                @Override
-                public void valueChanged(ListSelectionEvent e) {
-                    int pos = jTable1.getSelectedRow();
-                    if (pos < 0) {
-                        pos = 0;
-                    }
-                    category = listCategory.get(pos);
-                    lblid.setText(String.valueOf(category.getCategoryId()));
-                    txtname.setText(category.getCategoryName());
-                }
-
-            });
-        }
-
     }
 
     private void search(String query) {
@@ -170,6 +122,9 @@ public class ManagerCategory extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPopupMenu1 = new javax.swing.JPopupMenu();
+        jmEdit = new javax.swing.JMenuItem();
+        jmDelete = new javax.swing.JMenuItem();
         kGradientPanel2 = new keeptoo.KGradientPanel();
         jLabel6 = new javax.swing.JLabel();
         jlabel7 = new javax.swing.JLabel();
@@ -178,13 +133,28 @@ public class ManagerCategory extends javax.swing.JInternalFrame {
         update = new keeptoo.KButton();
         txtsearch = new javax.swing.JTextField();
         jComboBox3 = new javax.swing.JComboBox<>();
-        btndelete = new keeptoo.KButton();
         btndelete1 = new keeptoo.KButton();
         jlabel8 = new javax.swing.JLabel();
         lblid = new javax.swing.JLabel();
         jlabel9 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+
+        jmEdit.setText("Sửa");
+        jmEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmEditActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(jmEdit);
+
+        jmDelete.setText("Xóa");
+        jmDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmDeleteActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(jmDelete);
 
         setClosable(true);
         setIconifiable(true);
@@ -269,20 +239,6 @@ public class ManagerCategory extends javax.swing.JInternalFrame {
             }
         });
 
-        btndelete.setText("Xóa");
-        btndelete.setkBorderRadius(0);
-        btndelete.setkEndColor(new java.awt.Color(51, 153, 0));
-        btndelete.setkHoverEndColor(new java.awt.Color(204, 0, 204));
-        btndelete.setkHoverForeGround(new java.awt.Color(255, 204, 255));
-        btndelete.setkHoverStartColor(new java.awt.Color(0, 204, 204));
-        btndelete.setkStartColor(new java.awt.Color(0, 204, 204));
-        btndelete.setPreferredSize(new java.awt.Dimension(80, 30));
-        btndelete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btndeleteActionPerformed(evt);
-            }
-        });
-
         btndelete1.setText("Tải lại");
         btndelete1.setkBorderRadius(0);
         btndelete1.setkEndColor(new java.awt.Color(51, 153, 0));
@@ -326,21 +282,18 @@ public class ManagerCategory extends javax.swing.JInternalFrame {
                                 .addComponent(update, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btndelete, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btndelete1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btndelete1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(kGradientPanel2Layout.createSequentialGroup()
                                 .addComponent(lblid)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(265, 265, 265)
                                 .addComponent(jlabel9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtsearch, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(16, 16, 16))))
+                                .addComponent(txtsearch, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(kGradientPanel2Layout.createSequentialGroup()
                         .addGap(179, 179, 179)
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         kGradientPanel2Layout.setVerticalGroup(
             kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -362,7 +315,6 @@ public class ManagerCategory extends javax.swing.JInternalFrame {
                     .addComponent(kButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(update, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btndelete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btndelete1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -380,6 +332,11 @@ public class ManagerCategory extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jTable1MouseReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -392,35 +349,36 @@ public class ManagerCategory extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtnameActionPerformed
 
     private void kButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton2ActionPerformed
-        category = new Category();
-        category.setCategoryName(txtname.getText());
-        categoryDAO.save(category);
-        clearTable();
-        preapareGUI();
-        loadData();
+        if (txtname.getText().length() > 0 && txtname.getText().length() < 255) {
+            category = new Category();
+            category.setCategoryName(txtname.getText());
+            categoryDAO.save(category);
+            clearTable();
+            preapareGUI();
+            loadData();
+        } else {
+            JOptionPane.showMessageDialog(this, "tên danh mục trên 0 kí tự và dưới 255 kí tự", "", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_kButton2ActionPerformed
 
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
-        category = new Category();
-        int getid = new Integer(lblid.getText());
-        category.setCategoryName(txtname.getText());
-        category.setCategoryId(getid);
-        categoryDAO.update(category);
-        clearTable();
-        preapareGUI();
-        loadData();
+        if (txtname.getText().length() > 0 && txtname.getText().length() < 255) {
+            category = new Category();
+            int getid = new Integer(lblid.getText());
+            category.setCategoryName(txtname.getText());
+            category.setCategoryId(getid);
+            categoryDAO.update(category);
+            clearTable();
+            preapareGUI();
+            loadData();
+        } else {
+            JOptionPane.showMessageDialog(this, "tên danh mục trên 0 kí tự và dưới 255 kí tự", "", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_updateActionPerformed
 
     private void txtsearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtsearchActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtsearchActionPerformed
-
-    private void btndeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeleteActionPerformed
-        categoryDAO.delete(category);
-        clearTable();
-        preapareGUI();
-        loadData();
-    }//GEN-LAST:event_btndeleteActionPerformed
 
     private void btndelete1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndelete1ActionPerformed
         clearTable();
@@ -451,17 +409,51 @@ public class ManagerCategory extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jComboBox3ActionPerformed
 
+    private void jmEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmEditActionPerformed
+        int pos = jTable1.getSelectedRow();
+        idCategory = dtfCategory.getValueAt(pos, 0).toString();
+        String categoryName = dtfCategory.getValueAt(pos, 1).toString();
+        lblid.setText(idCategory);
+        txtname.setText(categoryName);
+    }//GEN-LAST:event_jmEditActionPerformed
+
+    private void jmDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmDeleteActionPerformed
+        int pos = jTable1.getSelectedRow();
+        String categoryName = dtfCategory.getValueAt(pos, 1).toString();
+        int choose = JOptionPane.showConfirmDialog(rootPane, "Bạn chắc chắn muốn xóa " + categoryName, "", JOptionPane.OK_CANCEL_OPTION);
+        if (choose == JOptionPane.OK_OPTION) {
+            idCategory = dtfCategory.getValueAt(pos, 0).toString();
+            int id = Integer.valueOf(idCategory);
+            category = new Category();
+            category.setCategoryId(id);
+            categoryDAO.delete(category);
+            Myultis.clearTable(dtfCategory);
+            preapareGUI();
+            loadData();
+        } else {
+            System.out.println(".");
+        }
+    }//GEN-LAST:event_jmDeleteActionPerformed
+
+    private void jTable1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseReleased
+        if (evt.isPopupTrigger()) {
+            jPopupMenu1.show(jTable1, evt.getX(), evt.getY());
+        }
+    }//GEN-LAST:event_jTable1MouseReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private keeptoo.KButton btndelete;
     private keeptoo.KButton btndelete1;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel jlabel7;
     private javax.swing.JLabel jlabel8;
     private javax.swing.JLabel jlabel9;
+    private javax.swing.JMenuItem jmDelete;
+    private javax.swing.JMenuItem jmEdit;
     private keeptoo.KButton kButton2;
     private keeptoo.KGradientPanel kGradientPanel2;
     private javax.swing.JLabel lblid;

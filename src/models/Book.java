@@ -10,6 +10,7 @@ package models;
  * @author admin
  */
 public class Book {
+
     private int bookId;
     private String booksCode;
     private String booksName;
@@ -36,9 +37,21 @@ public class Book {
         this.locationId = locationId;
         this.publicserId = publicserId;
     }
-    
 
-    public Book(String booksCode, String booksName, float booksPrice, int quantity, int status, int year,String locationName, String publicserName) {
+    public Book convert(Object... objects) {
+        int id = (Integer) objects[0];
+        String code = (String) objects[1];
+        String name = (String) objects[2];
+        return new Book(id, code, name);
+    }
+
+    public Book(int bookId, String booksCode, String booksName) {
+        this.bookId = bookId;
+        this.booksCode = booksCode;
+        this.booksName = booksName;
+    }
+
+    public Book(String booksCode, String booksName, float booksPrice, int quantity, int status, int year, String locationName, String publicserName) {
         this.booksCode = booksCode;
         this.booksName = booksName;
         this.booksPrice = booksPrice;
@@ -153,7 +166,4 @@ public class Book {
         return this.booksCode;
     }
 
-    
-    
-    
 }
