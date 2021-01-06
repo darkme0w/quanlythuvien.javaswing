@@ -187,21 +187,14 @@ public class Login extends javax.swing.JDialog {
     }//GEN-LAST:event_txtuserActionPerformed
 
     private void btnloginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnloginActionPerformed
-//        String password = new String(txtpassword.getPassword());
-//        listLibrarian = librarianDAO.getAll();
-//        for (Librarian librarian1 : listLibrarian) {
-//            if (librarian1.getUserName().equals(txtuser.getText()) && librarian1.getPassword().equals(password)) {
-//                dispose();
-//            }
-//        }
         String username = txtuser.getText();
         String password = new String(txtpassword.getPassword());
         StringBuilder sb = new StringBuilder();
         if (username.equals("")) {
-            sb.append("tài khoản không được để trống\n");
+            sb.append("Tài khoản không được để trống\n");
         }
         if (password.equals("")) {
-            sb.append("mật khẩu không được để trống\n");
+            sb.append("Mật khẩu không được để trống\n");
         }
         if (sb.length() > 0) {
             JOptionPane.showMessageDialog(this, sb.toString(), "", JOptionPane.ERROR_MESSAGE);
@@ -210,7 +203,14 @@ public class Login extends javax.swing.JDialog {
         listLibrarian = librarianDAO.getAll();
         for (Librarian librarian1 : listLibrarian) {
             if (librarian1.getUserName().equals(username) && librarian1.getPassword().equals(password)) {
+                Librarian.setLbId(librarian1.getLibrarianId());
+                Librarian.setLbName(librarian1.getLibrarianName());
+                JOptionPane.showMessageDialog(this, "Đăng nhập thành công", "SUCCESS!!", JOptionPane.ERROR_MESSAGE);
                 dispose();
+                break;
+            } else {
+                JOptionPane.showMessageDialog(this, "Sai tài khoản hoặc mật khẩu", "ERROR!!", JOptionPane.ERROR_MESSAGE);
+                break;
             }
         }
 

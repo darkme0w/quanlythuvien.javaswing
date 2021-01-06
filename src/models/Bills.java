@@ -12,6 +12,7 @@ import java.time.LocalDate;
  * @author admin
  */
 public class Bills {
+
     private int billsId;
     private int readerId;
     private int librarianId;
@@ -21,17 +22,19 @@ public class Bills {
     private String address;
     private String phone;
     private int gender;
+    private String librarianName;
 
     public Bills() {
     }
 
-    public Bills(int readerId, LocalDate createdDate, LocalDate payDay) {
+    public Bills(int readerId, LocalDate createdDate, LocalDate payDay, String librarianName) {
         this.readerId = readerId;
         this.createdDate = createdDate;
         this.payDay = payDay;
+        this.librarianName = librarianName;
     }
 
-    public Bills(int billsId, LocalDate createdDate, LocalDate payDay, String readerName, String address, String phone, int gender) {
+    public Bills(int billsId, LocalDate createdDate, LocalDate payDay, String readerName, String address, String phone, int gender, String librarianName) {
         this.billsId = billsId;
         this.createdDate = createdDate;
         this.payDay = payDay;
@@ -39,6 +42,15 @@ public class Bills {
         this.address = address;
         this.phone = phone;
         this.gender = gender;
+        this.librarianName = librarianName;
+    }
+
+    public String getLibrarianName() {
+        return librarianName;
+    }
+
+    public void setLibrarianName(String librarianName) {
+        this.librarianName = librarianName;
     }
 
     public Bills(int billsId, int readerId, int librarianId, LocalDate createdDate, LocalDate payDay, String readerName, String address, String phone, int gender) {
@@ -125,6 +137,4 @@ public class Bills {
         this.gender = gender;
     }
 
- 
-    
 }

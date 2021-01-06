@@ -21,6 +21,9 @@ public class Librarian {
     private int gender;
     private int permission;
     private LocalDate createdDate;
+    public static int lbId;
+    public static String lbName;
+    
 
     public Librarian() {
     }
@@ -35,6 +38,22 @@ public class Librarian {
         this.gender = gender;
         this.permission = permission;
         this.createdDate = createdDate;
+    }
+
+    public static int getLbId() {
+        return lbId;
+    }
+
+    public static void setLbId(int lbId) {
+        Librarian.lbId = lbId;
+    }
+
+    public static String getLbName() {
+        return lbName;
+    }
+
+    public static void setLbName(String lbName) {
+        Librarian.lbName = lbName;
     }
 
     public int getLibrarianId() {

@@ -31,8 +31,8 @@ public class BiilsDAO extends AbstractDAO<Bills> implements IBillsDAO {
 
     @Override
     public Integer save(Bills bills) {
-        String sql = "INSERT INTO books.Bills(ReaderID, CreatedDate, PayDay)VALUES(?,?,?)";
-        return insertReturnId(sql, bills.getReaderId(), bills.getCreatedDate(), bills.getPayDay());
+        String sql = "INSERT INTO books.Bills(ReaderID, CreatedDate, PayDay,LirarianID)VALUES(?,?,?,?)";
+        return insertReturnId(sql, bills.getReaderId(), bills.getCreatedDate(), bills.getPayDay(), bills.getLibrarianId());
     }
 
     @Override

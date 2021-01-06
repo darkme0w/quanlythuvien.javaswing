@@ -30,7 +30,8 @@ public class BillsDetailDAO extends AbstractDAO<BillsDetail> implements IBillsDe
 
     @Override
     public void update(BillsDetail billsDetail) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       String sql = "{Call sp_updateStatus_BillDetail(?,?)}";
+       this.update(sql, billsDetail.getStatus(),billsDetail.getBillId());
     }
 
     @Override

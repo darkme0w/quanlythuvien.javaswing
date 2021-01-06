@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 import models.BillsDetail;
+import utils.Myultis;
 
 /**
  *
@@ -26,13 +27,13 @@ public class JLogBillsDetail extends javax.swing.JDialog {
     private DefaultTableModel defaultTableModel;
     private IBillsDetailDAO billsDetailDAO;
     private BillsDetail billsDetail;
-    
+
     public JLogBillsDetail(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         billsDetailDAO = new BillsDetailDAO();
         initComponents();
     }
-    
+
     private void preapareGUI() {
         defaultTableModel = new DefaultTableModel();
         defaultTableModel.addColumn("Mã sách");
@@ -55,14 +56,15 @@ public class JLogBillsDetail extends javax.swing.JDialog {
             v.add(billsDetail.getPublicser());
             if (billsDetail.getStatus() == 1) {
                 v.add("Đã trả");
-            } else {
+            } else if (billsDetail.getStatus() == 0) {
                 v.add("Chưa trả");
+            } else if (billsDetail.getStatus() == 2) {
+                v.add("Trả thiêu");
             }
             v.add(billsDetail.getQuantity());
-            
+
             defaultTableModel.addRow(v);
         }
-
 
         jTable1.setModel(defaultTableModel);
     }
@@ -76,10 +78,30 @@ public class JLogBillsDetail extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPopupMenu1 = new javax.swing.JPopupMenu();
+        jmStt1 = new javax.swing.JMenuItem();
+        jmStt2 = new javax.swing.JMenuItem();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         lbBillId = new javax.swing.JLabel();
+
+        jmStt1.setText("Đã trả");
+        jmStt1.setActionCommand("");
+        jmStt1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmStt1ActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(jmStt1);
+
+        jmStt2.setText("Trả thiếu");
+        jmStt2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmStt2ActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(jmStt2);
 
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setModalExclusionType(java.awt.Dialog.ModalExclusionType.TOOLKIT_EXCLUDE);
@@ -98,6 +120,11 @@ public class JLogBillsDetail extends javax.swing.JDialog {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jTable1MouseReleased(evt);
             }
         });
         jScrollPane1.setViewportView(jTable1);
@@ -135,6 +162,32 @@ public class JLogBillsDetail extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jTable1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseReleased
+        if (evt.isPopupTrigger()) {
+            jPopupMenu1.show(jTable1, evt.getX(), evt.getY());
+        }
+    }//GEN-LAST:event_jTable1MouseReleased
+
+    private void jmStt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmStt1ActionPerformed
+        billsDetail = new BillsDetail();
+        int billId = Integer.valueOf(lbBillId.getText());
+        billsDetail.setBillId(billId);
+        billsDetail.setStatus(1);
+        billsDetailDAO.update(billsDetail);
+        Myultis.clearTable(defaultTableModel);
+        loadData(billId);
+    }//GEN-LAST:event_jmStt1ActionPerformed
+
+    private void jmStt2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmStt2ActionPerformed
+        billsDetail = new BillsDetail();
+        int billId = Integer.valueOf(lbBillId.getText());
+        billsDetail.setBillId(billId);
+        billsDetail.setStatus(2);
+        billsDetailDAO.update(billsDetail);
+        Myultis.clearTable(defaultTableModel);
+        loadData(billId);
+    }//GEN-LAST:event_jmStt2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -180,8 +233,11 @@ public class JLogBillsDetail extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JMenuItem jmStt1;
+    private javax.swing.JMenuItem jmStt2;
     private javax.swing.JLabel lbBillId;
     // End of variables declaration//GEN-END:variables
 }

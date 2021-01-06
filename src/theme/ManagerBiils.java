@@ -25,6 +25,7 @@ import javax.swing.table.DefaultTableModel;
 import models.Bills;
 import models.BillsDetail;
 import models.Book;
+import models.Librarian;
 import models.Reader;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
@@ -88,6 +89,7 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
         dftbBills.addColumn("Số điện thoại");
         dftbBills.addColumn("Địa chỉ");
         dftbBills.addColumn("Giới tính");
+        dftbBills.addColumn("Người lập phiếu");
     }
 
     private void loadData() {
@@ -107,11 +109,10 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
             } else {
                 v.add("Nữ");
             }
+            v.add(bills1.getLibrarianName());
 
             dftbBills.addRow(v);
         }
-
-//        listBook.forEach(s->System.out.println(s.toString()));
         jTable2.setModel(dftbBills);
     }
 
@@ -502,6 +503,7 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
         bills.setReaderId(readerId);
         bills.setCreatedDate(startDate);
         bills.setPayDay(endDate);
+        bills.setLibrarianId(Librarian.getLbId());
         int newId = billDAO.save(bills);
         bills = billDAO.findOne(newId);
         String bId = String.valueOf(bills.getBillsId());
@@ -551,6 +553,8 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
                 row.setHeight((short) 500);
                 cell = row.createCell(0, CellType.STRING);
                 cell.setCellValue("Tên người mượn: " + lbReaderName.getText());
+                cell = row.createCell(3, CellType.STRING);
+                cell.setCellValue("Người lập phiếu: " + Librarian.getLbName());
 
                 row = spreadsheet.createRow((short) 2);
                 row.setHeight((short) 500);
@@ -580,6 +584,7 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
                     row.createCell(2).setCellValue(billsDetail.getBookName());
                     row.createCell(3).setCellValue(billsDetail.getQuantity());
                 }
+
                 FileOutputStream out = new FileOutputStream(new File("D:/phieu.xlsx"));
                 workbook.write(out);
                 out.close();
