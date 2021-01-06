@@ -13,15 +13,24 @@ import dao.impl.BiilsDAO;
 import dao.impl.BillsDetailDAO;
 import dao.impl.BookDAO;
 import dao.impl.ReaderDAO;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import org.apache.poi.ss.usermodel.Cell;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import models.Bills;
 import models.BillsDetail;
 import models.Book;
 import models.Reader;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import utils.Myultis;
 
@@ -53,10 +62,8 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
         initComponents();
         readerDAO = new ReaderDAO();
         bookDAO = new BookDAO();
-        billDAO = new BiilsDAO();
         loadComboBox();
-        preapareGUI();
-        loadData();
+
     }
 
     private void loadComboBox() {
@@ -117,6 +124,8 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPopupMenu1 = new javax.swing.JPopupMenu();
+        jmDetail = new javax.swing.JMenuItem();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         pnlAddBill = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
@@ -148,12 +157,27 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
-        jXSearchField1 = new org.jdesktop.swingx.JXSearchField();
+        jtSearch = new org.jdesktop.swingx.JXSearchField();
+        jXButton1 = new org.jdesktop.swingx.JXButton();
+
+        jmDetail.setText("Chi tiết");
+        jmDetail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmDetailActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(jmDetail);
 
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
+
+        jTabbedPane1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTabbedPane1MouseClicked(evt);
+            }
+        });
 
         pnlAddBill.setPreferredSize(new java.awt.Dimension(1500, 617));
 
@@ -295,33 +319,32 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel1)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(cbReader, 0, 215, Short.MAX_VALUE)
-                                .addComponent(dpStartDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGap(60, 60, 60)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(dpEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(lbReaderId, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE))
-                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGap(109, 109, 109)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(jLabel6)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(lbIdBill, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(lbReaderName)
-                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addComponent(btnConfirmReader, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbReader, 0, 215, Short.MAX_VALUE)
+                            .addComponent(dpStartDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(60, 60, 60)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(dpEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(lbReaderId, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE))
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(109, 109, 109)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel6)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lbIdBill, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(lbReaderName)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addComponent(btnConfirmReader)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnSaveBills))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 443, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -358,9 +381,9 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(21, 21, 21)
                 .addComponent(btnSaveBills, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnlAddBillLayout = new javax.swing.GroupLayout(pnlAddBill);
@@ -384,10 +407,7 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "Mã phiếu", "Ngày mượn", "Ngày trả", "Tên độc giả", "Địa chỉ", "Số điện thoại", "Giới tính"
@@ -401,12 +421,28 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jTable2MouseReleased(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTable2);
 
-        jXSearchField1.setText("jXSearchField1");
-        jXSearchField1.addActionListener(new java.awt.event.ActionListener() {
+        jtSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jXSearchField1ActionPerformed(evt);
+                jtSearchActionPerformed(evt);
+            }
+        });
+        jtSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtSearchKeyReleased(evt);
+            }
+        });
+
+        jXButton1.setText("Tải lại");
+        jXButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jXButton1ActionPerformed(evt);
             }
         });
 
@@ -417,17 +453,21 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
             .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1251, Short.MAX_VALUE)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jXSearchField1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jXButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jXSearchField1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jtSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
+                    .addComponent(jXButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(248, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(102, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Danh sách phiếu mượn", jPanel3);
@@ -458,7 +498,10 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
         LocalDate startDate = Myultis.convertDatetoLocalDate(dpStartDate.getDate());
         LocalDate endDate = Myultis.convertDatetoLocalDate(dpEndDate.getDate());
         int readerId = Integer.valueOf(lbReaderId.getText());
-        bills = new Bills(readerId, startDate, endDate);
+        bills = new Bills();
+        bills.setReaderId(readerId);
+        bills.setCreatedDate(startDate);
+        bills.setPayDay(endDate);
         int newId = billDAO.save(bills);
         bills = billDAO.findOne(newId);
         String bId = String.valueOf(bills.getBillsId());
@@ -485,6 +528,7 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
 
     private void btnSaveBillsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveBillsActionPerformed
         billsDetailDAO = new BillsDetailDAO();
+        List<BillsDetail> listBillsDetails = new ArrayList<>();
         Vector data = defaultTableModel.getDataVector();
         int billId = Integer.valueOf(lbIdBill.getText());
         for (int i = 0; i < data.size(); i++) {
@@ -495,12 +539,93 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
             BillsDetail billsDetail = new BillsDetail(billId, bookId, quantity);
             billsDetailDAO.save(billsDetail);
         }
+        int choose = JOptionPane.showConfirmDialog(rootPane, "Bạn có muốn xuất phiếu ra Excel", "Xuất phiếu", JOptionPane.OK_CANCEL_OPTION);
+        if (choose == JOptionPane.OK_OPTION) {
+            try {
+                XSSFWorkbook workbook = new XSSFWorkbook();
+                XSSFSheet spreadsheet = workbook.createSheet("Phiếu mượn trả");
+                XSSFRow row = null;
+                Cell cell = null;
+
+                row = spreadsheet.createRow((short) 1);
+                row.setHeight((short) 500);
+                cell = row.createCell(0, CellType.STRING);
+                cell.setCellValue("Tên người mượn: " + lbReaderName.getText());
+
+                row = spreadsheet.createRow((short) 2);
+                row.setHeight((short) 500);
+                cell = row.createCell(1, CellType.STRING);
+                cell.setCellValue("PHIẾU MƯỢN TRẢ");
+                cell = row.createCell(0, CellType.STRING);
+                cell.setCellValue("Mã phiếu: " + lbIdBill.getText());
+
+                row = spreadsheet.createRow((short) 3);
+                row.setHeight((short) 500);
+                cell = row.createCell(0, CellType.STRING);
+                cell.setCellValue("STT");
+                cell = row.createCell(1, CellType.STRING);
+                cell.setCellValue("Mã sách");
+                cell = row.createCell(2, CellType.STRING);
+                cell.setCellValue("Tên sách");
+                cell = row.createCell(3, CellType.STRING);
+                cell.setCellValue("Số lượng");
+                listBillsDetails = billsDetailDAO.getAll(billId);
+
+                for (int i = 0; i < listBillsDetails.size(); i++) {
+                    BillsDetail billsDetail = listBillsDetails.get(i);
+                    row = spreadsheet.createRow((short) 4 + i);
+                    row.setHeight((short) 400);
+                    row.createCell(0).setCellValue(i + 1);
+                    row.createCell(1).setCellValue(billsDetail.getBookCode());
+                    row.createCell(2).setCellValue(billsDetail.getBookName());
+                    row.createCell(3).setCellValue(billsDetail.getQuantity());
+                }
+                FileOutputStream out = new FileOutputStream(new File("D:/phieu.xlsx"));
+                workbook.write(out);
+                out.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
 
     }//GEN-LAST:event_btnSaveBillsActionPerformed
 
-    private void jXSearchField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jXSearchField1ActionPerformed
+    private void jtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtSearchActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jXSearchField1ActionPerformed
+    }//GEN-LAST:event_jtSearchActionPerformed
+
+    private void jTable2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseReleased
+        if (evt.isPopupTrigger()) {
+            jPopupMenu1.show(jTable2, evt.getX(), evt.getY());
+        }
+    }//GEN-LAST:event_jTable2MouseReleased
+
+    private void jtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtSearchKeyReleased
+        String query = jtSearch.getText();
+        Myultis.filter(query, dftbBills, jTable2);
+    }//GEN-LAST:event_jtSearchKeyReleased
+
+    private void jXButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jXButton1ActionPerformed
+        Myultis.clearTable(dftbBills);
+        preapareGUI();
+        loadData();
+    }//GEN-LAST:event_jXButton1ActionPerformed
+
+    private void jmDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmDetailActionPerformed
+        int pos = jTable2.getSelectedRow();
+        int billId = Integer.valueOf(dftbBills.getValueAt(pos, 0).toString());
+        JLogBillsDetail dialog = new JLogBillsDetail(new javax.swing.JFrame(), true);
+        dialog.loadData(billId);
+        dialog.setVisible(true);
+
+    }//GEN-LAST:event_jmDetailActionPerformed
+
+    private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
+        billDAO = new BiilsDAO();
+        preapareGUI();
+        loadData();
+    }//GEN-LAST:event_jTabbedPane1MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -523,12 +648,15 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
-    private org.jdesktop.swingx.JXSearchField jXSearchField1;
+    private org.jdesktop.swingx.JXButton jXButton1;
+    private javax.swing.JMenuItem jmDetail;
+    private org.jdesktop.swingx.JXSearchField jtSearch;
     private javax.swing.JLabel lbIdBill;
     private javax.swing.JLabel lbNXB;
     private javax.swing.JLabel lbNameBook;

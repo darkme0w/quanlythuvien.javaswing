@@ -7,6 +7,7 @@ package dao.impl;
 
 import dao.IBillsDetailDAO;
 import java.util.List;
+import mapper.BillsDetailMapper;
 import models.BillsDetail;
 
 /**
@@ -16,8 +17,9 @@ import models.BillsDetail;
 public class BillsDetailDAO extends AbstractDAO<BillsDetail> implements IBillsDetailDAO{
 
     @Override
-    public List<BillsDetail> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<BillsDetail> getAll(int billId) {
+        String sql = "{Call sp_getById_vw_BillsDetail(?)}";
+        return query(sql, new BillsDetailMapper(), billId);
     }
 
     @Override

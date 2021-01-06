@@ -13,7 +13,7 @@ import models.BillsDetail;
  * @author phamh
  */
 public interface IBillsDetailDAO extends GenericDAO<BillsDetail>{
-    List<BillsDetail> getAll();
+    List<BillsDetail> getAll(int billId);
     void save(BillsDetail billsDetail);
     void update(BillsDetail billsDetail);
     void delete(BillsDetail billsDetail);

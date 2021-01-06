@@ -22,6 +22,77 @@ public class Bills {
     private String phone;
     private int gender;
 
+    public Bills() {
+    }
+
+    public Bills(int readerId, LocalDate createdDate, LocalDate payDay) {
+        this.readerId = readerId;
+        this.createdDate = createdDate;
+        this.payDay = payDay;
+    }
+
+    public Bills(int billsId, LocalDate createdDate, LocalDate payDay, String readerName, String address, String phone, int gender) {
+        this.billsId = billsId;
+        this.createdDate = createdDate;
+        this.payDay = payDay;
+        this.readerName = readerName;
+        this.address = address;
+        this.phone = phone;
+        this.gender = gender;
+    }
+
+    public Bills(int billsId, int readerId, int librarianId, LocalDate createdDate, LocalDate payDay, String readerName, String address, String phone, int gender) {
+        this.billsId = billsId;
+        this.readerId = readerId;
+        this.librarianId = librarianId;
+        this.createdDate = createdDate;
+        this.payDay = payDay;
+        this.readerName = readerName;
+        this.address = address;
+        this.phone = phone;
+        this.gender = gender;
+    }
+
+    public int getBillsId() {
+        return billsId;
+    }
+
+    public void setBillsId(int billsId) {
+        this.billsId = billsId;
+    }
+
+    public int getReaderId() {
+        return readerId;
+    }
+
+    public void setReaderId(int readerId) {
+        this.readerId = readerId;
+    }
+
+    public int getLibrarianId() {
+        return librarianId;
+    }
+
+    public void setLibrarianId(int librarianId) {
+        this.librarianId = librarianId;
+    }
+
+    public LocalDate getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(LocalDate createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public LocalDate getPayDay() {
+        return payDay;
+    }
+
+    public void setPayDay(LocalDate payDay) {
+        this.payDay = payDay;
+    }
+
     public String getReaderName() {
         return readerName;
     }
@@ -53,71 +124,7 @@ public class Bills {
     public void setGender(int gender) {
         this.gender = gender;
     }
-    
 
-    public Bills() {
-    }
-
-    public Bills(LocalDate createdDate, LocalDate payDay) {
-        this.createdDate = createdDate;
-        this.payDay = payDay;
-    }
-
-    public Bills(int billsId, LocalDate createdDate, LocalDate payDay, String readerName, String address, String phone, int gender) {
-        this.billsId = billsId;
-        this.createdDate = createdDate;
-        this.payDay = payDay;
-        this.readerName = readerName;
-        this.address = address;
-        this.phone = phone;
-        this.gender = gender;
-    }
-
-    public Bills(int readerId, LocalDate createdDate, LocalDate payDay) {
-        this.readerId = readerId;
-        this.createdDate = createdDate;
-        this.payDay = payDay;
-    }
-
-    public int getReaderId() {
-        return readerId;
-    }
-
-    public void setReaderId(int readerId) {
-        this.readerId = readerId;
-    }
-
-    public int getLibrarianId() {
-        return librarianId;
-    }
-
-    public void setLibrarianId(int librarianId) {
-        this.librarianId = librarianId;
-    }
-
-    public int getBillsId() {
-        return billsId;
-    }
-
-    public void setBillsId(int billsId) {
-        this.billsId = billsId;
-    }
-
-    public LocalDate getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(LocalDate createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public LocalDate getPayDay() {
-        return payDay;
-    }
-
-    public void setPayDay(LocalDate payDay) {
-        this.payDay = payDay;
-    }
-    
+ 
     
 }

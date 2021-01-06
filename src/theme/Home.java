@@ -29,7 +29,7 @@ public class Home extends javax.swing.JFrame {
     public Home() {
         initComponents();
         this.setLocationRelativeTo(null);
-//        this.setExtendedState(Home.MAXIMIZED_BOTH); 
+        this.setExtendedState(Home.MAXIMIZED_BOTH); 
         Login login = new Login(this, true);
         login.setVisible(true);
         librarianDAO = new LibrarianDAO();
@@ -128,6 +128,7 @@ public class Home extends javax.swing.JFrame {
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         pnlquanlysach.setBackground(new java.awt.Color(255, 255, 255));
+        pnlquanlysach.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         pnlquanlysach.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 pnlquanlysachMouseClicked(evt);
@@ -165,6 +166,7 @@ public class Home extends javax.swing.JFrame {
         jPanel2.add(pnlquanlysach, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 150, 40));
 
         pnlquanlytacgia.setBackground(new java.awt.Color(255, 255, 255));
+        pnlquanlytacgia.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         pnlquanlytacgia.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 pnlquanlytacgiaMouseClicked(evt);
@@ -202,6 +204,7 @@ public class Home extends javax.swing.JFrame {
         jPanel2.add(pnlquanlytacgia, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 150, 40));
 
         pnlquanlynhaxuatban.setBackground(new java.awt.Color(255, 255, 255));
+        pnlquanlynhaxuatban.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         pnlquanlynhaxuatban.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 pnlquanlynhaxuatbanMouseClicked(evt);
@@ -240,6 +243,7 @@ public class Home extends javax.swing.JFrame {
         jPanel2.add(pnlquanlynhaxuatban, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 150, 40));
 
         pnlquanlydanhmuc.setBackground(new java.awt.Color(255, 255, 255));
+        pnlquanlydanhmuc.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         pnlquanlydanhmuc.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 pnlquanlydanhmucMouseClicked(evt);
@@ -277,6 +281,7 @@ public class Home extends javax.swing.JFrame {
         jPanel2.add(pnlquanlydanhmuc, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 150, 40));
 
         pnlquanlydocgia.setBackground(new java.awt.Color(255, 255, 255));
+        pnlquanlydocgia.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         pnlquanlydocgia.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 pnlquanlydocgiaMouseClicked(evt);
@@ -314,6 +319,7 @@ public class Home extends javax.swing.JFrame {
         jPanel2.add(pnlquanlydocgia, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 150, 40));
 
         pnlquanlythuthu.setBackground(new java.awt.Color(255, 255, 255));
+        pnlquanlythuthu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         pnlquanlythuthu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 pnlquanlythuthuMouseClicked(evt);
@@ -351,6 +357,7 @@ public class Home extends javax.swing.JFrame {
         jPanel2.add(pnlquanlythuthu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 150, 40));
 
         pnlquanlyphieumuontra.setBackground(new java.awt.Color(255, 255, 255));
+        pnlquanlyphieumuontra.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         pnlquanlyphieumuontra.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 pnlquanlyphieumuontraMouseClicked(evt);
@@ -388,6 +395,7 @@ public class Home extends javax.swing.JFrame {
         jPanel2.add(pnlquanlyphieumuontra, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 160, 40));
 
         pnlquanlyxuphat.setBackground(new java.awt.Color(255, 255, 255));
+        pnlquanlyxuphat.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         pnlquanlyxuphat.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 pnlquanlyxuphatMouseClicked(evt);

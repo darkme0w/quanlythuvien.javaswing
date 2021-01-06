@@ -10,11 +10,30 @@ package models;
  * @author phamh
  */
 public class BillsDetail {
+
     private int billId;
     private int bookId;
     private String bookName;
     private int quantity;
     private int status;
+    private String bookCode;
+    private String publicser;
+
+    public String getPublicser() {
+        return publicser;
+    }
+
+    public void setPublicser(String publicser) {
+        this.publicser = publicser;
+    }
+
+    public String getBookCode() {
+        return bookCode;
+    }
+
+    public void setBookCode(String bookCode) {
+        this.bookCode = bookCode;
+    }
 
     public BillsDetail(int billId, int bookId, String bookName, int quantity, int status) {
         this.billId = billId;
@@ -25,6 +44,15 @@ public class BillsDetail {
     }
 
     public BillsDetail() {
+    }
+
+    public BillsDetail(int billId, String bookName, int quantity, int status, String bookCode, String publicser) {
+        this.billId = billId;
+        this.bookName = bookName;
+        this.quantity = quantity;
+        this.status = status;
+        this.bookCode = bookCode;
+        this.publicser = publicser;
     }
 
     public BillsDetail(int billId, int bookId, int quantity) {
@@ -72,6 +100,5 @@ public class BillsDetail {
     public void setStatus(int status) {
         this.status = status;
     }
-    
-    
+
 }

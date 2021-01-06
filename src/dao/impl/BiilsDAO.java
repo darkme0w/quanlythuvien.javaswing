@@ -14,7 +14,7 @@ import models.Bills;
  *
  * @author admin
  */
-public class BiilsDAO extends AbstractDAO<Bills> implements IBillsDAO{
+public class BiilsDAO extends AbstractDAO<Bills> implements IBillsDAO {
 
     @Override
     public List<Bills> getAll() {
@@ -24,15 +24,15 @@ public class BiilsDAO extends AbstractDAO<Bills> implements IBillsDAO{
 
     @Override
     public Bills findOne(Integer id) {
-        String sql = "{Call sp_findid_Bill (?)}";
+        String sql = "{Call sp_finbyid_viewBill (?)}";
         List<Bills> bill = query(sql, new BillsMapper(), id);
-       return bill.isEmpty() ? null : bill.get(0);
+        return bill.isEmpty() ? null : bill.get(0);
     }
 
     @Override
     public Integer save(Bills bills) {
-        String sql = "INSERT INTO books.Bills(ReaderID, CreatedDate , PayDay)VALUES(?,?,?)";
-        return insertReturnId(sql, bills.getReaderId() ,bills.getCreatedDate(), bills.getPayDay());
+        String sql = "INSERT INTO books.Bills(ReaderID, CreatedDate, PayDay)VALUES(?,?,?)";
+        return insertReturnId(sql, bills.getReaderId(), bills.getCreatedDate(), bills.getPayDay());
     }
 
     @Override
@@ -44,5 +44,5 @@ public class BiilsDAO extends AbstractDAO<Bills> implements IBillsDAO{
     public void delete(Bills bills) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }

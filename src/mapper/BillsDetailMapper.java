@@ -6,6 +6,7 @@
 package mapper;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import models.BillsDetail;
 
 /**
@@ -16,7 +17,18 @@ public class BillsDetailMapper implements RowMapper<BillsDetail>{
 
     @Override
     public BillsDetail mapRow(ResultSet rs) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        BillsDetail billsDetail = new BillsDetail();
+        try {
+            billsDetail.setBillId(rs.getInt("BillsID"));
+            billsDetail.setQuantity(rs.getInt("Quantity"));
+            billsDetail.setBookName(rs.getNString("BooksName"));
+            billsDetail.setBookCode(rs.getString("BooksCode"));
+            billsDetail.setPublicser(rs.getNString("PublicserName"));
+            billsDetail.setStatus(rs.getInt("Status"));
+            return billsDetail;
+        } catch (SQLException ex) {
+            return null;
+        }
     }
     
 }
