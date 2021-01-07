@@ -35,9 +35,9 @@ public class BookDAO extends AbstractDAO<Book> implements IBooksDAO {
     }
 
     @Override
-    public void save(Book book) {
-        String sql = "{Call sp_insert_Book (?,?,?,?,?,?,?,?)}";
-        this.insert(sql, book.getBooksCode(), book.getBooksName(), book.getBooksPrice(), book.getQuantity(), book.getStatus(), book.getYear(), book.getLocationId(), book.getPublicserId());
+    public Integer save(Book book) {
+        String sql = "INSERT INTO books.Books(BooksCode,BooksName,BooksPrice,Quantity,Status,Year,LocationID,PublicserID)VALUES(?,?,?,?,?,?,?,?)";
+        return insertReturnId(sql, book.getBooksCode(), book.getBooksName(), book.getBooksPrice(), book.getQuantity(), book.getStatus(), book.getYear(), book.getLocationId(), book.getPublicserId());
     }
 
     @Override
@@ -50,6 +50,13 @@ public class BookDAO extends AbstractDAO<Book> implements IBooksDAO {
     public List<Book> sortDESC() {
         String sql = "{Call sp_sortByDESC_vwBook}";
         return query(sql, new BookMapper());
+    }
+
+    @Override
+    public Book findOne(Integer id) {
+        String sql = "{Call sp_findbyid_vwBook (?)}";
+        List<Book> books = query(sql, new BookMapper(), id);
+        return books.isEmpty() ? null : books.get(0);
     }
 
 }

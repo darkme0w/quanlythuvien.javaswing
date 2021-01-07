@@ -20,9 +20,11 @@ public interface IBooksDAO extends GenericDAO<Book> {
 
     void update(Book book);
 
-    void save(Book book);
-
     List<Book> sortASC();
 
     List<Book> sortDESC();
+    
+    Book findOne(Integer id);
+    
+    Integer save(Book book);
 }

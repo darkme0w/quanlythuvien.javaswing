@@ -122,14 +122,13 @@ public class MangagerPublicser extends javax.swing.JInternalFrame {
         txtnhaxuatban = new javax.swing.JTextField();
         kButton2 = new keeptoo.KButton();
         kButton3 = new keeptoo.KButton();
-        txtfilter = new javax.swing.JTextField();
         jComboBox3 = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
         txtdiachi = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         lblid = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
         kButton6 = new keeptoo.KButton();
+        jXSearchField1 = new org.jdesktop.swingx.JXSearchField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
@@ -209,22 +208,6 @@ public class MangagerPublicser extends javax.swing.JInternalFrame {
             }
         });
 
-        txtfilter.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtfilter.setForeground(new java.awt.Color(255, 255, 255));
-        txtfilter.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
-        txtfilter.setCaretColor(new java.awt.Color(204, 0, 255));
-        txtfilter.setBackground(new java.awt.Color(0,0,0,0));
-        txtfilter.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtfilterActionPerformed(evt);
-            }
-        });
-        txtfilter.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtfilterKeyReleased(evt);
-            }
-        });
-
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sắp xếp", "A-Z", "Z-A" }));
         jComboBox3.setPreferredSize(new java.awt.Dimension(80, 30));
         jComboBox3.addActionListener(new java.awt.event.ActionListener() {
@@ -253,9 +236,6 @@ public class MangagerPublicser extends javax.swing.JInternalFrame {
         lblid.setForeground(new java.awt.Color(255, 255, 255));
         lblid.setText("...");
 
-        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel13.setText("Tìm kiếm");
-
         kButton6.setText("Tải lại");
         kButton6.setkBorderRadius(0);
         kButton6.setkEndColor(new java.awt.Color(51, 153, 0));
@@ -270,6 +250,12 @@ public class MangagerPublicser extends javax.swing.JInternalFrame {
             }
         });
 
+        jXSearchField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jXSearchField1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout kGradientPanel2Layout = new javax.swing.GroupLayout(kGradientPanel2);
         kGradientPanel2.setLayout(kGradientPanel2Layout);
         kGradientPanel2Layout.setHorizontalGroup(
@@ -279,52 +265,45 @@ public class MangagerPublicser extends javax.swing.JInternalFrame {
                 .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(kGradientPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel11)
+                        .addGap(23, 23, 23)
+                        .addComponent(kButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(kButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(kButton6, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE))
+                    .addGroup(kGradientPanel2Layout.createSequentialGroup()
+                        .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel10))
                         .addGap(18, 18, 18)
                         .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtdiachi)
                             .addGroup(kGradientPanel2Layout.createSequentialGroup()
-                                .addGap(86, 86, 86)
-                                .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel13))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtfilter, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(kGradientPanel2Layout.createSequentialGroup()
-                                .addComponent(kButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(kButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(kButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                    .addGroup(kGradientPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addGap(71, 71, 71)
-                        .addComponent(txtdiachi))
-                    .addGroup(kGradientPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addGap(18, 18, 18)
-                        .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtnhaxuatban)
+                                .addGap(250, 250, 250))
                             .addGroup(kGradientPanel2Layout.createSequentialGroup()
                                 .addComponent(lblid)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(kGradientPanel2Layout.createSequentialGroup()
-                                .addComponent(txtnhaxuatban, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
-                                .addGap(250, 250, 250)))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jXSearchField1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
+            .addGroup(kGradientPanel2Layout.createSequentialGroup()
+                .addGap(164, 164, 164)
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         kGradientPanel2Layout.setVerticalGroup(
             kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(kGradientPanel2Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addContainerGap()
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(11, 11, 11)
+                .addGap(19, 19, 19)
                 .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtfilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11)
                     .addComponent(lblid)
-                    .addComponent(jLabel13))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                    .addComponent(jXSearchField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(txtnhaxuatban, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -408,10 +387,6 @@ public class MangagerPublicser extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_kButton3ActionPerformed
 
-    private void txtfilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfilterActionPerformed
-
-    }//GEN-LAST:event_txtfilterActionPerformed
-
     private void txtdiachiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtdiachiActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtdiachiActionPerformed
@@ -433,11 +408,6 @@ public class MangagerPublicser extends javax.swing.JInternalFrame {
             }
         }
     }//GEN-LAST:event_jComboBox3ActionPerformed
-
-    private void txtfilterKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtfilterKeyReleased
-        String query = txtfilter.getText();
-        Myultis.filter(query, dtfPublicser, jTable1);
-    }//GEN-LAST:event_txtfilterKeyReleased
 
     private void kButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton6ActionPerformed
         Myultis.clearTable(dtfPublicser);
@@ -476,17 +446,22 @@ public class MangagerPublicser extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jmDeleteActionPerformed
 
+    private void jXSearchField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jXSearchField1ActionPerformed
+       String search = jXSearchField1.getText();
+       Myultis.filter(search, dtfPublicser, jTable1);
+    }//GEN-LAST:event_jXSearchField1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private org.jdesktop.swingx.JXSearchField jXSearchField1;
     private javax.swing.JMenuItem jmDelete;
     private javax.swing.JMenuItem jmEdit;
     private keeptoo.KButton kButton2;
@@ -495,7 +470,6 @@ public class MangagerPublicser extends javax.swing.JInternalFrame {
     private keeptoo.KGradientPanel kGradientPanel2;
     private javax.swing.JLabel lblid;
     private javax.swing.JTextField txtdiachi;
-    private javax.swing.JTextField txtfilter;
     private javax.swing.JTextField txtnhaxuatban;
     // End of variables declaration//GEN-END:variables
 }
