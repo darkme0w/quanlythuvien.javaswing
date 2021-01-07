@@ -5,6 +5,23 @@
  */
 package theme;
 
+import dao.ILibrarianDAO;
+import dao.IPenalizeDAO;
+import dao.IReaderDAO;
+import dao.impl.LibrarianDAO;
+import dao.impl.PenalizeDAO;
+import dao.impl.ReaderDAO;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import models.Librarian;
+import models.Penalize;
+import models.Reader;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+import utils.Myultis;
+
 /**
  *
  * @author admin
@@ -14,8 +31,88 @@ public class ManagerPenalize extends javax.swing.JInternalFrame {
     /**
      * Creates new form ManagerPenalize
      */
+    private List<Reader> listReader = new ArrayList<>();
+    private IReaderDAO readerDAO;
+    private Reader reader;
+
+    private List<Librarian> listLibrarian = new ArrayList<Librarian>();
+    private ILibrarianDAO librarianDAO;
+    private Librarian librarian;
+
+    private DefaultTableModel dtfPenalize;
+    private List<Penalize> listPenalize = new ArrayList<>();
+    private IPenalizeDAO penalizeDAO;
+    private Penalize penalize;
+
     public ManagerPenalize() {
         initComponents();
+        readerDAO = new ReaderDAO();
+        librarianDAO = new LibrarianDAO();
+
+        lbLibrarianName.setText(Librarian.getLbName());
+        loadComboBox();
+    }
+
+    private void loadComboBox() {
+        listReader.removeAll(listReader);
+        listReader = readerDAO.getAll();
+        listReader.forEach(cbReader::addItem);
+        preapareGUI();
+        AutoCompleteDecorator.decorate(cbReader);
+        loadData();
+    }
+
+    private void preapareGUI() {
+        dtfPenalize = new DefaultTableModel();
+        dtfPenalize.addColumn("Tên người lập");
+        dtfPenalize.addColumn("Số điện thoại người mượn");
+        dtfPenalize.addColumn("Tên người mượn");
+        dtfPenalize.addColumn("Ghi chú");
+    }
+
+    private void loadData() {
+        penalizeDAO = new PenalizeDAO();
+        listPenalize = penalizeDAO.getAll();
+        Vector v;
+        for (Penalize penalize : listPenalize) {
+            v = new Vector();
+            v.add(penalize.getLibrarianName());
+            v.add(penalize.getReaderName());
+            v.add(penalize.getPhone());
+            v.add(penalize.getNote());
+            dtfPenalize.addRow(v);
+        }
+        jTable1.setModel(dtfPenalize);
+    }
+
+    private void sortByDESC() {
+        penalizeDAO = new PenalizeDAO();
+        listPenalize = penalizeDAO.sortDesc();
+        Vector v;
+        for (Penalize penalize : listPenalize) {
+            v = new Vector();
+            v.add(penalize.getLibrarianName());
+            v.add(penalize.getReaderName());
+            v.add(penalize.getPhone());
+            v.add(penalize.getNote());
+            dtfPenalize.addRow(v);
+        }
+        jTable1.setModel(dtfPenalize);
+    }
+
+    private void sortByASC() {
+        penalizeDAO = new PenalizeDAO();
+        listPenalize = penalizeDAO.sortAsc();
+        Vector v;
+        for (Penalize penalize : listPenalize) {
+            v = new Vector();
+            v.add(penalize.getLibrarianName());
+            v.add(penalize.getReaderName());
+            v.add(penalize.getPhone());
+            v.add(penalize.getNote());
+            dtfPenalize.addRow(v);
+        }
+        jTable1.setModel(dtfPenalize);
     }
 
     /**
@@ -27,18 +124,34 @@ public class ManagerPenalize extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPopupMenu1 = new javax.swing.JPopupMenu();
+        jmEdit = new javax.swing.JMenuItem();
         kGradientPanel2 = new keeptoo.KGradientPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
         kButton2 = new keeptoo.KButton();
         kButton3 = new keeptoo.KButton();
-        kButton6 = new keeptoo.KButton();
-        jTextField3 = new javax.swing.JTextField();
+        txtfilter = new javax.swing.JTextField();
         jComboBox3 = new javax.swing.JComboBox<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        taNote = new javax.swing.JTextArea();
+        jLabel10 = new javax.swing.JLabel();
+        cbReader = new javax.swing.JComboBox<>();
+        jLabel11 = new javax.swing.JLabel();
+        lbLibrarianName = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        lbReaderID = new javax.swing.JLabel();
         kButton5 = new keeptoo.KButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+
+        jmEdit.setText("Sửa");
+        jmEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmEditActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(jmEdit);
 
         setClosable(true);
         setIconifiable(true);
@@ -48,7 +161,7 @@ public class ManagerPenalize extends javax.swing.JInternalFrame {
         kGradientPanel2.setkBorderRadius(0);
         kGradientPanel2.setkEndColor(new java.awt.Color(51, 153, 0));
         kGradientPanel2.setkStartColor(new java.awt.Color(0, 204, 204));
-        kGradientPanel2.setPreferredSize(new java.awt.Dimension(590, 150));
+        kGradientPanel2.setPreferredSize(new java.awt.Dimension(590, 230));
 
         jLabel6.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
@@ -58,16 +171,6 @@ public class ManagerPenalize extends javax.swing.JInternalFrame {
 
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Ghi chú");
-
-        jTextField2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
-        jTextField2.setCaretColor(new java.awt.Color(204, 0, 255));
-        jTextField2.setBackground(new java.awt.Color(0,0,0,0));
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
-            }
-        });
 
         kButton2.setText("Thêm");
         kButton2.setkBorderRadius(40);
@@ -99,34 +202,48 @@ public class ManagerPenalize extends javax.swing.JInternalFrame {
             }
         });
 
-        kButton6.setText("Tìm kiếm");
-        kButton6.setkBorderRadius(0);
-        kButton6.setkEndColor(new java.awt.Color(51, 153, 0));
-        kButton6.setkHoverEndColor(new java.awt.Color(204, 0, 204));
-        kButton6.setkHoverForeGround(new java.awt.Color(255, 204, 255));
-        kButton6.setkHoverStartColor(new java.awt.Color(0, 204, 204));
-        kButton6.setkStartColor(new java.awt.Color(0, 204, 204));
-        kButton6.setPreferredSize(new java.awt.Dimension(80, 30));
-        kButton6.addActionListener(new java.awt.event.ActionListener() {
+        txtfilter.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtfilter.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        txtfilter.setCaretColor(new java.awt.Color(204, 0, 255));
+        txtfilter.setBackground(new java.awt.Color(0,0,0,0));
+        txtfilter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                kButton6ActionPerformed(evt);
+                txtfilterActionPerformed(evt);
             }
         });
-
-        jTextField3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField3.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
-        jTextField3.setCaretColor(new java.awt.Color(204, 0, 255));
-        jTextField3.setBackground(new java.awt.Color(0,0,0,0));
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+        txtfilter.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtfilterKeyReleased(evt);
             }
         });
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sắp xếp", "A-Z", "Z-A" }));
         jComboBox3.setPreferredSize(new java.awt.Dimension(80, 30));
+        jComboBox3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox3ActionPerformed(evt);
+            }
+        });
 
-        kButton5.setText("Xóa");
+        taNote.setColumns(20);
+        taNote.setRows(5);
+        jScrollPane2.setViewportView(taNote);
+
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("Số điện thoại");
+
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("Tên người lập :");
+
+        lbLibrarianName.setForeground(new java.awt.Color(255, 255, 255));
+
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setText("Tìm kiếm");
+
+        lbReaderID.setForeground(new java.awt.Color(255, 255, 255));
+        lbReaderID.setForeground(new java.awt.Color(0,0,0,0));
+
+        kButton5.setText("Tải lại");
         kButton5.setkBorderRadius(0);
         kButton5.setkEndColor(new java.awt.Color(51, 153, 0));
         kButton5.setkHoverEndColor(new java.awt.Color(204, 0, 204));
@@ -152,23 +269,38 @@ public class ManagerPenalize extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(kGradientPanel2Layout.createSequentialGroup()
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(kButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(kGradientPanel2Layout.createSequentialGroup()
+                                        .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel10)
+                                            .addComponent(jLabel12))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtfilter, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(cbReader, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(kGradientPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel11)
+                                        .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(kGradientPanel2Layout.createSequentialGroup()
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(lbLibrarianName))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel2Layout.createSequentialGroup()
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(lbReaderID))))))
                             .addGroup(kGradientPanel2Layout.createSequentialGroup()
                                 .addComponent(kButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(kButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(kButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(kGradientPanel2Layout.createSequentialGroup()
                         .addGap(179, 179, 179)
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
         kGradientPanel2Layout.setVerticalGroup(
             kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,12 +308,27 @@ public class ManagerPenalize extends javax.swing.JInternalFrame {
                 .addGap(21, 21, 21)
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(11, 11, 11)
-                .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(kButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(kGradientPanel2Layout.createSequentialGroup()
+                        .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9)
+                            .addComponent(txtfilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel12))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel10)
+                            .addComponent(cbReader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(kGradientPanel2Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel11)
+                                    .addComponent(lbLibrarianName)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel2Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lbReaderID))))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(kButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(kButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -203,6 +350,14 @@ public class ManagerPenalize extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jTable1MouseExited(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jTable1MouseReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -210,43 +365,108 @@ public class ManagerPenalize extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
-
     private void kButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton2ActionPerformed
-        // TODO add your handling code here:
+        if (taNote.getText().length() > 0 && taNote.getText().length() < 255) {
+            penalize = new Penalize();
+            penalize.setNote(taNote.getText());
+            Reader readers = (Reader) cbReader.getSelectedItem();
+            penalize.setLibrarianId(Librarian.lbId);
+            penalize.setReaderId(readers.getReaderId());
+            penalizeDAO.save(penalize);
+            Myultis.clearTable(dtfPenalize);
+            preapareGUI();
+            loadData();
+        } else {
+            JOptionPane.showMessageDialog(this, "ghi chú phải trên 0 kí tự", "", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_kButton2ActionPerformed
 
     private void kButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton3ActionPerformed
-        // TODO add your handling code here:
+        if (taNote.getText().length() > 0 && taNote.getText().length() < 255) {
+            penalize = new Penalize();
+            penalize.setNote(taNote.getText());
+            Reader readers = (Reader) cbReader.getSelectedItem();
+            penalize.setReaderId(readers.getReaderId());
+            penalizeDAO.update(penalize);
+            Myultis.clearTable(dtfPenalize);
+            preapareGUI();
+            loadData();
+        } else {
+            JOptionPane.showMessageDialog(this, "ghi chú phải trên 0 kí tự", "", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_kButton3ActionPerformed
 
-    private void kButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton6ActionPerformed
+    private void txtfilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfilterActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_kButton6ActionPerformed
+    }//GEN-LAST:event_txtfilterActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void txtfilterKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtfilterKeyReleased
+        String query = txtfilter.getText();
+        Myultis.filter(query, dtfPenalize, jTable1);
+    }//GEN-LAST:event_txtfilterKeyReleased
+
+    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
+        if (evt.getSource() == jComboBox3) {
+            String msg = (String) jComboBox3.getSelectedItem();
+            switch (msg) {
+                case "A-Z":
+                    Myultis.clearTable(dtfPenalize);
+                    preapareGUI();
+                    sortByASC();
+                    break;
+                case "Z-A":
+                    Myultis.clearTable(dtfPenalize);
+                    preapareGUI();
+                    sortByDESC();
+                    break;
+            }
+        }
+    }//GEN-LAST:event_jComboBox3ActionPerformed
+
+    private void jmEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmEditActionPerformed
+        int pos = jTable1.getSelectedRow();
+        Reader readers = (Reader) cbReader.getSelectedItem();
+        taNote.setText(dtfPenalize.getValueAt(pos, 3).toString());
+        lbReaderID.setText(String.valueOf(readers.getReaderId()));
+    }//GEN-LAST:event_jmEditActionPerformed
+
+    private void jTable1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseExited
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_jTable1MouseExited
+
+    private void jTable1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseReleased
+        if (evt.isPopupTrigger()) {
+            jPopupMenu1.show(jTable1, evt.getX(), evt.getY());
+        }
+    }//GEN-LAST:event_jTable1MouseReleased
 
     private void kButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton5ActionPerformed
-        // TODO add your handling code here:
+        Myultis.clearTable(dtfPenalize);
+        preapareGUI();
+        loadData();
     }//GEN-LAST:event_kButton5ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<Reader> cbReader;
     private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JMenuItem jmEdit;
     private keeptoo.KButton kButton2;
     private keeptoo.KButton kButton3;
     private keeptoo.KButton kButton5;
-    private keeptoo.KButton kButton6;
     private keeptoo.KGradientPanel kGradientPanel2;
+    private javax.swing.JLabel lbLibrarianName;
+    private javax.swing.JLabel lbReaderID;
+    private javax.swing.JTextArea taNote;
+    private javax.swing.JTextField txtfilter;
     // End of variables declaration//GEN-END:variables
 }

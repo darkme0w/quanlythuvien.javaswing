@@ -9,6 +9,7 @@ import dao.ILibrarianDAO;
 import dao.impl.LibrarianDAO;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.control.ButtonType;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import models.Librarian;
@@ -29,7 +30,7 @@ public class Home extends javax.swing.JFrame {
     public Home() {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.setExtendedState(Home.MAXIMIZED_BOTH); 
+        this.setExtendedState(Home.MAXIMIZED_BOTH);
         Login login = new Login(this, true);
         login.setVisible(true);
         librarianDAO = new LibrarianDAO();
@@ -75,6 +76,7 @@ public class Home extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jPanel12 = new javax.swing.JPanel();
+        jLabel19 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jPanel13 = new javax.swing.JPanel();
         kGradientPanel1 = new keeptoo.KGradientPanel();
@@ -447,6 +449,14 @@ public class Home extends javax.swing.JFrame {
 
         jPanel2.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 150, 40));
 
+        jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_shutdown_40px_1.png"))); // NOI18N
+        jLabel19.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel19MouseClicked(evt);
+            }
+        });
+        jPanel2.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 380, -1, -1));
+
         menuleft.add(jPanel2, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(menuleft, java.awt.BorderLayout.LINE_START);
@@ -627,6 +637,14 @@ public class Home extends javax.swing.JFrame {
         managerPenalize.setVisible(true);
     }//GEN-LAST:event_pnlquanlyxuphatMouseClicked
 
+    private void jLabel19MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19MouseClicked
+        int choose = JOptionPane.showConfirmDialog(rootPane, "Bạn chắc chắn muốn đăng xuất ", "", JOptionPane.OK_CANCEL_OPTION);
+        if (choose == JOptionPane.OK_OPTION) {
+            System.exit(0);
+        }
+
+    }//GEN-LAST:event_jLabel19MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -674,6 +692,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;

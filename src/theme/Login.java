@@ -205,11 +205,8 @@ public class Login extends javax.swing.JDialog {
             if (librarian1.getUserName().equals(username) && librarian1.getPassword().equals(password)) {
                 Librarian.setLbId(librarian1.getLibrarianId());
                 Librarian.setLbName(librarian1.getLibrarianName());
-                JOptionPane.showMessageDialog(this, "Đăng nhập thành công", "SUCCESS!!", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Đăng nhập thành công", "SUCCESS!!", JOptionPane.DEFAULT_OPTION);
                 dispose();
-                break;
-            } else {
-                JOptionPane.showMessageDialog(this, "Sai tài khoản hoặc mật khẩu", "ERROR!!", JOptionPane.ERROR_MESSAGE);
                 break;
             }
         }
