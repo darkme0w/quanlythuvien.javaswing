@@ -24,7 +24,8 @@ public class BookAuthorDAO extends AbstractDAO<BookAuthor> implements IBookAutho
 
     @Override
     public void delete(BookAuthor bAuthor) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = "{Call sp_delete_BookAuthor(?)}";
+        this.update(sql, bAuthor.getBookId());
     }
 
     @Override

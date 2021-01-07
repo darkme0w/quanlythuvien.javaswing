@@ -24,7 +24,8 @@ public class BookCategoryDAO extends AbstractDAO<BookCategory> implements IBookC
 
     @Override
     public void delete(BookCategory bCategory) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+      String sql = "{Call sp_delete_BookCategory(?)}";
+        this.update(sql, bCategory.getBookId());
     }
 
     @Override

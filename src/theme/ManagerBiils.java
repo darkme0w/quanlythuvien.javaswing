@@ -90,12 +90,13 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
         dftbBills.addColumn("Địa chỉ");
         dftbBills.addColumn("Giới tính");
         dftbBills.addColumn("Người lập phiếu");
+        dftbBills.addColumn("Tình trạng");
     }
 
     private void loadData() {
         listBill = billDAO.getAll();
         Vector v;
-
+        LocalDate nowDate = LocalDate.now();
         for (Bills bills1 : listBill) {
             v = new Vector();
             v.add(bills1.getBillsId());
@@ -110,7 +111,9 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
                 v.add("Nữ");
             }
             v.add(bills1.getLibrarianName());
-
+            if (bills1.getPayDay().compareTo(nowDate) < 0) {
+                v.add("Đã quá hạn trả " + nowDate.compareTo(bills1.getPayDay())+ " ngày");
+            }
             dftbBills.addRow(v);
         }
         jTable2.setModel(dftbBills);
@@ -411,11 +414,11 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Mã phiếu", "Ngày mượn", "Ngày trả", "Tên độc giả", "Địa chỉ", "Số điện thoại", "Giới tính"
+                "Mã phiếu", "Ngày mượn", "Ngày trả", "Tên độc giả", "Địa chỉ", "Số điện thoại", "Giới tính", "Tình trạng"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -551,6 +554,7 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
 
                 row = spreadsheet.createRow((short) 1);
                 row.setHeight((short) 500);
+                
                 cell = row.createCell(0, CellType.STRING);
                 cell.setCellValue("Tên người mượn: " + lbReaderName.getText());
                 cell = row.createCell(3, CellType.STRING);

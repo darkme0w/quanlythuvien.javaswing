@@ -624,14 +624,12 @@ public class CreateBook extends javax.swing.JInternalFrame {
                     .addComponent(jLabel13)
                     .addComponent(vldBYear)
                     .addComponent(jLabel14))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jRadioButton1)
-                        .addComponent(jRadioButton2))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jtYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(49, 49, 49))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jRadioButton1)
+                    .addComponent(jRadioButton2))
+                .addGap(47, 47, 47))
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Tác giả"));
@@ -946,9 +944,23 @@ public class CreateBook extends javax.swing.JInternalFrame {
         if (choose == JOptionPane.OK_OPTION) {
             idBook = dftbBook.getValueAt(pos, 0).toString();
             int id = Integer.valueOf(idBook);
+            //del detail author
+            IBookAuthorDAO bookAuthorDAO = new BookAuthorDAO();
+            BookAuthor bookAuthor = new BookAuthor();
+            bookAuthor.setBookId(id);
+            bookAuthorDAO.delete(bookAuthor);
+            
+            //del detail category
+            IBookCategoryDAO bookCategoryDAO = new BookCategoryDAO();
+            BookCategory bookCategory = new BookCategory();
+            bookCategory.setBookId(id);
+            bookCategoryDAO.delete(bookCategory);
+            
+            
             books = new Book();
             books.setBookId(id);
             bookDAO.delete(books);
+            
             Myultis.clearTable(dftbBook);
             preapareGUI();
             loadData();
