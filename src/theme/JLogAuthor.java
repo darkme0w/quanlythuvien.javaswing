@@ -100,6 +100,10 @@ public class JLogAuthor extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPopupMenu1 = new javax.swing.JPopupMenu();
+        jmDelAu = new javax.swing.JMenuItem();
+        jPopupMenu2 = new javax.swing.JPopupMenu();
+        jmDelCate = new javax.swing.JMenuItem();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
@@ -108,6 +112,12 @@ public class JLogAuthor extends javax.swing.JDialog {
         lbBCode = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
+
+        jmDelAu.setText("Xóa");
+        jPopupMenu1.add(jmDelAu);
+
+        jmDelCate.setText("Xóa");
+        jPopupMenu2.add(jmDelCate);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -236,10 +246,14 @@ public class JLogAuthor extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JPopupMenu jPopupMenu1;
+    private javax.swing.JPopupMenu jPopupMenu2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
+    private javax.swing.JMenuItem jmDelAu;
+    private javax.swing.JMenuItem jmDelCate;
     private javax.swing.JLabel lbBCode;
     private javax.swing.JLabel lbBName;
     // End of variables declaration//GEN-END:variables

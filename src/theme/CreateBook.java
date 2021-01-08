@@ -73,6 +73,18 @@ public class CreateBook extends javax.swing.JInternalFrame {
     private Category category;
     private DefaultTableModel dftCategory;
 
+    // Book-Author
+    private List<BookAuthor> listAuthors = new ArrayList<>();
+    private DefaultTableModel dftAuthors;
+    private IBookAuthorDAO bookAuthorDAO;
+    private BookAuthor bookAuthor;
+
+    //Book-Category
+    private List<BookCategory> listCateogry = new ArrayList<>();
+    private DefaultTableModel dftCategorys;
+    private IBookCategoryDAO bookCategoryDAO;
+    private BookCategory bookCategory;
+
     public CreateBook() {
         initComponents();
         bookDAO = new BookDAO();
@@ -99,6 +111,8 @@ public class CreateBook extends javax.swing.JInternalFrame {
 
         listLocation.forEach(cbLocation::addItem);
         listPublicser.forEach(cbPublicser::addItem);
+        listLocation.forEach(cbLocation1::addItem);
+        listPublicser.forEach(cbPublicser1::addItem);
         listAuthor.forEach(cbAuthor::addItem);
         listCategory.forEach(cbCategory::addItem);
 
@@ -210,6 +224,15 @@ public class CreateBook extends javax.swing.JInternalFrame {
         jTable1.setModel(dftbBook);
     }
 
+    private void preapareAuthorCategory() {
+        dftAuthors = new DefaultTableModel();
+        dftCategorys = new DefaultTableModel();
+        dftAuthors.addColumn("ID");
+        dftAuthors.addColumn("Tên tác giả");
+        dftCategorys.addColumn("ID");
+        dftCategorys.addColumn("Thể loại");
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -224,6 +247,7 @@ public class CreateBook extends javax.swing.JInternalFrame {
         jmnEdit = new javax.swing.JMenuItem();
         jmnDelete = new javax.swing.JMenuItem();
         jmDetail = new javax.swing.JMenuItem();
+        jmAddDetail = new javax.swing.JMenuItem();
         jPopupMenu2 = new javax.swing.JPopupMenu();
         jmDelAuthor = new javax.swing.JMenuItem();
         jPopupMenu3 = new javax.swing.JPopupMenu();
@@ -237,7 +261,6 @@ public class CreateBook extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
-        btnEdit = new keeptoo.KButton();
         jPanel2 = new javax.swing.JPanel();
         cbLocation = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
@@ -274,6 +297,31 @@ public class CreateBook extends javax.swing.JInternalFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tbCategory = new javax.swing.JTable();
         btnAddBook = new javax.swing.JButton();
+        jPanel9 = new javax.swing.JPanel();
+        btnEdit = new keeptoo.KButton();
+        jPanel10 = new javax.swing.JPanel();
+        cbLocation1 = new javax.swing.JComboBox<>();
+        jLabel15 = new javax.swing.JLabel();
+        cbPublicser1 = new javax.swing.JComboBox<>();
+        jLabel17 = new javax.swing.JLabel();
+        jtYear1 = new javax.swing.JTextField();
+        jLabel18 = new javax.swing.JLabel();
+        jtBookCode1 = new javax.swing.JTextField();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jQuantity1 = new javax.swing.JTextField();
+        jtBPrice1 = new javax.swing.JTextField();
+        jLabel21 = new javax.swing.JLabel();
+        jRadioButton3 = new javax.swing.JRadioButton();
+        jRadioButton4 = new javax.swing.JRadioButton();
+        jLabel22 = new javax.swing.JLabel();
+        vldBYear1 = new javax.swing.JLabel();
+        vldBCode1 = new javax.swing.JLabel();
+        vldBQuantity1 = new javax.swing.JLabel();
+        vldBPrice1 = new javax.swing.JLabel();
+        vldBName1 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        jtBookName1 = new javax.swing.JTextField();
 
         jmnEdit.setText("Sửa");
         jmnEdit.addActionListener(new java.awt.event.ActionListener() {
@@ -298,6 +346,14 @@ public class CreateBook extends javax.swing.JInternalFrame {
             }
         });
         jPopupMenu1.add(jmDetail);
+
+        jmAddDetail.setText("Thêm tác giả ....");
+        jmAddDetail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmAddDetailActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(jmAddDetail);
 
         jmDelAuthor.setText("Xóa");
         jmDelAuthor.addActionListener(new java.awt.event.ActionListener() {
@@ -407,25 +463,6 @@ public class CreateBook extends javax.swing.JInternalFrame {
 
         jTabbedPane1.addTab("Danh sách", jPanel3);
 
-        btnEdit.setBackground(new java.awt.Color(0, 0, 0));
-        btnEdit.setForeground(new java.awt.Color(0, 0, 0));
-        btnEdit.setText("Sửa");
-        btnEdit.setkBorderRadius(40);
-        btnEdit.setkEndColor(new java.awt.Color(0, 204, 204));
-        btnEdit.setkFillButton(false);
-        btnEdit.setkForeGround(new java.awt.Color(0, 0, 0));
-        btnEdit.setkHoverEndColor(new java.awt.Color(0, 0, 0));
-        btnEdit.setkHoverForeGround(new java.awt.Color(255, 204, 255));
-        btnEdit.setkHoverStartColor(new java.awt.Color(0, 0, 0));
-        btnEdit.setkSelectedColor(new java.awt.Color(0, 0, 0));
-        btnEdit.setkStartColor(new java.awt.Color(0, 0, 0));
-        btnEdit.setPreferredSize(new java.awt.Dimension(80, 30));
-        btnEdit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditActionPerformed(evt);
-            }
-        });
-
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Thêm sách"));
 
         cbLocation.setPreferredSize(new java.awt.Dimension(100, 25));
@@ -516,7 +553,6 @@ public class CreateBook extends javax.swing.JInternalFrame {
         jLabel11.setText("Giá sách");
 
         buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setSelected(true);
         jRadioButton1.setText("Còn sách");
         jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -700,7 +736,7 @@ public class CreateBook extends javax.swing.JInternalFrame {
                 .addComponent(cbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(134, 134, 134)
                 .addComponent(btnAddCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(119, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -743,7 +779,7 @@ public class CreateBook extends javax.swing.JInternalFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
 
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Các thể loại"));
@@ -798,15 +834,10 @@ public class CreateBook extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnAddBook, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(86, 86, 86))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(58, 58, 58)))
+                                .addComponent(btnAddBook, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(58, 58, 58)
                         .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
@@ -819,7 +850,7 @@ public class CreateBook extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -830,14 +861,279 @@ public class CreateBook extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnAddBook, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnAddBook, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Thêm mới", jPanel1);
+
+        btnEdit.setBackground(new java.awt.Color(0, 0, 0));
+        btnEdit.setForeground(new java.awt.Color(0, 0, 0));
+        btnEdit.setText("Sửa");
+        btnEdit.setkBorderRadius(40);
+        btnEdit.setkEndColor(new java.awt.Color(0, 204, 204));
+        btnEdit.setkFillButton(false);
+        btnEdit.setkForeGround(new java.awt.Color(0, 0, 0));
+        btnEdit.setkHoverEndColor(new java.awt.Color(0, 0, 0));
+        btnEdit.setkHoverForeGround(new java.awt.Color(255, 204, 255));
+        btnEdit.setkHoverStartColor(new java.awt.Color(0, 0, 0));
+        btnEdit.setkSelectedColor(new java.awt.Color(0, 0, 0));
+        btnEdit.setkStartColor(new java.awt.Color(0, 0, 0));
+        btnEdit.setPreferredSize(new java.awt.Dimension(80, 30));
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditActionPerformed(evt);
+            }
+        });
+
+        jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder("Thêm sách"));
+
+        cbLocation1.setPreferredSize(new java.awt.Dimension(100, 25));
+        cbLocation1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbLocation1ActionPerformed(evt);
+            }
+        });
+
+        jLabel15.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel15.setText("Vị trí");
+
+        cbPublicser1.setPreferredSize(new java.awt.Dimension(100, 25));
+        cbPublicser1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbPublicser1ActionPerformed(evt);
+            }
+        });
+
+        jLabel17.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel17.setText("Nhà xuất bản");
+
+        jtYear1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jtYear1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        jtYear1.setCaretColor(new java.awt.Color(204, 0, 255));
+        jtYear.setBackground(new java.awt.Color(0,0,0,0));
+        jtYear1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtYear1ActionPerformed(evt);
+            }
+        });
+        jtYear1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtYear1KeyReleased(evt);
+            }
+        });
+
+        jLabel18.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel18.setText("Năm xuất bản");
+
+        jtBookCode1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jtBookCode1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        jtBookCode1.setCaretColor(new java.awt.Color(204, 0, 255));
+        jtBookCode.setBackground(new java.awt.Color(0,0,0,0));
+        jtBookCode1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtBookCode1ActionPerformed(evt);
+            }
+        });
+        jtBookCode1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtBookCode1KeyReleased(evt);
+            }
+        });
+
+        jLabel19.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel19.setText("Mã sách");
+
+        jLabel20.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel20.setText("Số lượng");
+
+        jQuantity1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jQuantity1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        jQuantity1.setCaretColor(new java.awt.Color(204, 0, 255));
+        jQuantity.setBackground(new java.awt.Color(0,0,0,0));
+        jQuantity1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jQuantity1ActionPerformed(evt);
+            }
+        });
+        jQuantity1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jQuantity1KeyReleased(evt);
+            }
+        });
+
+        jtBPrice1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jtBPrice1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        jtBPrice1.setCaretColor(new java.awt.Color(204, 0, 255));
+        jtBPrice.setBackground(new java.awt.Color(0,0,0,0));
+        jtBPrice1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtBPrice1KeyReleased(evt);
+            }
+        });
+
+        jLabel21.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel21.setText("Giá sách");
+
+        buttonGroup1.add(jRadioButton3);
+        jRadioButton3.setText("Còn sách");
+        jRadioButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton3ActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(jRadioButton4);
+        jRadioButton4.setText("Hết sách");
+
+        jLabel22.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel22.setText("Trạng thái");
+
+        vldBYear1.setForeground(new java.awt.Color(255, 0, 51));
+
+        vldBCode1.setForeground(new java.awt.Color(255, 0, 51));
+
+        vldBQuantity1.setForeground(new java.awt.Color(255, 0, 51));
+
+        vldBPrice1.setForeground(new java.awt.Color(255, 0, 51));
+
+        vldBName1.setForeground(new java.awt.Color(255, 0, 51));
+
+        jLabel23.setText("Tên sách");
+
+        jtBookName1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jtBookName1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        jtBookName1.setCaretColor(new java.awt.Color(204, 0, 255));
+        jtBPrice.setBackground(new java.awt.Color(0,0,0,0));
+        jtBookName1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtBookName1KeyReleased(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel15)
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(cbLocation1, 0, 186, Short.MAX_VALUE)
+                                .addGroup(jPanel10Layout.createSequentialGroup()
+                                    .addComponent(jLabel18)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(vldBYear1))
+                                .addComponent(jtYear1))
+                            .addComponent(cbPublicser1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel17))
+                        .addGap(46, 46, 46)
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel10Layout.createSequentialGroup()
+                                .addComponent(jLabel23)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(vldBName1))
+                            .addComponent(jLabel22)
+                            .addGroup(jPanel10Layout.createSequentialGroup()
+                                .addComponent(jRadioButton3)
+                                .addGap(18, 18, 18)
+                                .addComponent(jRadioButton4))
+                            .addGroup(jPanel10Layout.createSequentialGroup()
+                                .addComponent(jLabel21)
+                                .addGap(18, 18, 18)
+                                .addComponent(vldBPrice1))
+                            .addComponent(jtBPrice1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtBookName1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(26, 26, 26)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jtBookCode1)
+                    .addComponent(jQuantity1)
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel10Layout.createSequentialGroup()
+                                .addComponent(jLabel19)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(vldBCode1))
+                            .addGroup(jPanel10Layout.createSequentialGroup()
+                                .addComponent(jLabel20)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(vldBQuantity1)))
+                        .addGap(0, 135, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel15))
+                    .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(vldBName1)
+                        .addComponent(jLabel23)
+                        .addComponent(jLabel19)
+                        .addComponent(vldBCode1)))
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cbLocation1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtBookCode1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel17))
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addComponent(jtBookName1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel20)
+                            .addComponent(vldBQuantity1)
+                            .addComponent(jLabel21)
+                            .addComponent(vldBPrice1))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbPublicser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtBPrice1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jQuantity1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(37, 37, 37)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel18)
+                    .addComponent(vldBYear1)
+                    .addComponent(jLabel22))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtYear1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jRadioButton3)
+                    .addComponent(jRadioButton4))
+                .addGap(47, 47, 47))
+        );
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(521, Short.MAX_VALUE))
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(259, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Chỉnh sửa", jPanel9);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -930,31 +1226,63 @@ public class CreateBook extends javax.swing.JInternalFrame {
     private void jmnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnEditActionPerformed
         int pos = jTable1.getSelectedRow();
         idBook = dftbBook.getValueAt(pos, 0).toString();
-        jtBookCode.setText(dftbBook.getValueAt(pos, 1).toString());
-        jtBookName.setText(dftbBook.getValueAt(pos, 2).toString());
-        jtBPrice.setText(dftbBook.getValueAt(pos, 3).toString());
-        jQuantity.setText(dftbBook.getValueAt(pos, 4).toString());
-        jtYear.setText(dftbBook.getValueAt(pos, 5).toString());
-        for (int i = 0; i < cbPublicser.getItemCount(); i++) {
-            if (dftbBook.getValueAt(pos, 7).toString().equals(cbPublicser.getItemAt(i).getPublicserName())) {
-                cbPublicser.setSelectedIndex(i);
+        int inIdBook = Integer.valueOf(idBook);
+        jtBookCode1.setText(dftbBook.getValueAt(pos, 1).toString());
+        jtBookName1.setText(dftbBook.getValueAt(pos, 2).toString());
+        jtBPrice1.setText(dftbBook.getValueAt(pos, 3).toString());
+        jQuantity1.setText(dftbBook.getValueAt(pos, 4).toString());
+        jtYear1.setText(dftbBook.getValueAt(pos, 5).toString());
+        for (int i = 0; i < cbPublicser1.getItemCount(); i++) {
+            if (dftbBook.getValueAt(pos, 7).toString().equals(cbPublicser1.getItemAt(i).getPublicserName())) {
+                cbPublicser1.setSelectedIndex(i);
                 break;
             }
         }
 
-        for (int j = 0; j < cbLocation.getItemCount(); j++) {
-            if (dftbBook.getValueAt(pos, 8).toString().equals(cbLocation.getItemAt(j).getLocationName())) {
-                cbLocation.setSelectedIndex(j);
+        for (int j = 0; j < cbLocation1.getItemCount(); j++) {
+            if (dftbBook.getValueAt(pos, 8).toString().equals(cbLocation1.getItemAt(j).getLocationName())) {
+                cbLocation1.setSelectedIndex(j);
                 break;
             }
         }
-        if (dftbBook.getValueAt(pos, 6).toString().equals(jRadioButton1.getActionCommand())) {
-            jRadioButton1.setSelected(true);
-        } else if (dftbBook.getValueAt(pos, 5).toString().equals(jRadioButton2.getActionCommand())) {
-            jRadioButton2.setSelected(true);
+        if (dftbBook.getValueAt(pos, 6).toString().equals(jRadioButton3.getActionCommand())) {
+            jRadioButton3.setSelected(true);
+        } else if (dftbBook.getValueAt(pos, 5).toString().equals(jRadioButton4.getActionCommand())) {
+            jRadioButton4.setSelected(true);
         } else {
-            jRadioButton1.setSelected(true);
+            jRadioButton3.setSelected(true);
         }
+        // Chi tiêt của sách Author and Category
+//        preapareAuthorCategory();
+//        bookAuthorDAO = new BookAuthorDAO();
+//        bookCategoryDAO = new BookCategoryDAO();
+//        listAuthors = bookAuthorDAO.getAll(inIdBook);
+//        listCateogry = bookCategoryDAO.getAll(inIdBook);
+//
+//        for (BookAuthor bookAuthor1 : listAuthors) {
+//            Vector vA = new Vector();
+//
+//            vA.add(bookAuthor1.getAuthorId());
+//
+//            vA.add(bookAuthor1.getAuthorName());
+//
+//            dftAuthors.addRow(vA);
+//        }
+//
+//        tbAuthor.setModel(dftAuthors);
+//
+//        for (BookCategory bookCategory1 : listCateogry) {
+//            Vector vC = new Vector();
+//            vC.add(bookCategory1.getCateogryId());
+//
+//            vC.add(bookCategory1.getCategoryName());
+//
+//            dftCategorys.addRow(vC);
+//        }
+//
+//        tbCategory.setModel(dftCategorys);
+
+        jTabbedPane1.setSelectedIndex(2);
     }//GEN-LAST:event_jmnEditActionPerformed
 
     private void jmnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnDeleteActionPerformed
@@ -1099,6 +1427,12 @@ public class CreateBook extends javax.swing.JInternalFrame {
                 preapareGUI();
                 loadData();
                 JOptionPane.showMessageDialog(rootPane, "Thêm thành công");
+                jtBPrice.setText("");
+                jtBookCode.setText("");
+                jtBookName.setText("");
+                jtYear.setText("");
+                jQuantity.setText("");
+
             } else {
                 JOptionPane.showMessageDialog(rootPane, "Vui lòng xem lại các trường dữ liệu");
             }
@@ -1154,7 +1488,7 @@ public class CreateBook extends javax.swing.JInternalFrame {
                 Object objCategoryId = ((Vector) dataCategory.elementAt(i)).elementAt(0);
                 Object objCategoryName = ((Vector) dataCategory.elementAt(i)).elementAt(1);
                 int dataId = (Integer) objCategoryId;
-                if (selectCategory.getCategoryId()== dataId) {
+                if (selectCategory.getCategoryId() == dataId) {
                     JOptionPane.showMessageDialog(this, "Đã có " + objCategoryName);
                     flag = false;
                 }
@@ -1184,18 +1518,37 @@ public class CreateBook extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tbAuthorMouseReleased
 
     private void jmDelAuthorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmDelAuthorActionPerformed
+        int id = Integer.valueOf(idBook);
         if (tbAuthor.getSelectedRow() != -1) {
             // remove selected row from the model
-            dftAuthor.removeRow(tbAuthor.getSelectedRow());
-            JOptionPane.showMessageDialog(null, "Xóa thành công");
+            if ((DefaultTableModel) tbAuthor.getModel() == dftAuthor) {
+                dftAuthor.removeRow(tbAuthor.getSelectedRow());
+                JOptionPane.showMessageDialog(null, "Xóa thành công");
+            } else if ((DefaultTableModel) tbAuthor.getModel() == dftAuthors) {
+                //del detail author
+                IBookAuthorDAO bookAuthorDAO = new BookAuthorDAO();
+                BookAuthor bookAuthor = new BookAuthor();
+                bookAuthor.setBookId(id);
+                bookAuthorDAO.delete(bookAuthor);
+            }
+
         }
     }//GEN-LAST:event_jmDelAuthorActionPerformed
 
     private void jmDelCateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmDelCateActionPerformed
+        int id = Integer.valueOf(idBook);
         if (tbCategory.getSelectedRow() != -1) {
-            // remove selected row from the model
-            dftCategory.removeRow(tbCategory.getSelectedRow());
-            JOptionPane.showMessageDialog(null, "Xóa thành công");
+            if ((DefaultTableModel) tbCategory.getModel() == dftCategory) {
+                dftCategory.removeRow(tbCategory.getSelectedRow());
+                JOptionPane.showMessageDialog(null, "Xóa thành công");
+            } else if ((DefaultTableModel) tbCategory.getModel() == dftCategorys) {
+                //del detail category
+                IBookCategoryDAO bookCategoryDAO = new BookCategoryDAO();
+                BookCategory bookCategory = new BookCategory();
+                bookCategory.setBookId(id);
+                bookCategoryDAO.delete(bookCategory);
+            }
+
         }
     }//GEN-LAST:event_jmDelCateActionPerformed
 
@@ -1204,6 +1557,59 @@ public class CreateBook extends javax.swing.JInternalFrame {
             jPopupMenu3.show(tbCategory, evt.getX(), evt.getY());
         }
     }//GEN-LAST:event_tbCategoryMouseReleased
+
+    private void cbLocation1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbLocation1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbLocation1ActionPerformed
+
+    private void cbPublicser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbPublicser1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbPublicser1ActionPerformed
+
+    private void jtYear1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtYear1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtYear1ActionPerformed
+
+    private void jtYear1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtYear1KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtYear1KeyReleased
+
+    private void jtBookCode1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtBookCode1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtBookCode1ActionPerformed
+
+    private void jtBookCode1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtBookCode1KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtBookCode1KeyReleased
+
+    private void jQuantity1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jQuantity1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jQuantity1ActionPerformed
+
+    private void jQuantity1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jQuantity1KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jQuantity1KeyReleased
+
+    private void jtBPrice1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtBPrice1KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtBPrice1KeyReleased
+
+    private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButton3ActionPerformed
+
+    private void jtBookName1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtBookName1KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtBookName1KeyReleased
+
+    private void jmAddDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmAddDetailActionPerformed
+        if (jTable1.getSelectedRow() != -1) {
+            int bookId = Integer.valueOf(dftbBook.getValueAt(jTable1.getSelectedRow(), 0).toString());
+     
+            JLogAddDeitalBook dialog = new JLogAddDeitalBook(new javax.swing.JFrame(), true, bookId,dftbBook.getValueAt(jTable1.getSelectedRow(), 2).toString());
+            dialog.setVisible(true);
+        }
+    }//GEN-LAST:event_jmAddDetailActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1216,17 +1622,28 @@ public class CreateBook extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<Author> cbAuthor;
     private javax.swing.JComboBox<Category> cbCategory;
     private javax.swing.JComboBox<Location> cbLocation;
+    private javax.swing.JComboBox<Location> cbLocation1;
     private javax.swing.JComboBox<Publicser> cbPublicser;
+    private javax.swing.JComboBox<Publicser> cbPublicser1;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -1234,33 +1651,47 @@ public class CreateBook extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JPopupMenu jPopupMenu2;
     private javax.swing.JPopupMenu jPopupMenu3;
     private javax.swing.JTextField jQuantity;
+    private javax.swing.JTextField jQuantity1;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JRadioButton jRadioButton3;
+    private javax.swing.JRadioButton jRadioButton4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private org.jdesktop.swingx.JXSearchField jXSearchField1;
+    private javax.swing.JMenuItem jmAddDetail;
     private javax.swing.JMenuItem jmDelAuthor;
     private javax.swing.JMenuItem jmDelCate;
     private javax.swing.JMenuItem jmDetail;
     private javax.swing.JMenuItem jmnDelete;
     private javax.swing.JMenuItem jmnEdit;
     private javax.swing.JTextField jtBPrice;
+    private javax.swing.JTextField jtBPrice1;
     private javax.swing.JTextField jtBookCode;
+    private javax.swing.JTextField jtBookCode1;
     private javax.swing.JTextField jtBookName;
+    private javax.swing.JTextField jtBookName1;
     private javax.swing.JTextField jtYear;
+    private javax.swing.JTextField jtYear1;
     private javax.swing.JTable tbAuthor;
     private javax.swing.JTable tbCategory;
     private javax.swing.JLabel vldBCode;
+    private javax.swing.JLabel vldBCode1;
     private javax.swing.JLabel vldBName;
+    private javax.swing.JLabel vldBName1;
     private javax.swing.JLabel vldBPrice;
+    private javax.swing.JLabel vldBPrice1;
     private javax.swing.JLabel vldBQuantity;
+    private javax.swing.JLabel vldBQuantity1;
     private javax.swing.JLabel vldBYear;
+    private javax.swing.JLabel vldBYear1;
     // End of variables declaration//GEN-END:variables
 }

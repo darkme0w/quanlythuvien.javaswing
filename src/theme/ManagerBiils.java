@@ -48,11 +48,11 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
     private List<Reader> listReader = new ArrayList<>();
     private IReaderDAO readerDAO;
     private Reader reader;
-
+    
     private List<Book> listBook = new ArrayList<>();
     private IBooksDAO bookDAO;
     private Book book;
-
+    
     private List<Bills> listBill = new ArrayList<>();
     private Bills bills;
     private IBillsDAO billDAO;
@@ -60,28 +60,27 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
     private DefaultTableModel defaultTableModel;
     private DefaultTableModel dftbBills;
     private DefaultTableModel dftbBills1;
-
+    
     public ManagerBiils() {
         initComponents();
         readerDAO = new ReaderDAO();
         bookDAO = new BookDAO();
         loadComboBox();
-
     }
-
+    
     private void loadComboBox() {
         listReader.removeAll(listReader);
         listBook.removeAll(listBook);
         listReader = readerDAO.getAll();
         listBook = bookDAO.getAll();
         listReader.forEach(cbReader::addItem);
-        listBook.forEach(cbBook::addItem);
+        listBook.stream().filter(b -> b.getStatus() == 1).forEach((Book e) -> cbBook.addItem(e));
         AutoCompleteDecorator.decorate(cbReader);
         AutoCompleteDecorator.decorate(cbBook);
         spnQuantity.setValue(1);
-
+        
     }
-
+    
     private void preapareGUI() {
         dftbBills = new DefaultTableModel();
         dftbBills.addColumn("Mã phiếu");
@@ -94,7 +93,7 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
         dftbBills.addColumn("Người lập phiếu");
         dftbBills.addColumn("Tình trạng");
     }
-
+    
     private void preapareGUI1() {
         dftbBills1 = new DefaultTableModel();
         dftbBills1.addColumn("Mã phiếu");
@@ -107,7 +106,7 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
         dftbBills1.addColumn("Người lập phiếu");
         dftbBills1.addColumn("Tình trạng");
     }
-
+    
     private void loadData() {
         listBill = billDAO.getAll();
         Vector v;
@@ -137,13 +136,13 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
         }
         jTable2.setModel(dftbBills);
     }
-
+    
     private void loadData1() {
         listBill = billDAO.getAll();
         Vector v;
         LocalDate nowDate = LocalDate.now();
         for (Bills bills1 : listBill) {
-
+            
             v = new Vector();
             v.add(bills1.getBillsId());
             v.add(bills1.getCreatedDate());
@@ -163,7 +162,7 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
                 v.add("Đã trả");
             }
             dftbBills1.addRow(v);
-
+            
         }
         jTable3.setModel(dftbBills1);
     }
@@ -681,7 +680,7 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
                 defaultTableModel.addRow(row);
             }
         }
-
+        
 
     }//GEN-LAST:event_btnAddDetailBillsActionPerformed
 
@@ -692,7 +691,7 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
 
         //Book
         IBooksDAO booksDAO = new BookDAO();
-
+        
         billDAO = new BiilsDAO();
         LocalDate startDate = Myultis.convertDatetoLocalDate(dpStartDate.getDate());
         LocalDate endDate = Myultis.convertDatetoLocalDate(dpEndDate.getDate());
@@ -709,7 +708,7 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
         int newId = billDAO.save(bills);
         bills = billDAO.findOne(newId);
         String bId = String.valueOf(bills.getBillsId());
-
+        
         int billId = Integer.valueOf(bId);
         for (int i = 0; i < data.size(); i++) {
             Object objBookId = ((Vector) data.elementAt(i)).elementAt(0);
@@ -719,11 +718,12 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
             Book bookU = new Book();
             bookU.setBookId(bookId);
             booksDAO.updateMinusQuantity(bookU, quantity);
-    
+            
             BillsDetail billsDetail = new BillsDetail(billId, bookId, quantity);
             billsDetailDAO.save(billsDetail);
         }
         int choose = JOptionPane.showConfirmDialog(rootPane, "Bạn có muốn xuất phiếu ra Excel", "Xuất phiếu", JOptionPane.OK_CANCEL_OPTION);
+        Myultis.clearTable(dftbBills);
         if (choose == JOptionPane.OK_OPTION) {
             try {
                 XSSFWorkbook workbook = new XSSFWorkbook();
@@ -732,7 +732,7 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
                 Cell cell = null;
                 row = spreadsheet.createRow((short) 1);
                 row.setHeight((short) 500);
-
+                
                 cell = row.createCell(0, CellType.STRING);
 //                spreadsheet.autoSizeColumn(0);
                 cell.setCellValue("Tên người mượn: " + lbReaderName.getText());
@@ -742,14 +742,14 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
                 DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy");
                 String formattedDate = endDate.format(myFormatObj);
                 cell.setCellValue("Ngày trả sách: " + formattedDate);
-
+                
                 row = spreadsheet.createRow((short) 2);
                 row.setHeight((short) 500);
                 cell = row.createCell(1, CellType.STRING);
                 cell.setCellValue("PHIẾU MƯỢN TRẢ");
                 cell = row.createCell(0, CellType.STRING);
                 cell.setCellValue("Mã phiếu: " + lbIdBill.getText());
-
+                
                 row = spreadsheet.createRow((short) 3);
                 row.setHeight((short) 500);
                 cell = row.createCell(0, CellType.STRING);
@@ -761,7 +761,7 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
                 cell = row.createCell(3, CellType.STRING);
                 cell.setCellValue("Số lượng");
                 listBillsDetails = billsDetailDAO.getAll(billId);
-
+                
                 for (int i = 0; i < listBillsDetails.size(); i++) {
                     BillsDetail billsDetail = listBillsDetails.get(i);
                     row = spreadsheet.createRow((short) 4 + i);
@@ -771,14 +771,14 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
                     row.createCell(2).setCellValue(billsDetail.getBookName());
                     row.createCell(3).setCellValue(billsDetail.getQuantity());
                 }
-
+                
                 FileOutputStream out = new FileOutputStream(new File("D:/phieu.xlsx"));
                 workbook.write(out);
                 out.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
+            
         }
 
     }//GEN-LAST:event_btnSaveBillsActionPerformed
@@ -852,7 +852,7 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
             BillsDetail billsDetail = new BillsDetail();
             billsDetail.setBillId(billId);
             billsDetailDAO.delete(billsDetail);
-
+            
             Bills bills = new Bills();
             bills.setBillsId(billId);
             billDAO.delete(bills);
@@ -873,12 +873,12 @@ public class ManagerBiils extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jXSearchField1KeyReleased
 
     private void spnQuantityKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_spnQuantityKeyReleased
-
+        
 
     }//GEN-LAST:event_spnQuantityKeyReleased
 
     private void spnQuantityInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_spnQuantityInputMethodTextChanged
-
+        
 
     }//GEN-LAST:event_spnQuantityInputMethodTextChanged
 
