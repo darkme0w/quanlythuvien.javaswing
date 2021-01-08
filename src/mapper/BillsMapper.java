@@ -31,6 +31,7 @@ public class BillsMapper implements RowMapper<Bills> {
             bills.setGender(rs.getInt("Gender"));
             bills.setPhone(rs.getString("Phone"));
             bills.setAddress(rs.getNString("Address"));
+            bills.setStatus(rs.getInt("status"));
             return bills;
         } catch (SQLException ex) {
             return null;

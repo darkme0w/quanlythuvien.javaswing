@@ -27,4 +27,8 @@ public interface IBooksDAO extends GenericDAO<Book> {
     Book findOne(Integer id);
     
     Integer save(Book book);
+    
+    void updateMinusQuantity(Book book, int quantity);
+    
+    void updatePlusQuantity(Book book, int quantity);
 }

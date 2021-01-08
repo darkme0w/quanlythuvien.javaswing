@@ -37,12 +37,20 @@ public class BiilsDAO extends AbstractDAO<Bills> implements IBillsDAO {
 
     @Override
     public void update(Bills bills) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       String sql = "{Call sp_updatePayDay_Bill(?,?,?)}";
+       this.update(sql,bills.getCreatedDate(), bills.getPayDay(),bills.getBillsId());
     }
 
     @Override
     public void delete(Bills bills) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+      String sql = "{Call sp_delete_Bill(?)}";
+      this.update(sql, bills.getBillsId());
+    }
+
+    @Override
+    public void updateStatus(Bills bills) {
+       String sql = "{Call sp_updateStatus_Bill(?,?)}";
+       this.update(sql,bills.getStatus(), bills.getBillsId());
     }
 
 }

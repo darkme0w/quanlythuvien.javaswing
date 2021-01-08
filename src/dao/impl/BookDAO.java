@@ -59,4 +59,16 @@ public class BookDAO extends AbstractDAO<Book> implements IBooksDAO {
         return books.isEmpty() ? null : books.get(0);
     }
 
+    @Override
+    public void updateMinusQuantity(Book book, int quantity) {
+        String sql = "{Call sp_updateQuantityMinus_Book(?,?)}";
+        this.update(sql, quantity, book.getBookId());
+    }
+
+    @Override
+    public void updatePlusQuantity(Book book, int quantity) {
+        String sql = "{Call sp_updateQuantityPlus_Book(?,?)}";
+        this.update(sql, quantity, book.getBookId());
+    }
+
 }

@@ -18,4 +18,5 @@ public interface IBillsDAO extends GenericDAO<Bills>{
     Integer save(Bills bills);
     void update(Bills bills);
     void delete(Bills bills);
+    void updateStatus(Bills bills);
 }

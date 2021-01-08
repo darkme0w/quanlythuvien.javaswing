@@ -5,13 +5,19 @@
  */
 package theme;
 
+import dao.IBillsDAO;
 import dao.IBillsDetailDAO;
+import dao.IBooksDAO;
+import dao.impl.BiilsDAO;
 import dao.impl.BillsDetailDAO;
+import dao.impl.BookDAO;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
+import models.Bills;
 import models.BillsDetail;
+import models.Book;
 import utils.Myultis;
 
 /**
@@ -27,6 +33,7 @@ public class JLogBillsDetail extends javax.swing.JDialog {
     private DefaultTableModel defaultTableModel;
     private IBillsDetailDAO billsDetailDAO;
     private BillsDetail billsDetail;
+    private int c;
 
     public JLogBillsDetail(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -36,6 +43,7 @@ public class JLogBillsDetail extends javax.swing.JDialog {
 
     private void preapareGUI() {
         defaultTableModel = new DefaultTableModel();
+        defaultTableModel.addColumn("Id");
         defaultTableModel.addColumn("Mã sách");
         defaultTableModel.addColumn("Tên sách");
         defaultTableModel.addColumn("Nhà xuất bản");
@@ -44,29 +52,49 @@ public class JLogBillsDetail extends javax.swing.JDialog {
     }
 
     public void loadData(int id) {
+        c = 0;
         preapareGUI();
         listBillDetail = billsDetailDAO.getAll(id);
         Vector v;
         String tId = String.valueOf(id);
+        boolean check = false;
         lbBillId.setText(tId);
+
         for (BillsDetail billsDetail : listBillDetail) {
             v = new Vector();
+            v.add(billsDetail.getBookId());
             v.add(billsDetail.getBookCode());
             v.add(billsDetail.getBookName());
             v.add(billsDetail.getPublicser());
-            if (billsDetail.getStatus() == 1) {
-                v.add("Đã trả");
-            } else if (billsDetail.getStatus() == 0) {
-                v.add("Chưa trả");
-            } else if (billsDetail.getStatus() == 2) {
-                v.add("Trả thiêu");
+            switch (billsDetail.getStatus()) {
+                case 1:
+                    v.add("Đã trả");
+                    c++;
+                    break;
+                case 0:
+                    v.add("Chưa trả");
+                    break;
+                case 2:
+                    v.add("Trả thiêu");
+                    break;
+                default:
+                    break;
             }
             v.add(billsDetail.getQuantity());
 
             defaultTableModel.addRow(v);
         }
 
+        if (listBillDetail.size() == c) {
+            IBillsDAO billsDAO = new BiilsDAO();
+            Bills bills = new Bills();
+            bills.setBillsId(id);
+            bills.setStatus(1);
+            billsDAO.updateStatus(bills);
+        }
+        
         jTable1.setModel(defaultTableModel);
+
     }
 
     /**
@@ -170,23 +198,38 @@ public class JLogBillsDetail extends javax.swing.JDialog {
     }//GEN-LAST:event_jTable1MouseReleased
 
     private void jmStt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmStt1ActionPerformed
-        billsDetail = new BillsDetail();
-        int billId = Integer.valueOf(lbBillId.getText());
-        billsDetail.setBillId(billId);
-        billsDetail.setStatus(1);
-        billsDetailDAO.update(billsDetail);
-        Myultis.clearTable(defaultTableModel);
-        loadData(billId);
+        if (jTable1.getSelectedRow() != -1) {
+            billsDetail = new BillsDetail();
+            IBooksDAO bookDAO = new BookDAO();
+            Book book = new Book();
+            int bookId = Integer.valueOf(defaultTableModel.getValueAt(jTable1.getSelectedRow(), 0).toString());
+            int quantity = Integer.valueOf(defaultTableModel.getValueAt(jTable1.getSelectedRow(), 5).toString());
+            book.setBookId(bookId);
+            
+            int billId = Integer.valueOf(lbBillId.getText());
+            billsDetail.setBillId(billId);
+            billsDetail.setBookId(bookId);
+            billsDetail.setStatus(1);
+            billsDetailDAO.update(billsDetail);
+            bookDAO.updatePlusQuantity(book, quantity);
+            Myultis.clearTable(defaultTableModel);
+            loadData(billId);
+        }
     }//GEN-LAST:event_jmStt1ActionPerformed
 
     private void jmStt2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmStt2ActionPerformed
-        billsDetail = new BillsDetail();
-        int billId = Integer.valueOf(lbBillId.getText());
-        billsDetail.setBillId(billId);
-        billsDetail.setStatus(2);
-        billsDetailDAO.update(billsDetail);
-        Myultis.clearTable(defaultTableModel);
-        loadData(billId);
+        if (jTable1.getSelectedRow() != -1) {
+            billsDetail = new BillsDetail();
+            int bookId = Integer.valueOf(defaultTableModel.getValueAt(jTable1.getSelectedRow(), 0).toString());
+            int billId = Integer.valueOf(lbBillId.getText());
+            billsDetail.setBillId(billId);
+            billsDetail.setBookId(bookId);
+            billsDetail.setStatus(2);
+            billsDetailDAO.update(billsDetail);
+            Myultis.clearTable(defaultTableModel);
+            loadData(billId);
+        }
+
     }//GEN-LAST:event_jmStt2ActionPerformed
 
     /**

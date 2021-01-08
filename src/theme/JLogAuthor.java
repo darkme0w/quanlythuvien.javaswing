@@ -36,6 +36,8 @@ public class JLogAuthor extends javax.swing.JDialog {
     private DefaultTableModel dftCategory;
     private IBookCategoryDAO bookCategoryDAO;
     private BookCategory bookCategory;
+    private int i = 1;
+    private int j = 1;
 
     public JLogAuthor(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -64,8 +66,8 @@ public class JLogAuthor extends javax.swing.JDialog {
 
         for (BookAuthor bookAuthor1 : listAuthors) {
             Vector vA = new Vector();
-            int i=1;
             
+
             vA.add(i);
             i++;
             vA.add(bookAuthor1.getAuthorName());
@@ -77,7 +79,7 @@ public class JLogAuthor extends javax.swing.JDialog {
 
         for (BookCategory bookCategory1 : listCateogry) {
             Vector vC = new Vector();
-            int j = 1;
+            
             vC.add(j);
             j++;
             vC.add(bookCategory1.getCategoryName());

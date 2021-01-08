@@ -19,6 +19,7 @@ public class BillsDetailMapper implements RowMapper<BillsDetail>{
     public BillsDetail mapRow(ResultSet rs) {
         BillsDetail billsDetail = new BillsDetail();
         try {
+            billsDetail.setBookId(rs.getInt("BooksID"));
             billsDetail.setBillId(rs.getInt("BillsID"));
             billsDetail.setQuantity(rs.getInt("Quantity"));
             billsDetail.setBookName(rs.getNString("BooksName"));

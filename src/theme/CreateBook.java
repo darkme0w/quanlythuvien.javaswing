@@ -224,6 +224,10 @@ public class CreateBook extends javax.swing.JInternalFrame {
         jmnEdit = new javax.swing.JMenuItem();
         jmnDelete = new javax.swing.JMenuItem();
         jmDetail = new javax.swing.JMenuItem();
+        jPopupMenu2 = new javax.swing.JPopupMenu();
+        jmDelAuthor = new javax.swing.JMenuItem();
+        jPopupMenu3 = new javax.swing.JPopupMenu();
+        jmDelCate = new javax.swing.JMenuItem();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
@@ -263,12 +267,12 @@ public class CreateBook extends javax.swing.JInternalFrame {
         jPanel6 = new javax.swing.JPanel();
         cbCategory = new javax.swing.JComboBox<>();
         btnAddCategory = new javax.swing.JButton();
-        jPanel7 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tbCategory = new javax.swing.JTable();
         jPanel8 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tbAuthor = new javax.swing.JTable();
+        jPanel7 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tbCategory = new javax.swing.JTable();
         btnAddBook = new javax.swing.JButton();
 
         jmnEdit.setText("Sửa");
@@ -294,6 +298,22 @@ public class CreateBook extends javax.swing.JInternalFrame {
             }
         });
         jPopupMenu1.add(jmDetail);
+
+        jmDelAuthor.setText("Xóa");
+        jmDelAuthor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmDelAuthorActionPerformed(evt);
+            }
+        });
+        jPopupMenu2.add(jmDelAuthor);
+
+        jmDelCate.setText("Xóa");
+        jmDelCate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmDelCateActionPerformed(evt);
+            }
+        });
+        jPopupMenu3.add(jmDelCate);
 
         setBorder(null);
         setClosable(true);
@@ -582,7 +602,7 @@ public class CreateBook extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel12)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(vldBQuantity)))
-                        .addGap(0, 75, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -680,7 +700,7 @@ public class CreateBook extends javax.swing.JInternalFrame {
                 .addComponent(cbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(134, 134, 134)
                 .addComponent(btnAddCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(119, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -690,39 +710,6 @@ public class CreateBook extends javax.swing.JInternalFrame {
                     .addComponent(cbCategory, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
                     .addComponent(btnAddCategory, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE))
                 .addContainerGap())
-        );
-
-        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Các thể loại"));
-
-        tbCategory.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "ID", "Thể loại"
-            }
-        ));
-        jScrollPane2.setViewportView(tbCategory);
-
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-        );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 234, Short.MAX_VALUE)
-            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(67, Short.MAX_VALUE)))
         );
 
         jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder("Các tác giả"));
@@ -735,27 +722,62 @@ public class CreateBook extends javax.swing.JInternalFrame {
                 "ID", "Tên tác giả"
             }
         ));
+        tbAuthor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                tbAuthorMouseReleased(evt);
+            }
+        });
         jScrollPane3.setViewportView(tbAuthor);
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(67, Short.MAX_VALUE)))
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(55, Short.MAX_VALUE))
+        );
+
+        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Các thể loại"));
+
+        tbCategory.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Thể loại"
+            }
+        ));
+        tbCategory.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                tbCategoryMouseReleased(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tbCategory);
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(48, Short.MAX_VALUE))
         );
 
         btnAddBook.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_save_16px_1.png"))); // NOI18N
@@ -771,50 +793,48 @@ public class CreateBook extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(292, 292, 292)
-                        .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAddBook, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(50, 50, 50))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(22, 22, 22)))
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(219, 219, 219))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                    .addContainerGap(749, Short.MAX_VALUE)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(223, 223, 223)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnAddBook, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(86, 86, 86))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(58, 58, 58)))
+                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(55, 55, 55)
+                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(51, 51, 51))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnAddBook, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnAddBook, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(25, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(23, 23, 23)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGap(314, 314, 314)))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Thêm mới", jPanel1);
@@ -827,7 +847,7 @@ public class CreateBook extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 626, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1)
         );
 
         pack();
@@ -949,18 +969,17 @@ public class CreateBook extends javax.swing.JInternalFrame {
             BookAuthor bookAuthor = new BookAuthor();
             bookAuthor.setBookId(id);
             bookAuthorDAO.delete(bookAuthor);
-            
+
             //del detail category
             IBookCategoryDAO bookCategoryDAO = new BookCategoryDAO();
             BookCategory bookCategory = new BookCategory();
             bookCategory.setBookId(id);
             bookCategoryDAO.delete(bookCategory);
-            
-            
+
             books = new Book();
             books.setBookId(id);
             bookDAO.delete(books);
-            
+
             Myultis.clearTable(dftbBook);
             preapareGUI();
             loadData();
@@ -1096,26 +1115,95 @@ public class CreateBook extends javax.swing.JInternalFrame {
 
     private void btnAddAuthorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddAuthorActionPerformed
         Author selectAuthor = (Author) cbAuthor.getSelectedItem();
-        Object[] row = {selectAuthor.getAuthorId(), selectAuthor.getAuthorName()};
         dftAuthor = (DefaultTableModel) tbAuthor.getModel();
-        dftAuthor.addRow(row);
+        boolean flag = true;
+        Vector dataAuthor = dftAuthor.getDataVector();
+        if (dataAuthor.size() <= 0) {
+            Object[] row = {selectAuthor.getAuthorId(), selectAuthor.getAuthorName()};
+            dftAuthor.addRow(row);
+        } else if (dataAuthor.size() > 0) {
+            for (int i = 0; i < dataAuthor.size(); i++) {
+                Object objAuthorId = ((Vector) dataAuthor.elementAt(i)).elementAt(0);
+                Object objAuthorName = ((Vector) dataAuthor.elementAt(i)).elementAt(1);
+                int dataId = (Integer) objAuthorId;
+                if (selectAuthor.getAuthorId() == dataId) {
+                    JOptionPane.showMessageDialog(this, "Đã có " + objAuthorName);
+                    flag = false;
+                }
+            }
+            if (flag == true) {
+                Object[] row = {selectAuthor.getAuthorId(), selectAuthor.getAuthorName()};
+                dftAuthor.addRow(row);
+            }
+        }
+
+
     }//GEN-LAST:event_btnAddAuthorActionPerformed
 
     private void btnAddCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCategoryActionPerformed
         Category selectCategory = (Category) cbCategory.getSelectedItem();
-        Object[] row = {selectCategory.getCategoryId(), selectCategory.getCategoryName()};
         dftCategory = (DefaultTableModel) tbCategory.getModel();
-        dftCategory.addRow(row);
+
+        boolean flag = true;
+        Vector dataCategory = dftCategory.getDataVector();
+        if (dataCategory.size() <= 0) {
+            Object[] row = {selectCategory.getCategoryId(), selectCategory.getCategoryName()};
+            dftCategory.addRow(row);
+        } else if (dataCategory.size() > 0) {
+            for (int i = 0; i < dataCategory.size(); i++) {
+                Object objCategoryId = ((Vector) dataCategory.elementAt(i)).elementAt(0);
+                Object objCategoryName = ((Vector) dataCategory.elementAt(i)).elementAt(1);
+                int dataId = (Integer) objCategoryId;
+                if (selectCategory.getCategoryId()== dataId) {
+                    JOptionPane.showMessageDialog(this, "Đã có " + objCategoryName);
+                    flag = false;
+                }
+            }
+            if (flag == true) {
+                Object[] row = {selectCategory.getCategoryId(), selectCategory.getCategoryName()};
+                dftCategory.addRow(row);
+            }
+        }
+
+
     }//GEN-LAST:event_btnAddCategoryActionPerformed
 
     private void jmDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmDetailActionPerformed
-         int pos = jTable1.getSelectedRow();
-         int bookId = Integer.valueOf(dftbBook.getValueAt(pos, 0).toString());
-         JLogAuthor jLogAuthor = new JLogAuthor(new javax.swing.JFrame(), true);
-         jLogAuthor.loadData(bookId, dftbBook.getValueAt(pos, 2).toString(), dftbBook.getValueAt(pos, 1).toString());
-         jLogAuthor.setVisible(true);
-         
+        int pos = jTable1.getSelectedRow();
+        int bookId = Integer.valueOf(dftbBook.getValueAt(pos, 0).toString());
+        JLogAuthor jLogAuthor = new JLogAuthor(new javax.swing.JFrame(), true);
+        jLogAuthor.loadData(bookId, dftbBook.getValueAt(pos, 2).toString(), dftbBook.getValueAt(pos, 1).toString());
+        jLogAuthor.setVisible(true);
+
     }//GEN-LAST:event_jmDetailActionPerformed
+
+    private void tbAuthorMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbAuthorMouseReleased
+        if (evt.isPopupTrigger()) {
+            jPopupMenu2.show(tbAuthor, evt.getX(), evt.getY());
+        }
+    }//GEN-LAST:event_tbAuthorMouseReleased
+
+    private void jmDelAuthorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmDelAuthorActionPerformed
+        if (tbAuthor.getSelectedRow() != -1) {
+            // remove selected row from the model
+            dftAuthor.removeRow(tbAuthor.getSelectedRow());
+            JOptionPane.showMessageDialog(null, "Xóa thành công");
+        }
+    }//GEN-LAST:event_jmDelAuthorActionPerformed
+
+    private void jmDelCateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmDelCateActionPerformed
+        if (tbCategory.getSelectedRow() != -1) {
+            // remove selected row from the model
+            dftCategory.removeRow(tbCategory.getSelectedRow());
+            JOptionPane.showMessageDialog(null, "Xóa thành công");
+        }
+    }//GEN-LAST:event_jmDelCateActionPerformed
+
+    private void tbCategoryMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbCategoryMouseReleased
+        if (evt.isPopupTrigger()) {
+            jPopupMenu3.show(tbCategory, evt.getX(), evt.getY());
+        }
+    }//GEN-LAST:event_tbCategoryMouseReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1147,6 +1235,8 @@ public class CreateBook extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPopupMenu jPopupMenu1;
+    private javax.swing.JPopupMenu jPopupMenu2;
+    private javax.swing.JPopupMenu jPopupMenu3;
     private javax.swing.JTextField jQuantity;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
@@ -1156,6 +1246,8 @@ public class CreateBook extends javax.swing.JInternalFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private org.jdesktop.swingx.JXSearchField jXSearchField1;
+    private javax.swing.JMenuItem jmDelAuthor;
+    private javax.swing.JMenuItem jmDelCate;
     private javax.swing.JMenuItem jmDetail;
     private javax.swing.JMenuItem jmnDelete;
     private javax.swing.JMenuItem jmnEdit;

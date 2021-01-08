@@ -23,6 +23,7 @@ public class Bills {
     private String phone;
     private int gender;
     private String librarianName;
+    private int status;
 
     public Bills() {
     }
@@ -34,7 +35,7 @@ public class Bills {
         this.librarianName = librarianName;
     }
 
-    public Bills(int billsId, LocalDate createdDate, LocalDate payDay, String readerName, String address, String phone, int gender, String librarianName) {
+    public Bills(int billsId, LocalDate createdDate, LocalDate payDay, String readerName, String address, String phone, int gender, String librarianName, int status) {
         this.billsId = billsId;
         this.createdDate = createdDate;
         this.payDay = payDay;
@@ -43,6 +44,15 @@ public class Bills {
         this.phone = phone;
         this.gender = gender;
         this.librarianName = librarianName;
+        this.status = status;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public String getLibrarianName() {

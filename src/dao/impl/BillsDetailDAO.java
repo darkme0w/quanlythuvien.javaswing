@@ -30,13 +30,14 @@ public class BillsDetailDAO extends AbstractDAO<BillsDetail> implements IBillsDe
 
     @Override
     public void update(BillsDetail billsDetail) {
-       String sql = "{Call sp_updateStatus_BillDetail(?,?)}";
-       this.update(sql, billsDetail.getStatus(),billsDetail.getBillId());
+       String sql = "{Call sp_updateStatus_BillDetail(?,?,?)}";
+       this.update(sql, billsDetail.getStatus(),billsDetail.getBillId(),billsDetail.getBookId());
     }
 
     @Override
     public void delete(BillsDetail billsDetail) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+      String sql = "{Call sp_delete_BillDetail(?)}";
+      this.update(sql, billsDetail.getBillId());
     }
     
 }
