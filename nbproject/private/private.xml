@@ -5,10 +5,11 @@
         <group>
             <file>file:/C:/Users/phamh/OneDrive/Documents/NetBeansProjects/quanlythuvien.javaswing/src/dao/impl/BiilsDAO.java</file>
             <file>file:/C:/Users/phamh/OneDrive/Documents/NetBeansProjects/quanlythuvien.javaswing/src/theme/ManagerBiils.java</file>
+            <file>file:/C:/Users/phamh/OneDrive/Documents/NetBeansProjects/quanlythuvien.javaswing/src/dao/impl/BookDAO.java</file>
+            <file>file:/C:/Users/phamh/OneDrive/Documents/NetBeansProjects/quanlythuvien.javaswing/src/dao/IBooksDAO.java</file>
             <file>file:/C:/Users/phamh/OneDrive/Documents/NetBeansProjects/quanlythuvien.javaswing/src/theme/CreateBook.java</file>
             <file>file:/C:/Users/phamh/OneDrive/Documents/NetBeansProjects/quanlythuvien.javaswing/src/dao/impl/BillsDetailDAO.java</file>
             <file>file:/C:/Users/phamh/OneDrive/Documents/NetBeansProjects/quanlythuvien.javaswing/src/theme/JLogBillsDetail.java</file>
-            <file>file:/C:/Users/phamh/OneDrive/Documents/NetBeansProjects/quanlythuvien.javaswing/src/dao/IBillsDAO.java</file>
         </group>
     </open-files>
 </project-private>
