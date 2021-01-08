@@ -5,6 +5,7 @@
  */
 package theme;
 
+import com.sun.org.apache.bcel.internal.generic.AALOAD;
 import dao.ILibrarianDAO;
 import dao.impl.LibrarianDAO;
 import java.util.ArrayList;
@@ -640,7 +641,9 @@ public class Home extends javax.swing.JFrame {
     private void jLabel19MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19MouseClicked
         int choose = JOptionPane.showConfirmDialog(rootPane, "Bạn chắc chắn muốn đăng xuất ", "", JOptionPane.OK_CANCEL_OPTION);
         if (choose == JOptionPane.OK_OPTION) {
-            System.exit(0);
+            dispose();
+            Home h = new Home();
+            h.setVisible(true);
         }
 
     }//GEN-LAST:event_jLabel19MouseClicked
