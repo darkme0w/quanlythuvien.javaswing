@@ -20,4 +20,6 @@ public interface IBookCategoryDAO extends GenericDAO<BookCategory>{
     void update(BookCategory bCategory);
 
     void save(BookCategory bCategory);
+    
+     void delete(BookCategory bCategory, int bookId);
 }

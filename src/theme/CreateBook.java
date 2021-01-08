@@ -160,7 +160,6 @@ public class CreateBook extends javax.swing.JInternalFrame {
             dftbBook.addRow(v);
         }
 
-//        listBook.forEach(s->System.out.println(s.toString()));
         jTable1.setModel(dftbBook);
     }
 
@@ -247,7 +246,6 @@ public class CreateBook extends javax.swing.JInternalFrame {
         jmnEdit = new javax.swing.JMenuItem();
         jmnDelete = new javax.swing.JMenuItem();
         jmDetail = new javax.swing.JMenuItem();
-        jmAddDetail = new javax.swing.JMenuItem();
         jPopupMenu2 = new javax.swing.JPopupMenu();
         jmDelAuthor = new javax.swing.JMenuItem();
         jPopupMenu3 = new javax.swing.JPopupMenu();
@@ -346,14 +344,6 @@ public class CreateBook extends javax.swing.JInternalFrame {
             }
         });
         jPopupMenu1.add(jmDetail);
-
-        jmAddDetail.setText("Thêm tác giả ....");
-        jmAddDetail.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmAddDetailActionPerformed(evt);
-            }
-        });
-        jPopupMenu1.add(jmAddDetail);
 
         jmDelAuthor.setText("Xóa");
         jmDelAuthor.addActionListener(new java.awt.event.ActionListener() {
@@ -459,7 +449,7 @@ public class CreateBook extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 1190, 390));
+        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 1190, 350));
 
         jTabbedPane1.addTab("Danh sách", jPanel3);
 
@@ -779,7 +769,7 @@ public class CreateBook extends javax.swing.JInternalFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Các thể loại"));
@@ -1252,36 +1242,6 @@ public class CreateBook extends javax.swing.JInternalFrame {
         } else {
             jRadioButton3.setSelected(true);
         }
-        // Chi tiêt của sách Author and Category
-//        preapareAuthorCategory();
-//        bookAuthorDAO = new BookAuthorDAO();
-//        bookCategoryDAO = new BookCategoryDAO();
-//        listAuthors = bookAuthorDAO.getAll(inIdBook);
-//        listCateogry = bookCategoryDAO.getAll(inIdBook);
-//
-//        for (BookAuthor bookAuthor1 : listAuthors) {
-//            Vector vA = new Vector();
-//
-//            vA.add(bookAuthor1.getAuthorId());
-//
-//            vA.add(bookAuthor1.getAuthorName());
-//
-//            dftAuthors.addRow(vA);
-//        }
-//
-//        tbAuthor.setModel(dftAuthors);
-//
-//        for (BookCategory bookCategory1 : listCateogry) {
-//            Vector vC = new Vector();
-//            vC.add(bookCategory1.getCateogryId());
-//
-//            vC.add(bookCategory1.getCategoryName());
-//
-//            dftCategorys.addRow(vC);
-//        }
-//
-//        tbCategory.setModel(dftCategorys);
-
         jTabbedPane1.setSelectedIndex(2);
     }//GEN-LAST:event_jmnEditActionPerformed
 
@@ -1602,15 +1562,6 @@ public class CreateBook extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtBookName1KeyReleased
 
-    private void jmAddDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmAddDetailActionPerformed
-        if (jTable1.getSelectedRow() != -1) {
-            int bookId = Integer.valueOf(dftbBook.getValueAt(jTable1.getSelectedRow(), 0).toString());
-     
-            JLogAddDeitalBook dialog = new JLogAddDeitalBook(new javax.swing.JFrame(), true, bookId,dftbBook.getValueAt(jTable1.getSelectedRow(), 2).toString());
-            dialog.setVisible(true);
-        }
-    }//GEN-LAST:event_jmAddDetailActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddAuthor;
@@ -1667,7 +1618,6 @@ public class CreateBook extends javax.swing.JInternalFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private org.jdesktop.swingx.JXSearchField jXSearchField1;
-    private javax.swing.JMenuItem jmAddDetail;
     private javax.swing.JMenuItem jmDelAuthor;
     private javax.swing.JMenuItem jmDelCate;
     private javax.swing.JMenuItem jmDetail;

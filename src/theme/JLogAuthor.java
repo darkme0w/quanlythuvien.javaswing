@@ -5,16 +5,25 @@
  */
 package theme;
 
+import dao.IAuthorDAO;
 import dao.IBookAuthorDAO;
 import dao.IBookCategoryDAO;
+import dao.ICategoryDAO;
+import dao.impl.AuthorDAO;
 import dao.impl.BookAuthorDAO;
 import dao.impl.BookCategoryDAO;
+import dao.impl.CategoryDAO;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import models.Author;
 import models.BookAuthor;
 import models.BookCategory;
+import models.Category;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+import utils.Myultis;
 
 /**
  *
@@ -38,6 +47,17 @@ public class JLogAuthor extends javax.swing.JDialog {
     private BookCategory bookCategory;
     private int i = 1;
     private int j = 1;
+    private int bookId;
+
+    //Author
+    private List<Author> listAuthor = new ArrayList<>();
+    private IAuthorDAO authorDAO;
+    private Author author;
+
+    //Category
+    private List<Category> listCategory = new ArrayList<>();
+    private ICategoryDAO categoryDAO;
+    private Category category;
 
     public JLogAuthor(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -45,31 +65,44 @@ public class JLogAuthor extends javax.swing.JDialog {
         bookCategoryDAO = new BookCategoryDAO();
 
         initComponents();
+        preapareGUI();
+        preapareGUI1();
+        loadCBox();
     }
 
     private void preapareGUI() {
+
         dftAuthor = new DefaultTableModel();
-        dftCategory = new DefaultTableModel();
         dftAuthor.addColumn("Số thứ tự");
+        dftAuthor.addColumn("ID");
         dftAuthor.addColumn("Tên tác giả");
+
+    }
+
+    private void preapareGUI1() {
+
+        dftCategory = new DefaultTableModel();
         dftCategory.addColumn("Số thứ tự");
+        dftCategory.addColumn("ID");
         dftCategory.addColumn("Thể loại");
     }
 
     public void loadData(int id, String bookName, String bookCode) {
-        preapareGUI();
+
+        listAuthors.removeAll(listAuthors);
+        listCateogry.removeAll(listCateogry);
         listAuthors = bookAuthorDAO.getAll(id);
         listCateogry = bookCategoryDAO.getAll(id);
-
+        bookId = id;
         lbBName.setText(bookName);
         lbBCode.setText(bookCode);
 
         for (BookAuthor bookAuthor1 : listAuthors) {
             Vector vA = new Vector();
-            
 
             vA.add(i);
             i++;
+            vA.add(bookAuthor1.getAuthorId());
             vA.add(bookAuthor1.getAuthorName());
 
             dftAuthor.addRow(vA);
@@ -79,15 +112,69 @@ public class JLogAuthor extends javax.swing.JDialog {
 
         for (BookCategory bookCategory1 : listCateogry) {
             Vector vC = new Vector();
-            
+
             vC.add(j);
             j++;
+            vC.add(bookCategory1.getCateogryId());
             vC.add(bookCategory1.getCategoryName());
 
             dftCategory.addRow(vC);
         }
 
         jTable2.setModel(dftCategory);
+    }
+
+    private void loadDataAuthor() {
+        listAuthors.removeAll(listAuthors);
+        listAuthors = bookAuthorDAO.getAll(bookId);
+        for (BookAuthor bookAuthor1 : listAuthors) {
+            Vector vA = new Vector();
+
+            vA.add(i);
+            i++;
+            vA.add(bookAuthor1.getAuthorId());
+            vA.add(bookAuthor1.getAuthorName());
+
+            dftAuthor.addRow(vA);
+        }
+
+        jTable1.setModel(dftAuthor);
+
+    }
+
+    private void loadDataCategory() {
+        listCateogry.removeAll(listCateogry);
+        listCateogry = bookCategoryDAO.getAll(bookId);
+        for (BookCategory bookCategory1 : listCateogry) {
+            Vector vC = new Vector();
+
+            vC.add(j);
+            j++;
+            vC.add(bookCategory1.getCateogryId());
+            vC.add(bookCategory1.getCategoryName());
+
+            dftCategory.addRow(vC);
+        }
+
+        jTable2.setModel(dftCategory);
+    }
+
+    private void loadCBox() {
+
+        listCategory.removeAll(listCategory);
+        listAuthor.removeAll(listAuthor);
+
+        authorDAO = new AuthorDAO();
+        categoryDAO = new CategoryDAO();
+
+        listAuthor = authorDAO.getAll();
+        listCategory = categoryDAO.getAll();
+
+        listAuthor.forEach(cbAuthor::addItem);
+        listCategory.forEach(cbCategory::addItem);
+
+        AutoCompleteDecorator.decorate(cbAuthor);
+        AutoCompleteDecorator.decorate(cbCategory);
 
     }
 
@@ -112,11 +199,27 @@ public class JLogAuthor extends javax.swing.JDialog {
         lbBCode = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
+        jPanel6 = new javax.swing.JPanel();
+        cbCategory = new javax.swing.JComboBox<>();
+        btnAddCategory = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        cbAuthor = new javax.swing.JComboBox<>();
+        btnAddAuthor = new javax.swing.JButton();
 
         jmDelAu.setText("Xóa");
+        jmDelAu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmDelAuActionPerformed(evt);
+            }
+        });
         jPopupMenu1.add(jmDelAu);
 
         jmDelCate.setText("Xóa");
+        jmDelCate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmDelCateActionPerformed(evt);
+            }
+        });
         jPopupMenu2.add(jmDelCate);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -135,6 +238,11 @@ public class JLogAuthor extends javax.swing.JDialog {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jTable1MouseReleased(evt);
             }
         });
         jScrollPane1.setViewportView(jTable1);
@@ -159,7 +267,68 @@ public class JLogAuthor extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jTable2MouseReleased(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTable2);
+
+        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("Thể loại"));
+
+        btnAddCategory.setText("Thêm thể loại");
+        btnAddCategory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddCategoryActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(cbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnAddCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAddCategory))
+                .addGap(0, 6, Short.MAX_VALUE))
+        );
+
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Tác giả"));
+
+        btnAddAuthor.setText("Thêm tác giả");
+        btnAddAuthor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddAuthorActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(cbAuthor, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnAddAuthor, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(cbAuthor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnAddAuthor))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -168,17 +337,23 @@ public class JLogAuthor extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(54, 54, 54)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lbBCode))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lbBName)))
-                .addContainerGap(71, Short.MAX_VALUE))
+                        .addComponent(lbBName)
+                        .addContainerGap(482, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lbBCode)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -191,61 +366,180 @@ public class JLogAuthor extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(lbBCode))
+                .addGap(37, 37, 37)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48)
+                .addGap(35, 35, 35)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(75, Short.MAX_VALUE))
+                .addContainerGap(83, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jmDelAuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmDelAuActionPerformed
+        int pos = jTable1.getSelectedRow();
+        String auName = dftAuthor.getValueAt(pos, 2).toString();
+        int auId = Integer.valueOf(dftAuthor.getValueAt(pos, 1).toString());
+        int choose = JOptionPane.showConfirmDialog(rootPane, "Bạn chắc chắn muốn xóa " + auName, "", JOptionPane.OK_CANCEL_OPTION);
+        if (choose == JOptionPane.OK_OPTION) {
+            bookAuthor = new BookAuthor();
+            bookAuthor.setAuthorId(auId);
+            bookAuthorDAO.delete(bookAuthor, bookId);
+            Myultis.clearTable(dftAuthor);
+            preapareGUI();
+            loadDataAuthor();
+        }
+    }//GEN-LAST:event_jmDelAuActionPerformed
+
+    private void jTable1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseReleased
+        if (evt.isPopupTrigger()) {
+            jPopupMenu1.show(jTable1, evt.getX(), evt.getY());
+        }
+    }//GEN-LAST:event_jTable1MouseReleased
+
+    private void jTable2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseReleased
+        if (evt.isPopupTrigger()) {
+            jPopupMenu2.show(jTable2, evt.getX(), evt.getY());
+        }
+    }//GEN-LAST:event_jTable2MouseReleased
+
+    private void jmDelCateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmDelCateActionPerformed
+        int pos = jTable2.getSelectedRow();
+        String cateName = dftCategory.getValueAt(pos, 2).toString();
+        int cateId = Integer.valueOf(dftCategory.getValueAt(pos, 1).toString());
+        int choose = JOptionPane.showConfirmDialog(rootPane, "Bạn chắc chắn muốn xóa " + cateName, "", JOptionPane.OK_CANCEL_OPTION);
+        if (choose == JOptionPane.OK_OPTION) {
+            bookCategory = new BookCategory();
+            bookCategory.setCateogryId(cateId);
+            bookCategoryDAO.delete(bookCategory, bookId);
+            Myultis.clearTable(dftCategory);
+            preapareGUI1();
+            loadDataCategory();
+        }
+    }//GEN-LAST:event_jmDelCateActionPerformed
+
+    private void btnAddCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCategoryActionPerformed
+        Category selectCategory = (Category) cbCategory.getSelectedItem();
+        dftCategory = (DefaultTableModel) jTable2.getModel();
+        bookCategoryDAO = new BookCategoryDAO();
+        boolean flag = true;
+        Vector dataCategory = dftCategory.getDataVector();
+        if (dataCategory.size() <= 0) {
+            bookCategory = new BookCategory(bookId, selectCategory.getCategoryId());
+            bookCategoryDAO.save(bookCategory);
+            Myultis.clearTable(dftCategory);
+            preapareGUI1();
+            loadDataCategory();
+        } else if (dataCategory.size() > 0) {
+            for (int i = 0; i < dataCategory.size(); i++) {
+                Object objCategoryId = ((Vector) dataCategory.elementAt(i)).elementAt(1);
+                Object objCategoryName = ((Vector) dataCategory.elementAt(i)).elementAt(2);
+                int dataId = (Integer) objCategoryId;
+                if (selectCategory.getCategoryId() == dataId) {
+                    JOptionPane.showMessageDialog(this, "Đã có " + objCategoryName);
+                    flag = false;
+                }
+            }
+            if (flag == true) {
+                bookCategory = new BookCategory(bookId, selectCategory.getCategoryId());
+                bookCategoryDAO.save(bookCategory);
+                Myultis.clearTable(dftCategory);
+                preapareGUI1();
+                loadDataCategory();
+            }
+        }
+    }//GEN-LAST:event_btnAddCategoryActionPerformed
+
+    private void btnAddAuthorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddAuthorActionPerformed
+        Author selectAuthor = (Author) cbAuthor.getSelectedItem();
+        dftAuthor = (DefaultTableModel) jTable1.getModel();
+        boolean flag = true;
+        bookAuthorDAO = new BookAuthorDAO();
+        Vector dataAuthor = dftAuthor.getDataVector();
+        if (dataAuthor.size() <= 0) {
+            bookAuthor = new BookAuthor(bookId, selectAuthor.getAuthorId());
+            bookAuthorDAO.save(bookAuthor);
+            Myultis.clearTable(dftAuthor);
+            preapareGUI();
+            loadDataAuthor();
+        } else if (dataAuthor.size() > 0) {
+            for (int i = 0; i < dataAuthor.size(); i++) {
+                Object objAuthorId = ((Vector) dataAuthor.elementAt(i)).elementAt(1);
+                Object objAuthorName = ((Vector) dataAuthor.elementAt(i)).elementAt(2);
+                int dataId = (Integer) objAuthorId;
+                if (selectAuthor.getAuthorId() == dataId) {
+                    JOptionPane.showMessageDialog(this, "Đã có " + objAuthorName);
+                    flag = false;
+                }
+            }
+            if (flag == true) {
+                //add author
+
+                bookAuthor = new BookAuthor(bookId, selectAuthor.getAuthorId());
+                bookAuthorDAO.save(bookAuthor);
+                Myultis.clearTable(dftAuthor);
+                preapareGUI();
+                loadDataAuthor();
+
+            }
+        }
+    }//GEN-LAST:event_btnAddAuthorActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JLogAuthor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JLogAuthor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JLogAuthor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JLogAuthor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                JLogAuthor dialog = new JLogAuthor(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(JLogAuthor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(JLogAuthor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(JLogAuthor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(JLogAuthor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the dialog */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                JLogAuthor dialog = new JLogAuthor(new javax.swing.JFrame(), true);
+//                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+//                    @Override
+//                    public void windowClosing(java.awt.event.WindowEvent e) {
+//                        System.exit(0);
+//                    }
+//                });
+//                dialog.setVisible(true);
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddAuthor;
+    private javax.swing.JButton btnAddCategory;
+    private javax.swing.JComboBox<Author> cbAuthor;
+    private javax.swing.JComboBox<Category> cbCategory;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JPopupMenu jPopupMenu2;
     private javax.swing.JScrollPane jScrollPane1;

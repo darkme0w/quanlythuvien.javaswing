@@ -39,4 +39,10 @@ public class BookAuthorDAO extends AbstractDAO<BookAuthor> implements IBookAutho
         this.insert(sql, bAuthor.getBookId(), bAuthor.getAuthorId());
     }
 
+    @Override
+    public void delete(BookAuthor bookAuthor, int bookId) {
+        String sql = "{Call sp_del_bookAuthor(?,?)}";
+        this.update(sql, bookId,bookAuthor.getAuthorId());
+    }
+
 }

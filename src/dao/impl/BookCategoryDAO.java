@@ -24,7 +24,7 @@ public class BookCategoryDAO extends AbstractDAO<BookCategory> implements IBookC
 
     @Override
     public void delete(BookCategory bCategory) {
-      String sql = "{Call sp_delete_BookCategory(?)}";
+        String sql = "{Call sp_delete_BookCategory(?)}";
         this.update(sql, bCategory.getBookId());
     }
 
@@ -37,6 +37,12 @@ public class BookCategoryDAO extends AbstractDAO<BookCategory> implements IBookC
     public void save(BookCategory bCategory) {
         String sql = "{Call sp_insert_BookCategory(?,?)}";
         this.insert(sql, bCategory.getBookId(), bCategory.getCateogryId());
+    }
+
+    @Override
+    public void delete(BookCategory bCategory, int bookId) {
+        String sql = "{Call sp_del_bookCategory(?,?)}";
+        this.update(sql, bookId, bCategory.getCateogryId());
     }
 
 }

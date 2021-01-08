@@ -21,4 +21,6 @@ public interface IBookAuthorDAO extends GenericDAO<BookAuthor> {
     void update(BookAuthor bAuthor);
 
     void save(BookAuthor bAuthor);
+    
+    void delete(BookAuthor bookAuthor, int bookId);
 }
